@@ -2,6 +2,7 @@ Snowball
 ======
 
 ### System Dependencies
+We recommend using [Homebrew](http://brew.sh/) whenever possible.
 
 * Ruby 2.1.1 (we recommend [rbenv](http://rbenv.org/))
 * [PostgreSQL](https://wiki.postgresql.org/wiki/Homebrew)
@@ -51,5 +52,4 @@ Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://sc
 - Once it is merged and pushed to `master`, you can and *should* deploy immediately
 
 ### Heroku Setup
-1. Setup the [Heroku Toolbelt](http://toolbelt.heroku.com/)
 1. `heroku git:remote -a snowball`
