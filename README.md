@@ -49,7 +49,6 @@ Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://sc
 - When you need feedback or help, or you think the branch is ready for merging, open a [pull request](https://help.github.com/articles/using-pull-requests)
 - After someone else has reviewed and signed off on the feature, you can merge it into `master`
 - Once it is merged and pushed to `master`, you can and *should* deploy immediately
-[Another Reference](https://gist.github.com/jbenet/ee6c9ac48068889b0912)
 
 ### Heroku Setup
 1. Setup the [Heroku Toolbelt](http://toolbelt.heroku.com/)
