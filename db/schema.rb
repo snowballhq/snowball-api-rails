@@ -11,9 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20140503013513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+  enable_extension 'uuid-ossp'
+
+  create_table 'clips', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+  end
+
+  create_table 'reels', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+  end
 
 end
