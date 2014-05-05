@@ -1,0 +1,21 @@
+AllCops:
+  Exclude:
+    - bin/*
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+NumericLiterals:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
