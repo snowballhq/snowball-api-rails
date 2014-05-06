@@ -7,6 +7,7 @@ gem 'pg'
 gem 'unicorn'
 gem 'jbuilder'
 gem 'paperclip'
+gem 'aws-sdk'
 
 gem 'sass-rails'
 gem 'uglifier'
