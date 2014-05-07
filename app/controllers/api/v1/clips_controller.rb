@@ -9,24 +9,17 @@ class Api::V1::ClipsController < Api::V1::ApiController
   end
 
   def create
-    @clip = Clip.new clip_params
-    if @clip.save
-      render :show, status: :created, location: api_v1_clip_url(@clip)
-    else
-      render json: @clip.errors, status: :unprocessable_entity
-    end
+    @clip = Clip.create! clip_params
+    render :show, status: :created, location: api_v1_clip_url(@clip)
   end
 
   def update
-    if @clip.update(clip_params)
-      render :show, status: :ok, location: api_v1_clip_url(@clip)
-    else
-      render json: @clip.errors, status: :unprocessable_entity
-    end
+    @clip.update! clip_params
+    render :show, status: :ok, location: api_v1_clip_url(@clip)
   end
 
   def destroy
-    @clip.destroy
+    @clip.destroy!
     head :no_content
   end
 
