@@ -1,4 +1,6 @@
 class Api::V1::ApiController < ApplicationController
+  protect_from_forgery with: :null_session
+
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
 
