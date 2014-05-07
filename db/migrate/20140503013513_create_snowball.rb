@@ -7,7 +7,7 @@ class CreateSnowball < ActiveRecord::Migration
     end
     create_table :clips, id: :uuid do |t|
       t.belongs_to :reel
-      t.attachment :video
+      t.string :video_file_name
       t.timestamps
     end
   end

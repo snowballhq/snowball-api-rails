@@ -20,9 +20,6 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   create_table 'clips', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
     t.integer 'reel_id'
     t.string 'video_file_name'
-    t.string 'video_content_type'
-    t.integer 'video_file_size'
-    t.datetime 'video_updated_at'
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end
