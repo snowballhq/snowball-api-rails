@@ -42,7 +42,7 @@ describe Api::V1::ClipsController do
     end
 
     describe 'with invalid params' do
-      it "raises ActiveRecord::RecordInvalid" do
+      it 'raises ActiveRecord::RecordInvalid' do
         bypass_rescue
         expect do
           post :create, { clip: invalid_attributes }, valid_session
@@ -68,7 +68,7 @@ describe Api::V1::ClipsController do
     end
 
     describe 'with invalid params' do
-      it "raises ActiveRecord::RecordInvalid" do
+      it 'raises ActiveRecord::RecordInvalid' do
         clip.save!
         bypass_rescue
         expect do
