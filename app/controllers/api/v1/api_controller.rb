@@ -1,6 +1,7 @@
 class Api::V1::ApiController < ApplicationController
   protect_from_forgery with: :null_session
 
+  rescue_from StandardError, with: :render_error
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
 
@@ -15,7 +16,7 @@ class Api::V1::ApiController < ApplicationController
       message = error.message
       status = :unprocessable_entity
     else
-      message = 'An unexpected condition was encountered.'
+      message = 'An unexpected error has occured.'
       status = :internal_server_error
     end
     render json: { message: message }, status: status
