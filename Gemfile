@@ -25,3 +25,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'dotenv-rails'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
+
+group :production, :development do
+  gem 'rails_stdout_logging'
+end

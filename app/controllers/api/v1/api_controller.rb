@@ -16,6 +16,7 @@ class Api::V1::ApiController < ApplicationController
       message = error.message
       status = :unprocessable_entity
     else
+      logger.error error.message
       message = 'An unexpected error has occured.'
       status = :internal_server_error
     end
