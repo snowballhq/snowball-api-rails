@@ -4,6 +4,7 @@ class Api::V1::ApiController < ApplicationController
 
   protected
 
+  # TODO: spec this using a shared spec
   def render_error(error)
     if error.kind_of? ActiveRecord::RecordInvalid
       message = error.record.errors.full_messages.first
