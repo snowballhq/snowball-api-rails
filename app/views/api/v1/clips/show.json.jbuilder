@@ -1,1 +1,3 @@
-json.extract! @clip, :id, :created_at, :updated_at
+json.clip do
+  json.partial! @clip, partial: 'api/v1/clips/clip', as: :clip
+end
