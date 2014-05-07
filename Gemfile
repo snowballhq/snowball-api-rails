@@ -23,4 +23,5 @@ group :development, :test do
   gem 'rubocop'
   gem 'guard-rspec'
   gem 'better_errors'
+  gem 'dotenv-rails'
 end
