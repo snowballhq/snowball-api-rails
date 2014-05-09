@@ -7,18 +7,11 @@ class Clip < ActiveRecord::Base
 
   after_create :encode_video
 
+  include HLSEncoder
+
   private
 
   def encode_video
-    unless Rails.env.test?
-      response = Zencoder::Job.create(
-        input: video_url,
-        output: {
-          width: '480',
-          url: 's3://YOUR_S3_BUCKET/key_output.webm',
-          notification: 'http://sharp-mountain-4005.herokuapp.com/zencoder/response'
-        }
-      )
-    end
+    hls_encode_video(video.url)
   end
 end

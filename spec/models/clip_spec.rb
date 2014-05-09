@@ -23,6 +23,13 @@ describe Clip do
   end
 
   describe '#encode_video' do
-    # TODO: write spec
+    it 'calls #hls_encode_video' do
+      expect(clip).to receive :hls_encode_video
+      clip.save!
+    end
+  end
+
+  describe 'HLSEncoder' do
+    # TODO: write HLSEncoder concern specs
   end
 end
