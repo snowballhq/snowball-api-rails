@@ -231,6 +231,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    zencoder (2.4.6)
+      multi_json
 
 PLATFORMS
   ruby
@@ -257,3 +259,4 @@ DEPENDENCIES
   turbolinks
   uglifier
   unicorn
+  zencoder

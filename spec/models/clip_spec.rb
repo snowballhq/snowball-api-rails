@@ -14,4 +14,15 @@ describe Clip do
     it { should validate_attachment_presence :video }
     # no shoulda matcher for validates_attachment_file_name, so no spec written
   end
+
+  describe 'after_create' do
+    it 'calls #encode_video' do
+      expect(clip).to receive :encode_video
+      clip.save!
+    end
+  end
+
+  describe '#encode_video' do
+    # TODO: write spec
+  end
 end

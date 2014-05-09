@@ -45,4 +45,8 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.include Paperclip::Shoulda::Matchers
+
+  config.after :all do
+    FileUtils.rm_rf(Rails.root + 'public/system/clips')
+  end
 end

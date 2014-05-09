@@ -8,6 +8,7 @@ gem 'unicorn'
 gem 'jbuilder'
 gem 'paperclip'
 gem 'fog'
+gem 'zencoder'
 
 gem 'sass-rails'
 gem 'uglifier'
