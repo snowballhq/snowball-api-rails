@@ -12,6 +12,6 @@ class Clip < ActiveRecord::Base
   private
 
   def encode_video
-    hls_encode_video(video.url)
+    hls_encode_video(video)
   end
 end

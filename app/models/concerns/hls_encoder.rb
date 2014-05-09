@@ -1,16 +1,17 @@
 module HLSEncoder
   extend ActiveSupport::Concern
 
-  def hls_encode_video(video_url)
+  def hls_encode_video(video)
     unless Rails.env.test?
-      base_url = "s3://#{ENV['S3_ENCODED_CLIPS_BUCKET_NAME']}/:class/:attachment/:id/:style/:basename.:extension"
+      input_url = "s3://#{ENV['S3_ORIGINAL_CLIPS_BUCKET_NAME']}/#{video.path}"
+      output_url = "s3://#{ENV['S3_ENCODED_CLIPS_BUCKET_NAME']}/#{video.path}"
       response = Zencoder::Job.create(
-        input: video_url,
+        input: input_url,
         output: [
           { # Audio Only
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             filename: 'file-64k.m3u8',
             format: :aac,
             public: 1,
@@ -19,7 +20,7 @@ module HLSEncoder
           { # Video 400x225
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 300,
             decoder_buffer_size: 800,
             filename: 'file-240k.m3u8',
@@ -35,7 +36,7 @@ module HLSEncoder
           { # Video 400x225
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 600,
             decoder_buffer_size: 1600,
             filename: 'file-440k.m3u8',
@@ -50,7 +51,7 @@ module HLSEncoder
           { # Video 480x270
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 900,
             decoder_buffer_size: 2400,
             filename: 'file-640k.m3u8',
@@ -65,7 +66,7 @@ module HLSEncoder
           { # Video 640x360
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 1500,
             decoder_buffer_size: 4000,
             filename: 'file-1040k.m3u8',
@@ -80,7 +81,7 @@ module HLSEncoder
           { # Video 960x540
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 2250,
             decoder_buffer_size: 6000,
             filename: 'file-1540k.m3u8',
@@ -95,7 +96,7 @@ module HLSEncoder
           { # Video 1024x576
             audio_bitrate: 56,
             audio_sample_rate: 22050,
-            base_url: base_url,
+            base_url: output_url,
             decoder_bitrate_cap: 3000,
             decoder_buffer_size: 8000,
             filename: 'file-2040k.m3u8',
@@ -113,7 +114,7 @@ module HLSEncoder
             # stream is most appropriate. The order of the other entries is
             # irrelevant.
             # From Apple's HTTP Live Streaming Overview, Stream Alternates
-            base_url: base_url,
+            base_url: output_url,
             filename: 'playlist.m3u8',
             public: 1,
             streams: [
