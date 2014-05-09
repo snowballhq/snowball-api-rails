@@ -2,6 +2,11 @@ module HLSEncoder
   extend ActiveSupport::Concern
 
   def hls_encode_video(video)
+    # This method is not tested with Rspec. Please be careful!
+    #
+    # This method expects a paperclip video, not a URL
+    # It also expects the model that implements this to have a column
+    # named zencoder_job_id
     unless Rails.env.test?
       input_url = "s3://#{ENV['S3_ORIGINAL_CLIPS_BUCKET_NAME']}/#{video.path}"
       output_url = "s3://#{ENV['S3_ENCODED_CLIPS_BUCKET_NAME']}/#{video.path}"
@@ -151,6 +156,8 @@ module HLSEncoder
           }
       ]
       )
+      self.zencoder_job_id = response.body['id']
+      self.save!
     end
   end
 end
