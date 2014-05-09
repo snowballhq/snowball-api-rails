@@ -2,7 +2,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   before_action :set_clip, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clips = Clip.all
+    @clips = Clip.where('video_hls_index_file_name IS NOT NULL')
   end
 
   def show

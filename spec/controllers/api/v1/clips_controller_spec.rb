@@ -11,8 +11,11 @@ describe Api::V1::ClipsController do
   end
 
   describe 'GET index' do
-    it 'assigns all clips as @clips' do
+    it 'assigns all clips with hls playlists as @clips' do
       clip.save!
+      get :index, {}, valid_session
+      assigns(:clips).should eq([])
+      clip.update(video_hls_index_file_name: 'playlist.m3u8')
       get :index, {}, valid_session
       assigns(:clips).should eq([clip])
     end
