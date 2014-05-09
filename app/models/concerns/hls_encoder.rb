@@ -154,10 +154,24 @@ module HLSEncoder
           ],
             type: 'playlist'
           }
-      ]
+        ],
+        notifications: [
+          if Rails.env.development?
+            'http://zencoderfetcher/'
+          else
+            api_v1_zencoder_url
+          end
+        ]
       )
       self.zencoder_job_id = response.body['id']
       self.save!
     end
+  end
+
+  def video_hls_index_url
+    url = 'https://' + ENV['S3_ENCODED_CLIPS_BUCKET_NAME'] +
+      '.s3.amazonaws.com/' + video.path + '/' +
+      video_hls_index_file_name
+    url
   end
 end

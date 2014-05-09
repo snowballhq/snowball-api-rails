@@ -47,6 +47,6 @@ RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
 
   config.after :all do
-    FileUtils.rm_rf(Rails.root + 'public/system/clips')
+    FileUtils.rm_rf(Rails.root + 'clips')
   end
 end

@@ -29,6 +29,13 @@ describe Clip do
     end
   end
 
+  describe '#hls_index_url' do
+    it 'provides the correct hls_index_url' do
+      clip.update(video_hls_index_file_name: 'playlist.m3u8')
+      expect(clip.video_hls_index_url).to eq("https://snowball-development-clips-encoded.s3.amazonaws.com/clips/videos/#{clip.id}/original/video.mp4/playlist.m3u8")
+    end
+  end
+
   describe 'HLSEncoder' do
     # TODO: write HLSEncoder concern specs
   end
