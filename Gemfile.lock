@@ -95,6 +95,9 @@ GEM
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     hike (1.2.3)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.9)
     jbuilder (2.0.7)
       activesupport (>= 3.0.0, < 5)
@@ -118,6 +121,7 @@ GEM
     mini_portile (0.5.3)
     minitest (5.3.3)
     multi_json (1.9.3)
+    multi_xml (0.5.5)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.0)
@@ -220,6 +224,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    trollop (2.0)
     turbolinks (2.2.2)
       coffee-rails
     tzinfo (1.1.0)
@@ -233,6 +238,12 @@ GEM
       raindrops (~> 0.7)
     zencoder (2.4.6)
       multi_json
+    zencoder-fetcher (0.2.8)
+      activesupport
+      httparty
+      i18n
+      json
+      trollop
 
 PLATFORMS
   ruby
@@ -260,3 +271,4 @@ DEPENDENCIES
   uglifier
   unicorn
   zencoder
+  zencoder-fetcher

@@ -27,6 +27,10 @@ group :development, :test do
   gem 'dotenv-rails'
 end
 
+group :development do
+  gem 'zencoder-fetcher'
+end
+
 group :production do
   gem 'rails_12factor'
 end
