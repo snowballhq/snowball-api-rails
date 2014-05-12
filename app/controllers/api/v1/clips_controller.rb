@@ -2,7 +2,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   before_action :set_clip, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clips = Clip.where('encoded_video_file_name IS NOT NULL')
+    @clips = Clip.where('zencoder_job_id IS NULL')
   end
 
   def show

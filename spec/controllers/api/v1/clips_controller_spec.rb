@@ -11,11 +11,11 @@ describe Api::V1::ClipsController do
   end
 
   describe 'GET index' do
-    it 'assigns all clips with encoded videos as @clips' do
-      clip.save!
+    it 'assigns all encoded clips as @clips' do
+      clip.update!(zencoder_job_id: 12345)
       get :index, {}, valid_session
       assigns(:clips).should eq([])
-      clip.update(encoded_video_file_name: 'video.mp4')
+      clip.update!(zencoder_job_id: nil)
       get :index, {}, valid_session
       assigns(:clips).should eq([clip])
     end
