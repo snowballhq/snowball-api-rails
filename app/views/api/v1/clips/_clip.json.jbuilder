@@ -1,2 +1,2 @@
 json.id clip.id.to_s
-json.video_hls_index_url clip.video_hls_index_url
+json.video_url clip.encoded_video_url

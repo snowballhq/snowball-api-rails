@@ -22,21 +22,14 @@ describe Clip do
     end
   end
 
-  describe '#encode_video' do
-    it 'calls #hls_encode_video' do
-      expect(clip).to receive :hls_encode_video
-      clip.save!
+  describe '#encoded_video_url' do
+    it 'provides the correct encoded_video_url' do
+      clip.update(encoded_video_file_name: 'video.mp4')
+      expect(clip.encoded_video_url).to eq("https://snowball-development-clips-encoded.s3.amazonaws.com/clips/videos/#{clip.id}/original/video.mp4")
     end
   end
 
-  describe '#hls_index_url' do
-    it 'provides the correct hls_index_url' do
-      clip.update(video_hls_index_file_name: 'playlist.m3u8')
-      expect(clip.video_hls_index_url).to eq("https://snowball-development-clips-encoded.s3.amazonaws.com/clips/videos/#{clip.id}/original/video.mp4/playlist.m3u8")
-    end
-  end
-
-  describe 'HLSEncoder' do
-    # TODO: write HLSEncoder concern specs
+  describe 'VideoEncoder' do
+    # TODO: write VideoEncoder concern specs
   end
 end

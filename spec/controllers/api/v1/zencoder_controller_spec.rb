@@ -19,8 +19,8 @@ describe Api::V1::ZencoderController do
         expect(Clip).to receive(:where).with(zencoder_job_id: job_id).and_return([clip])
         post :create, valid_params
       end
-      it 'updates the name of the video hls index and removes the Zencoder job ID' do
-        expect_any_instance_of(Clip).to receive(:update).with(video_hls_index_file_name: 'playlist.m3u8', zencoder_job_id: nil)
+      it 'updates the name of the encoded video and removes the Zencoder job ID' do
+        expect_any_instance_of(Clip).to receive(:update).with(encoded_video_file_name: 'video.mp4', zencoder_job_id: nil)
         post :create, valid_params
       end
     end

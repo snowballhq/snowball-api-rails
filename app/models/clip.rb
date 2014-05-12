@@ -7,11 +7,5 @@ class Clip < ActiveRecord::Base
 
   after_create :encode_video
 
-  include HLSEncoder
-
-  private
-
-  def encode_video
-    hls_encode_video(video)
-  end
+  include VideoEncoder
 end
