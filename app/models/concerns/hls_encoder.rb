@@ -169,9 +169,11 @@ module HLSEncoder
   end
 
   def video_hls_index_url
-    url = 'https://' + ENV['S3_ENCODED_CLIPS_BUCKET_NAME'] +
-      '.s3.amazonaws.com/' + video.path + '/' +
-      video_hls_index_file_name
+    if video.path && video.path.length > 0 && video_hls_index_file_name && video_hls_index_file_name.length > 0
+      url = 'https://' + ENV['S3_ENCODED_CLIPS_BUCKET_NAME'] +
+        '.s3.amazonaws.com/' + video.path + '/' +
+        video_hls_index_file_name
+    end
     url
   end
 end
