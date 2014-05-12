@@ -24,13 +24,15 @@ describe Clip do
 
   describe '#encoded_video_path' do
     it 'provides the correct encoded_video_path' do
+      clip.save!
       expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/540p/video.mp4"
     end
   end
 
   describe '#encoded_video_url' do
     it 'provides the correct encoded_video_url' do
-      expect(clip.encoded_video_url).to eq("https://snowball-development-clips-encoded.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
+      clip.save!
+      expect(clip.encoded_video_url).to eq("https://snowball-development-clips.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
     end
   end
 

@@ -38,7 +38,7 @@ module Snowball
       storage: :fog,
       url: ':class/:attachment/:id/:style/:basename.:extension',
       path: ':class/:attachment/:id/:style/:basename.:extension',
-      fog_directory: ENV['S3_ORIGINAL_CLIPS_BUCKET_NAME'],
+      fog_directory: ENV['S3_BUCKET_NAME'],
       fog_credentials: {
         provider: :aws,
         aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
