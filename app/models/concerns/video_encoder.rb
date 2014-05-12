@@ -14,6 +14,7 @@ module VideoEncoder
         input: input_url,
         output: {
           url: output_url,
+          public: true,
           audio_bitrate: 56,
           audio_sample_rate: 22050,
           aspect_mode: :crop,
