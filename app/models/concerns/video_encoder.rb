@@ -36,11 +36,11 @@ module VideoEncoder
   end
 
   def encoded_video_path
-    video.path.sub('original', '540p')
+    video.path.sub('/original/', '/540p/')
   end
 
   def encoded_video_url
-    if video.path && video.path.length > 0 && zencoder_job_id.nil?
+    if video.path && video.path.length > 0
       url = 'https://' + ENV['S3_BUCKET_NAME'] +
         '.s3.amazonaws.com/' + encoded_video_path
       url
