@@ -9,6 +9,7 @@ gem 'jbuilder'
 gem 'paperclip'
 gem 'fog'
 gem 'zencoder'
+gem 'kaminari'
 
 gem 'sass-rails'
 gem 'uglifier'

@@ -2,7 +2,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   before_action :set_clip, only: [:show, :edit, :update, :destroy]
 
   def index
-    @clips = Clip.where('zencoder_job_id IS NULL')
+    @clips = Clip.where('zencoder_job_id IS NULL').page(page_params)
   end
 
   def show

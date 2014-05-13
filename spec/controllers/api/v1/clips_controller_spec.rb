@@ -19,6 +19,14 @@ describe Api::V1::ClipsController do
       get :index, {}, valid_session
       assigns(:clips).should eq([clip])
     end
+
+    it 'is paginated' do
+      create_list(:clip, 26)
+      get :index, { page: 1 }, valid_session
+      expect(assigns(:clips).count).to eq 25
+      get :index, { page: 2 }, valid_session
+      expect(assigns(:clips).count).to eq 1
+    end
   end
 
   describe 'GET show' do

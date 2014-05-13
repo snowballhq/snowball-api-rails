@@ -7,7 +7,8 @@ class Api::V1::ApiController < ApplicationController
 
   protected
 
-  # TODO: spec this using a shared spec
+  # TODO: spec entire APIController using a shared spec
+
   def render_error(error)
     if error.kind_of? ActiveRecord::RecordInvalid
       message = error.record.errors.full_messages.first
@@ -21,5 +22,9 @@ class Api::V1::ApiController < ApplicationController
       status = :internal_server_error
     end
     render json: { message: message }, status: status
+  end
+
+  def page_params
+    params.permit(:page)[:page]
   end
 end
