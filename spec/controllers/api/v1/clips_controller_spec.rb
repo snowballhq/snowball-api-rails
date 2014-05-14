@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Api::V1::ClipsController do
   let(:clip) { build :clip }
-  let(:valid_attributes) { attributes_for(:clip).stringify_keys! }
+  let(:valid_request) { { reel_id: clip.reel } }
+  let(:valid_attributes) { attributes_for(:clip).merge(reel_id: clip.reel.id).stringify_keys! }
   let(:invalid_attributes) { { video: nil } }
   let(:valid_session) { {} }
 
@@ -13,18 +14,18 @@ describe Api::V1::ClipsController do
   describe 'GET index' do
     it 'assigns all encoded clips as @clips' do
       clip.update!(zencoder_job_id: 12345)
-      get :index, {}, valid_session
+      get :index, valid_request, valid_session
       assigns(:clips).should eq([])
       clip.update!(zencoder_job_id: nil)
-      get :index, {}, valid_session
+      get :index, valid_request, valid_session
       assigns(:clips).should eq([clip])
     end
 
     it 'is paginated' do
       create_list(:clip, 26)
-      get :index, { page: 1 }, valid_session
+      get :index, valid_request.merge(page: 1), valid_session
       expect(assigns(:clips).count).to eq 25
-      get :index, { page: 2 }, valid_session
+      get :index, valid_request.merge(page: 2), valid_session
       expect(assigns(:clips).count).to eq 1
     end
   end
@@ -41,12 +42,12 @@ describe Api::V1::ClipsController do
     describe 'with valid params' do
       it 'creates a new clip' do
         expect do
-          post :create, { clip: valid_attributes }, valid_session
+          post :create, valid_request.merge(clip: valid_attributes), valid_session
         end.to change(Clip, :count).by(1)
       end
 
       it 'renders json with the created clip' do
-        post :create, { clip: valid_attributes }, valid_session
+        post :create, valid_request.merge(clip: valid_attributes), valid_session
         expect(response.status).to eq 201
         expect(response).to render_template :show
       end
@@ -56,7 +57,7 @@ describe Api::V1::ClipsController do
       it 'raises ActiveRecord::RecordInvalid' do
         bypass_rescue
         expect do
-          post :create, { clip: invalid_attributes }, valid_session
+          post :create, valid_request.merge(clip: invalid_attributes), valid_session
         end.to raise_error ActiveRecord::RecordInvalid
       end
     end
