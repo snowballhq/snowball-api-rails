@@ -3,7 +3,7 @@ if ENV['UNICORN_COUNT'].to_i > 0
 else
   worker_processes 4
 end
-timeout 15
+timeout 30
 preload_app true
 
 before_fork do |server, worker|
