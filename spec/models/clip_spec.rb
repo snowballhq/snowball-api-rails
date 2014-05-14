@@ -32,7 +32,7 @@ describe Clip do
   describe '#encoded_video_url' do
     it 'provides the correct encoded_video_url' do
       clip.save!
-      expect(clip.encoded_video_url).to eq("https://snowball-development-clips.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
+      expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
     end
   end
 
