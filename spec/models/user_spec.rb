@@ -6,31 +6,27 @@ describe User do
 
   it { should be_valid }
 
-  it 'validates presence of :auth_token' do
-    user.stub(:generate_auth_token)
-    user.should validate_presence_of :auth_token
-  end
-  it 'validates presence of :username' do
-    user.stub(:generate_username)
-    user.should validate_presence_of :username
-  end
-  it 'validates uniqueness of :username' do
-    user.save! # generates username
-    user.should validate_uniqueness_of :username
+  describe 'associations' do
   end
 
-  it { should_not allow_value('test@test').for :username }
-  it { should_not allow_value('test test').for :username }
-  it { should allow_value('username1').for :username }
+  describe 'validations' do
+    it 'validates presence of :auth_token' do
+      user.stub(:generate_auth_token)
+      user.should validate_presence_of :auth_token
+    end
+    it 'validates presence of :username' do
+      user.stub(:generate_username)
+      user.should validate_presence_of :username
+    end
+    it 'validates uniqueness of :username' do
+      user.save! # generates username
+      user.should validate_uniqueness_of :username
+    end
 
-  # it { should have_many :identities }
-  # it { should have_many :posts }
-  # it { should have_many(:likes).through :posts }
-  # it { should have_many(:liked).class_name 'Like' }
-  # it { should have_many :comments }
-  # it { should have_many(:reported).class_name 'Report' }
-  # it { should have_many :notifications }
-  # it { should have_many(:followed).class_name 'Follow' }
+    it { should_not allow_value('test@test').for :username }
+    it { should_not allow_value('test test').for :username }
+    it { should allow_value('username1').for :username }
+  end
 
   describe 'before_validation on: :create' do
     describe '#generate_auth_token' do

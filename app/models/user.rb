@@ -1,18 +1,11 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
+  # TODO: associations go here
+
   validates :auth_token, presence: true
   validates :username, presence: true, format: /\A\w{1,30}\z/, uniqueness: true
   # email/password validations are handled by :validatable in devise
-
-  # has_many :identities
-  # has_many :posts
-  # has_many :likes, through: :posts # likes user has received
-  # has_many :liked, class_name: 'Like' # likes user has given
-  # has_many :reported, class_name: 'Report' # reports user has given
-  # has_many :comments
-  # has_many :notifications
-  # has_many :followed, class_name: 'Follow'
 
   before_validation(on: :create) do
     generate_auth_token
