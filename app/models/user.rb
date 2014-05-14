@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     count = 0
     loop do
       truncate_length = count == 0 ? 30 : (30 - count.to_s.length)
-      self.username = "#{email.split("@")[0].downcase.gsub(/[^0-9A-Za-z]/, '').truncate(truncate_length, omission: '')}#{count.to_s if count > 0}"
+      self.username = "#{email.split('@')[0].downcase.gsub(/[^0-9A-Za-z]/, '').truncate(truncate_length, omission: '')}#{count.to_s if count > 0}"
       count += 1
       break unless self.class.exists?(username: username)
     end
