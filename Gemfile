@@ -10,6 +10,7 @@ gem 'paperclip'
 gem 'fog'
 gem 'zencoder'
 gem 'kaminari'
+gem 'devise'
 
 gem 'sass-rails'
 gem 'uglifier'
