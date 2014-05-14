@@ -12,7 +12,7 @@ describe Api::V1::ClipsController do
   end
 
   describe 'GET index' do
-    it 'assigns all encoded clips as @clips' do
+    it 'assigns all encoded clips scoped to the reel id as @clips' do
       clip.update!(zencoder_job_id: 12345)
       get :index, valid_request, valid_session
       assigns(:clips).should eq([])
@@ -22,7 +22,7 @@ describe Api::V1::ClipsController do
     end
 
     it 'is paginated' do
-      create_list(:clip, 26)
+      create_list(:clip, 26, reel: clip.reel)
       get :index, valid_request.merge(page: 1), valid_session
       expect(assigns(:clips).count).to eq 25
       get :index, valid_request.merge(page: 2), valid_session
