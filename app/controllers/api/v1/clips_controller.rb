@@ -32,6 +32,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   def clip_params
     params[:clip] = {} unless params[:clip].present?
     params[:clip][:video] = params[:video] if params[:video].present?
+    params[:clip][:reel_id] = params[:reel_id] if params[:reel_id].present?
     params.delete :video
     params.require(:clip).permit(:video, :reel_id)
   end
