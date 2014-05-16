@@ -1,4 +1,7 @@
 class Clip < ActiveRecord::Base
+  include Orderable
+  include VideoEncoder
+
   belongs_to :reel
 
   validates :reel, presence: true
@@ -9,5 +12,4 @@ class Clip < ActiveRecord::Base
 
   after_create :encode_video
 
-  include VideoEncoder
 end

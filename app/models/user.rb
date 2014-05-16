@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Orderable
+
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
   # TODO: associations go here
