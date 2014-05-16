@@ -5,7 +5,6 @@ describe Api::V1::ClipsController do
   let(:valid_request) { { reel_id: clip.reel } }
   let(:valid_attributes) { attributes_for(:clip).merge(reel_id: clip.reel.id).stringify_keys! }
   let(:invalid_attributes) { { video: nil } }
-  let(:valid_session) { {} }
 
   before :each do
     request.env['HTTP_ACCEPT'] = 'application/json'
@@ -14,18 +13,18 @@ describe Api::V1::ClipsController do
   describe 'GET index' do
     it 'assigns all encoded clips scoped to the reel id as @clips' do
       clip.update!(zencoder_job_id: 12345)
-      get :index, valid_request, valid_session
+      get :index, valid_request
       assigns(:clips).should eq([])
       clip.update!(zencoder_job_id: nil)
-      get :index, valid_request, valid_session
+      get :index, valid_request
       assigns(:clips).should eq([clip])
     end
 
     it 'is paginated' do
       create_list(:clip, 26, reel: clip.reel)
-      get :index, valid_request.merge(page: 1), valid_session
+      get :index, valid_request.merge(page: 1)
       expect(assigns(:clips).count).to eq 25
-      get :index, valid_request.merge(page: 2), valid_session
+      get :index, valid_request.merge(page: 2)
       expect(assigns(:clips).count).to eq 1
     end
   end
@@ -33,7 +32,7 @@ describe Api::V1::ClipsController do
   describe 'GET show' do
     it 'assigns the requested clip as @clip' do
       clip.save!
-      get :show, { id: clip }, valid_session
+      get :show, id: clip
       assigns(:clip).should eq(clip)
     end
   end
@@ -42,12 +41,12 @@ describe Api::V1::ClipsController do
     describe 'with valid params' do
       it 'creates a new clip' do
         expect do
-          post :create, valid_request.merge(clip: valid_attributes), valid_session
+          post :create, valid_request.merge(clip: valid_attributes)
         end.to change(Clip, :count).by(1)
       end
 
       it 'renders json with the created clip' do
-        post :create, valid_request.merge(clip: valid_attributes), valid_session
+        post :create, valid_request.merge(clip: valid_attributes)
         expect(response.status).to eq 201
         expect(response).to render_template :show
       end
@@ -57,7 +56,7 @@ describe Api::V1::ClipsController do
       it 'raises ActiveRecord::RecordInvalid' do
         bypass_rescue
         expect do
-          post :create, valid_request.merge(clip: invalid_attributes), valid_session
+          post :create, valid_request.merge(clip: invalid_attributes)
         end.to raise_error ActiveRecord::RecordInvalid
       end
     end
@@ -70,11 +69,11 @@ describe Api::V1::ClipsController do
     describe 'with valid params' do
       it 'updates the requested clip' do
         Clip.any_instance.should_receive(:update!).with(valid_attributes)
-        put :update, { id: clip, clip: valid_attributes }, valid_session
+        put :update, id: clip, clip: valid_attributes
       end
 
       it 'renders json with the updated clip' do
-        put :update, { id: clip, clip: valid_attributes }, valid_session
+        put :update, id: clip, clip: valid_attributes
         expect(response).to render_template :show
       end
     end
@@ -83,7 +82,7 @@ describe Api::V1::ClipsController do
       it 'raises ActiveRecord::RecordInvalid' do
         bypass_rescue
         expect do
-          put :update, { id: clip, clip: invalid_attributes }, valid_session
+          put :update, id: clip, clip: invalid_attributes
         end.to raise_error ActiveRecord::RecordInvalid
       end
     end
@@ -95,12 +94,12 @@ describe Api::V1::ClipsController do
     end
     it 'destroys the requested clip' do
       expect do
-        delete :destroy, { id: clip }, valid_session
+        delete :destroy, id: clip
       end.to change(Clip, :count).by(-1)
     end
 
     it 'renders no content' do
-      delete :destroy, { id: clip }, valid_session
+      delete :destroy, id: clip
       expect(response.status).to eq 204
       expect(response.body.length).to eq 0
     end
