@@ -2,11 +2,17 @@ require 'spec_helper'
 
 describe Api::V1::ReelsController do
   let(:reel) { build :reel }
+  let(:user) { create :user }
   let(:valid_attributes) { attributes_for(:reel).stringify_keys! }
   let(:invalid_attributes) { { name: nil } }
 
   before :each do
+    login_api user.auth_token
     request.env['HTTP_ACCEPT'] = 'application/json'
+  end
+
+  it_behaves_like 'a restricted api controller' do
+    let(:action) { proc { get :index } }
   end
 
   describe 'GET index' do

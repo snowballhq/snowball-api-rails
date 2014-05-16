@@ -1,4 +1,5 @@
 class Api::V1::ReelsController < Api::V1::ApiController
+  before_action :restrict_access!
   before_action :set_reel, only: [:show, :edit, :update, :destroy]
 
   def index

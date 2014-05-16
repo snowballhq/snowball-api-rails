@@ -2,12 +2,18 @@ require 'spec_helper'
 
 describe Api::V1::ClipsController do
   let(:clip) { build :clip }
+  let(:user) { create :user }
   let(:valid_request) { { reel_id: clip.reel } }
   let(:valid_attributes) { attributes_for(:clip).merge(reel_id: clip.reel.id).stringify_keys! }
   let(:invalid_attributes) { { video: nil } }
 
   before :each do
+    login_api user.auth_token
     request.env['HTTP_ACCEPT'] = 'application/json'
+  end
+
+  it_behaves_like 'a restricted api controller' do
+    let(:action) { proc { get :index, reel_id: clip.reel } }
   end
 
   describe 'GET index' do

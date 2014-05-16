@@ -1,4 +1,5 @@
 class Api::V1::ClipsController < Api::V1::ApiController
+  before_action :restrict_access!
   before_action :set_clip, only: [:show, :edit, :update, :destroy]
   before_action :set_reel, only: :index
 
