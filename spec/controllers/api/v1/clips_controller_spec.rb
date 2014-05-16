@@ -51,6 +51,11 @@ describe Api::V1::ClipsController do
         end.to change(Clip, :count).by(1)
       end
 
+      it 'scopes the new clip to the current user' do
+        post :create, valid_request.merge(clip: valid_attributes)
+        expect(Clip.last.user_id).to eq user.id
+      end
+
       it 'renders json with the created clip' do
         post :create, valid_request.merge(clip: valid_attributes)
         expect(response.status).to eq 201

@@ -7,6 +7,7 @@ describe User do
   it { should be_valid }
 
   describe 'associations' do
+    it { should have_many :clips }
   end
 
   describe 'validations' do

@@ -11,7 +11,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   end
 
   def create
-    @clip = Clip.create! clip_params
+    @clip = current_user.clips.create! clip_params
     render :show, status: :created, location: api_v1_clip_url(@clip)
   end
 

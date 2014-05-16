@@ -7,10 +7,12 @@ describe Clip do
 
   describe 'associations' do
     it { should belong_to :reel }
+    it { should belong_to :user }
   end
 
   describe 'validations' do
     it { should validate_presence_of :reel }
+    it { should validate_presence_of :user }
     it { should have_attached_file :video }
     it { should validate_attachment_presence :video }
     # no shoulda matcher for validates_attachment_file_name, so no spec written

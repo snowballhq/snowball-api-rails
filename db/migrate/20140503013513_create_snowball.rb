@@ -17,13 +17,14 @@ class CreateSnowball < ActiveRecord::Migration
     add_index :users, :reset_password_token, unique: true
 
     create_table :reels, id: :uuid do |t|
-      t.string :name
+      t.string :name, null: false
       t.timestamps
     end
 
     create_table :clips, id: :uuid do |t|
-      t.uuid :reel_id
-      t.string :video_file_name
+      t.uuid :reel_id, null: false
+      t.uuid :user_id, null: false
+      t.string :video_file_name, null: false
       t.integer :zencoder_job_id
       t.timestamps
     end
