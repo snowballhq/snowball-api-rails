@@ -38,6 +38,12 @@ describe Clip do
       end
     end
 
+    describe '#thumbnail_extension' do
+      it 'provides the correct thumbnail_extension' do
+        expect(clip.thumbnail_extension).to eq '.png'
+      end
+    end
+
     describe '#thumbnail_base_url' do
       it 'provides the correct thumbnail_base_url' do
         expect(clip.thumbnail_base_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/")
@@ -46,7 +52,7 @@ describe Clip do
 
     describe '#thumbnail_url' do
       it 'provides the correct thumbnail_url' do
-        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x360")
+        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x360.png")
       end
     end
 

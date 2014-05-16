@@ -55,6 +55,10 @@ module VideoEncoder
     '640x360'
   end
 
+  def thumbnail_extension
+    '.png'
+  end
+
   def thumbnail_path_without_filename
     thumbnail_path = video.path.sub('/original/', '/thumbnails/')
     thumbnail_path.sub(video.original_filename, '')
@@ -69,7 +73,7 @@ module VideoEncoder
   end
 
   def thumbnail_url
-    thumbnail_base_url + thumbnail_filename
+    thumbnail_base_url + thumbnail_filename + thumbnail_extension
   end
 
   def encoded_video_path
