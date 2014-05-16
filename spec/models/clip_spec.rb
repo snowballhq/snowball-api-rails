@@ -23,21 +23,41 @@ describe Clip do
     end
   end
 
-  describe '#encoded_video_path' do
-    it 'provides the correct encoded_video_path' do
-      clip.save!
-      expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/540p/video.mp4"
-    end
-  end
-
-  describe '#encoded_video_url' do
-    it 'provides the correct encoded_video_url' do
-      clip.save!
-      expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
-    end
-  end
-
   describe 'VideoEncoder' do
-    # TODO: write VideoEncoder concern specs
+    describe '#thumbnail_filename' do
+      it 'provides the correct thumbnail_filename' do
+        expect(clip.thumbnail_filename).to eq '640x360'
+      end
+    end
+
+    describe '#thumbnail_path' do
+      it 'provides the correct thumbnail_path_without_filename' do
+        expect(clip.thumbnail_path_without_filename).to eq "clips/videos/#{clip.id}/thumbnails/"
+      end
+    end
+
+    describe '#thumbnail_base_url' do
+      it 'provides the correct thumbnail_base_url' do
+        expect(clip.thumbnail_base_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/")
+      end
+    end
+
+    describe '#thumbnail_url' do
+      it 'provides the correct thumbnail_url' do
+        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x360")
+      end
+    end
+
+    describe '#encoded_video_path' do
+      it 'provides the correct encoded_video_path' do
+        expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/540p/video.mp4"
+      end
+    end
+
+    describe '#encoded_video_url' do
+      it 'provides the correct encoded_video_url' do
+        expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
+      end
+    end
   end
 end
