@@ -43,7 +43,7 @@ module VideoEncoder
           if Rails.env.development?
             'http://zencoderfetcher/'
           else
-            api_v1_zencoder_url
+            'http://snowball-production.herokuapp.com/api/v1/zencoder'
           end
       )
       self.zencoder_job_id = response.body['id']
