@@ -52,4 +52,5 @@ Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://sc
 - Once it is merged and pushed to `master`, you can and *should* deploy immediately
 
 ### Heroku Setup
+1. `heroku keys:add`
 1. `heroku git:remote -a snowball`
