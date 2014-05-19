@@ -8,6 +8,7 @@ describe Clip do
   describe 'associations' do
     it { should belong_to :reel }
     it { should belong_to :user }
+    it { should have_many :likes }
   end
 
   describe 'validations' do

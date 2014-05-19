@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
   has_many :clips
+  has_many :liked, class_name: 'Like'
 
   validates :auth_token, presence: true
   validates :username, presence: true, format: /\A\w{1,30}\z/, uniqueness: true

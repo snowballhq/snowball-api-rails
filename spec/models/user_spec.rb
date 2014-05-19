@@ -8,6 +8,7 @@ describe User do
 
   describe 'associations' do
     it { should have_many :clips }
+    it { should have_many(:liked).class_name 'Like' }
   end
 
   describe 'validations' do

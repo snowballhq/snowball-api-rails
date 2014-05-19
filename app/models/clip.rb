@@ -4,6 +4,7 @@ class Clip < ActiveRecord::Base
 
   belongs_to :reel
   belongs_to :user
+  has_many :likes, as: :likeable
 
   validates :reel, presence: true
   validates :user, presence: true

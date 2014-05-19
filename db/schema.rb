@@ -18,10 +18,19 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   enable_extension 'uuid-ossp'
 
   create_table 'clips', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.uuid 'reel_id',         null: false
-    t.uuid 'user_id',         null: false
-    t.string 'video_file_name', null: false
+    t.uuid 'reel_id',                     null: false
+    t.uuid 'user_id',                     null: false
+    t.string 'video_file_name',             null: false
     t.integer 'zencoder_job_id'
+    t.integer 'likes_count',     default: 0, null: false
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+  end
+
+  create_table 'likes', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.uuid 'user_id',       null: false
+    t.uuid 'likeable_id',   null: false
+    t.string 'likeable_type', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end

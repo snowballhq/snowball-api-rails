@@ -26,6 +26,14 @@ class CreateSnowball < ActiveRecord::Migration
       t.uuid :user_id, null: false
       t.string :video_file_name, null: false
       t.integer :zencoder_job_id
+      t.integer :likes_count, null: false, default: 0
+      t.timestamps
+    end
+
+    create_table :likes, id: :uuid do |t|
+      t.uuid :user_id, null: false
+      t.uuid :likeable_id, null: false
+      t.string :likeable_type, null: false
       t.timestamps
     end
   end
