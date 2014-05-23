@@ -15,15 +15,25 @@ describe Like do
     it { should validate_presence_of :likeable }
   end
 
-  # describe 'notifiable' do
-  #   it 'creates a new notification' do
-  #     expect(like.likeable.user.notifications.count).to eq 0
-  #     like.save!
-  #     expect(like.likeable.user.notifications.count).to eq 1
-  #   end
-  #   it 'words the notification message correctly' do
-  #     like.save!
-  #     expect(like.likeable.user.notifications.first.message).to eq "#{like.user.username} liked your photo."
-  #   end
-  # end
+  describe 'notifiable' do
+    describe 'after_create' do
+      describe '#create_notification' do
+        it 'creates a new notification' do
+          expect(like.likeable.user.notifications.count).to eq 0
+          like.save!
+          expect(like.likeable.user.notifications.count).to eq 1
+        end
+      end
+    end
+    describe 'after_destroy' do
+      describe '#destroy_notification' do
+        it 'destroys the existing notification' do
+          like.save!
+          expect(like.likeable.user.notifications.count).to eq 1
+          like.destroy!
+          expect(like.likeable.user.notifications.count).to eq 0
+        end
+      end
+    end
+  end
 end

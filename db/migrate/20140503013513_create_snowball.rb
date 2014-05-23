@@ -36,5 +36,12 @@ class CreateSnowball < ActiveRecord::Migration
       t.string :likeable_type, null: false
       t.timestamps
     end
+
+    create_table :notifications, id: :uuid do |t|
+      t.uuid :user_id, null: false
+      t.uuid :notifiable_id, null: false
+      t.string :notifiable_type, null: false
+      t.timestamps
+    end
   end
 end

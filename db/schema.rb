@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 20140503013513) do
     t.datetime 'updated_at'
   end
 
+  create_table 'notifications', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.uuid 'user_id',         null: false
+    t.uuid 'notifiable_id',   null: false
+    t.string 'notifiable_type', null: false
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+  end
+
   create_table 'reels', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
     t.string 'name',       null: false
     t.datetime 'created_at'

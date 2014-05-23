@@ -1,5 +1,5 @@
 class Like < ActiveRecord::Base
-  # include Notifiable
+  include Notifiable
 
   belongs_to :user
   belongs_to :likeable, polymorphic: true, counter_cache: true
