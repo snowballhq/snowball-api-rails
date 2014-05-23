@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       match 'users/sign_in', to: 'sessions#create', via: :post
       match 'users/sign_up', to: 'registrations#create', via: :post
+      resources :users, only: :show
       resources :reels do
         resources :clips, shallow: true do
           resources :likes, only: :create

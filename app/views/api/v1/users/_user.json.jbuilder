@@ -1,5 +1,7 @@
 json.id user.id
 json.username user.username
+json.clips_count user.clips_count
+json.likes_count user.likes_count
 # This nested if/else is because of a problem signing up with the current_user
 # method. If that changes, this can be updated to a much cleaner solution.
 if controller_name == 'sessions' || controller_name == 'registrations'

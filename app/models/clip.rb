@@ -3,7 +3,7 @@ class Clip < ActiveRecord::Base
   include VideoEncoder
 
   belongs_to :reel
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   has_many :likes, as: :likeable
 
   validates :reel, presence: true

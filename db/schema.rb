@@ -50,11 +50,14 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   end
 
   create_table 'users', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.string 'username',               null: false
-    t.string 'auth_token',             null: false
-    t.string 'email',                  null: false
-    t.string 'encrypted_password',     null: false
+    t.string 'username',                           null: false
+    t.string 'auth_token',                         null: false
+    t.string 'email',                              null: false
+    t.string 'encrypted_password',                 null: false
     t.string 'reset_password_token'
+    t.integer 'likes_count',            default: 0, null: false
+    t.integer 'followers_count',        default: 0, null: false
+    t.integer 'clips_count',            default: 0, null: false
     t.datetime 'reset_password_sent_at'
     t.datetime 'created_at'
     t.datetime 'updated_at'
