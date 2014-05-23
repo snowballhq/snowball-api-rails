@@ -69,4 +69,17 @@ describe Clip do
       end
     end
   end
+
+  describe '#user_has_liked?' do
+    before :each do
+      clip.save!
+    end
+    it 'returns true if the user has liked the clip' do
+      clip.likes.create!(user: clip.user)
+      expect(clip.user_has_liked?(clip.user)).to be_true
+    end
+    it 'returns false if the user has not liked the clip' do
+      expect(clip.user_has_liked?(clip.user)).to be_false
+    end
+  end
 end

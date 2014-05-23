@@ -14,4 +14,9 @@ class Clip < ActiveRecord::Base
   validates_attachment_file_name :video, matches: [/mp4\Z/]
 
   after_create :encode_video
+
+  def user_has_liked?(user)
+    return true if user.liked.where(likeable: self).count > 0
+    false
+  end
 end
