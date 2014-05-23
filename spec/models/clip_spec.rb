@@ -21,6 +21,7 @@ describe Clip do
 
   describe 'after_create' do
     it 'calls #encode_video' do
+      # no testing since this is hitting a remote service
       expect(clip).to receive :encode_video
       clip.save!
     end

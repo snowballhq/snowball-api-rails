@@ -247,6 +247,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    urbanairship (2.3.3)
+      json
     warden (1.2.3)
       rack (>= 1.0)
     zencoder (2.4.6)
@@ -285,5 +287,6 @@ DEPENDENCIES
   turbolinks
   uglifier
   unicorn
+  urbanairship
   zencoder
   zencoder-fetcher

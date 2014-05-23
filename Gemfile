@@ -11,6 +11,7 @@ gem 'fog'
 gem 'zencoder'
 gem 'kaminari'
 gem 'devise'
+gem 'urbanairship'
 
 gem 'sass-rails'
 gem 'uglifier'

@@ -15,6 +15,14 @@ describe Notification do
     it { should validate_presence_of :notifiable }
   end
 
+  describe 'after_create' do
+    it 'calls #send_push_notification' do
+      # no testing since this is hitting a remote service
+      expect(notification).to receive :send_push_notification
+      notification.save!
+    end
+  end
+
   describe '#action' do
     it 'returns the lowercase notifiable_type' do
       expect(notification.action).to eq 'like'

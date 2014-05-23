@@ -7,6 +7,16 @@ class Notification < ActiveRecord::Base
   validates :user, presence: true
   validates :notifiable, presence: true
 
+  after_create :send_push_notification
+
+  def send_push_notification
+    notification = {
+      aliases: [user.id],
+      aps: { alert: message }
+    }
+    Urbanairship.push(notification)
+  end
+
   def action
     notifiable_type.downcase
   end
