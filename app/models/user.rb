@@ -18,23 +18,23 @@ class User < ActiveRecord::Base
     generate_username unless username.present?
   end
 
-  # def self.get_facebook_profile(access_token)
-  #   graph = Koala::Facebook::API.new access_token
-  #   profile = graph.get_object('me')
-  #   profile.symbolize_keys if profile
-  # end
+  def self.get_facebook_profile(access_token)
+    graph = Koala::Facebook::API.new access_token
+    profile = graph.get_object('me')
+    profile.symbolize_keys if profile
+  end
 
-  # def self.find_or_create_by_auth_hash(auth_hash)
-  #   identity = Identity.find_by_auth_hash auth_hash
-  #   unless identity
-  #     user = User.where(email: auth_hash[:email]).first
-  #     unless user
-  #       user = User.create!(email: auth_hash[:email], name: auth_hash[:name], password: SecureRandom.hex, remote_image_url: auth_hash[:remote_image_url])
-  #     end
-  #     identity = user.identities.create_with_auth_hash auth_hash
-  #   end
-  #   identity.user
-  # end
+  def self.find_or_create_by_auth_hash(auth_hash)
+    identity = Identity.find_by_auth_hash auth_hash
+    unless identity
+      user = User.where(email: auth_hash[:email]).first
+      unless user
+        user = User.create!(email: auth_hash[:email], name: auth_hash[:name], password: SecureRandom.hex)# , remote_image_url: auth_hash[:remote_image_url]) # Enable once user images have been created
+      end
+      identity = user.identities.create_with_auth_hash auth_hash
+    end
+    identity.user
+  end
 
   private
 

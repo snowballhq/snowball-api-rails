@@ -12,6 +12,7 @@ gem 'zencoder'
 gem 'kaminari'
 gem 'devise'
 gem 'urbanairship'
+gem 'koala'
 
 gem 'sass-rails'
 gem 'uglifier'

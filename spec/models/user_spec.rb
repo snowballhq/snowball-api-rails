@@ -48,59 +48,59 @@ describe User do
     end
   end
 
-  # describe '.get_facebook_profile' do
-  #  context 'with a valid access token' do
-  #    it 'returns the facebook profile' do
-  #      Koala::Facebook::API.any_instance.should_receive :get_object
-  #      User.get_facebook_profile '1'
-  #    end
-  #  end
-  #  context 'without a valid access token' do
-  #    it 'returns nil' do
-  #      Koala::Facebook::API.any_instance.stub(:get_object).and_return nil
-  #      expect(User.get_facebook_profile '1').to be_nil
-  #    end
-  #  end
-  # end
-  #
-  # describe 'facebook authentication' do
-  #  before :each do
-  #    user.save!
-  #    @identity = build :identity, user: user
-  #    @auth_hash = { provider: @identity.provider, uid: @identity.uid, name: user.name, email: user.email }
-  #  end
-  #
-  #  describe '.find_or_create_by_auth_hash' do
-  #    context 'when identity is found' do
-  #      it 'returns the user' do
-  #        @identity.save!
-  #        expect(User.find_or_create_by_auth_hash @auth_hash).to eq user
-  #      end
-  #    end
-  #    context 'when identity is not found' do
-  #      context 'when user is found' do
-  #        it 'returns the user' do
-  #          expect(User.find_or_create_by_auth_hash @auth_hash).to eq user
-  #        end
-  #      end
-  #      context 'when user is not found' do
-  #        it 'creates a new user' do
-  #          user.destroy!
-  #          expect do
-  #            User.find_or_create_by_auth_hash @auth_hash
-  #          end.to change(User, :count).by 1
-  #        end
-  #        it 'returns the user' do
-  #          user.destroy!
-  #          expect(User.find_or_create_by_auth_hash @auth_hash).to be_an_instance_of User
-  #        end
-  #      end
-  #      it 'creates a new identity for the user' do
-  #        expect do
-  #          User.find_or_create_by_auth_hash @auth_hash
-  #        end.to change(Identity, :count).by 1
-  #      end
-  #    end
-  #  end
-  # end
+  describe 'facebook authentication' do
+    before :each do
+      user.save!
+      @identity = build :identity, user: user
+      @auth_hash = { provider: @identity.provider, uid: @identity.uid, name: user.name, email: user.email }
+    end
+
+    describe '.get_facebook_profile' do
+      context 'with a valid access token' do
+        it 'returns the facebook profile' do
+          Koala::Facebook::API.any_instance.should_receive :get_object
+          User.get_facebook_profile '1'
+        end
+      end
+      context 'without a valid access token' do
+        it 'returns nil' do
+          Koala::Facebook::API.any_instance.stub(:get_object).and_return nil
+          expect(User.get_facebook_profile '1').to be_nil
+        end
+      end
+    end
+
+    describe '.find_or_create_by_auth_hash' do
+      context 'when identity is found' do
+        it 'returns the user' do
+          @identity.save!
+          expect(User.find_or_create_by_auth_hash @auth_hash).to eq user
+        end
+      end
+      context 'when identity is not found' do
+        context 'when user is found' do
+          it 'returns the user' do
+            expect(User.find_or_create_by_auth_hash @auth_hash).to eq user
+          end
+        end
+        context 'when user is not found' do
+          it 'creates a new user' do
+            user.destroy!
+            expect do
+              User.find_or_create_by_auth_hash @auth_hash
+            end.to change(User, :count).by 1
+          end
+          it 'returns the user' do
+            user.destroy!
+            expect(User.find_or_create_by_auth_hash @auth_hash).to be_an_instance_of User
+          end
+        end
+        it 'creates a new identity for the user' do
+          expect do
+            User.find_or_create_by_auth_hash @auth_hash
+          end.to change(Identity, :count).by 1
+        end
+      end
+    end
+  end
 end
