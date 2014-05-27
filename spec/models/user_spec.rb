@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe User do
-
   subject(:user) { build :user }
 
   it { should be_valid }
@@ -10,6 +9,7 @@ describe User do
     it { should have_many :clips }
     it { should have_many(:liked).class_name 'Like' }
     it { should have_many(:likes).through :clips }
+    it { should have_many :identities }
   end
 
   describe 'validations' do

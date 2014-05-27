@@ -19,6 +19,13 @@ class CreateSnowball < ActiveRecord::Migration
     add_index :users, :username, unique: true
     add_index :users, :reset_password_token, unique: true
 
+    create_table :identities, id: :uuid do |t|
+      t.uuid :user_id, null: false
+      t.string :uid, null: false
+      t.string :provider, null: false
+      t.timestamps
+    end
+
     create_table :reels, id: :uuid do |t|
       t.string :name, null: false
       t.timestamps
