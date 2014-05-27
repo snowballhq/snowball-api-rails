@@ -9,7 +9,7 @@ describe User do
     it { should have_many :clips }
     it { should have_many(:liked).class_name 'Like' }
     it { should have_many(:likes).through :clips }
-    it { should have_many :identities }
+    it { should have_many(:identities).dependent(:destroy) }
   end
 
   describe 'validations' do

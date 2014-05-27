@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :liked, class_name: 'Like' # likes user has given
   has_many :likes, through: :clips # likes user has received
   has_many :notifications
-  has_many :identities
+  has_many :identities, dependent: :destroy
 
   validates :auth_token, presence: true
   validates :username, presence: true, format: /\A\w{1,30}\z/, uniqueness: true
