@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_many :identities, dependent: :destroy
 
+  validates :name, presence: true
   validates :auth_token, presence: true
   validates :username, presence: true, format: /\A\w{1,30}\z/, uniqueness: true
   # email/password validations are handled by :validatable in devise

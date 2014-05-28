@@ -6,6 +6,6 @@ class Api::V1::RegistrationsController < Api::V1::ApiController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :username)
+    params.require(:user).permit(:name, :email, :password, :username)
   end
 end
