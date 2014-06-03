@@ -28,7 +28,7 @@ class CreateSnowball < ActiveRecord::Migration
     end
 
     create_table :reels, id: :uuid do |t|
-      t.string :name, null: false
+      t.string :name
       t.timestamps
     end
 

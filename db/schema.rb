@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   end
 
   create_table 'reels', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.string 'name',       null: false
+    t.string 'name'
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end
