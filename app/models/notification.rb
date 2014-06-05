@@ -10,11 +10,13 @@ class Notification < ActiveRecord::Base
   after_create :send_push_notification
 
   def send_push_notification
-    notification = {
-      aliases: [user.id],
-      aps: { alert: message }
-    }
-    Urbanairship.push(notification)
+    unless Rails.env.test?
+      notification = {
+        aliases: [user.id],
+        aps: { alert: message }
+      }
+      Urbanairship.push(notification)
+    end
   end
 
   def action
