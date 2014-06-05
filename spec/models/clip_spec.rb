@@ -11,6 +11,10 @@ describe Clip do
     it { should have_many :likes }
   end
 
+  describe 'nested attributes' do
+    it { should accept_nested_attributes_for :reel }
+  end
+
   describe 'validations' do
     it { should validate_presence_of :reel }
     it { should validate_presence_of :user }

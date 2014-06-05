@@ -56,6 +56,13 @@ describe Api::V1::ClipsController do
         expect(Clip.last.user_id).to eq user.id
       end
 
+      it 'creates a new reel if one is provided' do
+        expect do
+          clip_with_new_reel = { clip: attributes_for(:clip).merge(reel_attributes: { name: 'testarola' } ) }
+          post :create, clip_with_new_reel
+        end.to change(Reel, :count).by 1
+      end
+
       it 'renders json with the created clip' do
         post :create, valid_request.merge(clip: valid_attributes)
         expect(response.status).to eq 201

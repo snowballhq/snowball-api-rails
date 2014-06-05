@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       match 'users/sign_in', to: 'sessions#create', via: :post
       match 'users/sign_up', to: 'registrations#create', via: :post
       resources :users, only: :show
+      resources :clips, only: :create
       resources :reels do
         resources :clips, shallow: true do
           resources :likes, only: :create
