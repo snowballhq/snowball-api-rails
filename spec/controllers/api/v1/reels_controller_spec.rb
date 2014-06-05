@@ -55,11 +55,11 @@ describe Api::V1::ReelsController do
     end
 
     describe 'with invalid params' do
-      it 'raises ActiveRecord::RecordInvalid' do
+      it 'raises an error' do
         bypass_rescue
         expect do
-          post :create, reel: invalid_attributes
-        end.to raise_error ActiveRecord::RecordInvalid
+          post :create, reel: nil
+        end.to raise_error
       end
     end
   end
@@ -81,11 +81,11 @@ describe Api::V1::ReelsController do
     end
 
     describe 'with invalid params' do
-      it 'raises ActiveRecord::RecordInvalid' do
+      it 'raises an error' do
         bypass_rescue
         expect do
-          put :update, id: reel, reel: invalid_attributes
-        end.to raise_error ActiveRecord::RecordInvalid
+          put :update, id: reel, reel: nil
+        end.to raise_error
       end
     end
   end
