@@ -4,7 +4,7 @@ Snowball
 ### System Dependencies
 We recommend using [Homebrew](http://brew.sh/) whenever possible.
 
-* Ruby 2.1.1 (we recommend [rbenv](http://rbenv.org/))
+* Ruby 2.1.2 (we recommend [rbenv](http://rbenv.org/))
 * [PostgreSQL](https://wiki.postgresql.org/wiki/Homebrew)
 * [Heroku Toolbelt](http://toolbelt.heroku.com/)
 
@@ -43,7 +43,7 @@ All deployment to prod is done automatically via CI using a Github hook. Once de
 To push a feature branch to staging, use `git push staging ${BRANCH_NAME}:master`.
 
 ### Our Git Flow
-Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://scottchacon.com/2011/08/31/github-flow.html). 
+Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://scottchacon.com/2011/08/31/github-flow.html).
 - Anything in the `master` branch is deployable
 - To work on something new, create a descriptively named branch off of `master` (ie: `new-oauth2-scopes`)
 - Commit to that branch locally and regularly push your work to the same named branch on the server
