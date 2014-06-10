@@ -58,7 +58,7 @@ describe Api::V1::ClipsController do
 
       it 'creates a new reel if one is provided' do
         expect do
-          clip_with_new_reel = { clip: attributes_for(:clip).merge(reel_attributes: { name: 'testarola' } ) }
+          clip_with_new_reel = { clip: attributes_for(:clip).merge(reel_attributes: { name: 'testarola' }) }
           post :create, clip_with_new_reel
         end.to change(Reel, :count).by 1
       end

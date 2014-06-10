@@ -18,11 +18,10 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   enable_extension 'uuid-ossp'
 
   create_table 'clips', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.uuid 'reel_id',                     null: false
-    t.uuid 'user_id',                     null: false
-    t.string 'video_file_name',             null: false
+    t.uuid 'reel_id',         null: false
+    t.uuid 'user_id',         null: false
+    t.string 'video_file_name', null: false
     t.integer 'zencoder_job_id'
-    t.integer 'likes_count',     default: 0, null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end
@@ -58,15 +57,12 @@ ActiveRecord::Schema.define(version: 20140503013513) do
   end
 
   create_table 'users', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.string 'name',                               null: false
-    t.string 'username',                           null: false
-    t.string 'auth_token',                         null: false
-    t.string 'email',                              null: false
-    t.string 'encrypted_password',                 null: false
+    t.string 'name',                   null: false
+    t.string 'username',               null: false
+    t.string 'auth_token',             null: false
+    t.string 'email',                  null: false
+    t.string 'encrypted_password',     null: false
     t.string 'reset_password_token'
-    t.integer 'likes_count',            default: 0, null: false
-    t.integer 'followers_count',        default: 0, null: false
-    t.integer 'clips_count',            default: 0, null: false
     t.datetime 'reset_password_sent_at'
     t.datetime 'created_at'
     t.datetime 'updated_at'

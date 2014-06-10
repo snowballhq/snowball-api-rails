@@ -6,8 +6,8 @@ describe Like do
   it { should be_valid }
 
   describe 'associations' do
-    it { should belong_to(:user).counter_cache true }
-    it { should belong_to(:likeable).counter_cache true }
+    it { should belong_to :user }
+    it { should belong_to :likeable }
   end
 
   describe 'validations' do

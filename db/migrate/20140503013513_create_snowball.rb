@@ -9,9 +9,6 @@ class CreateSnowball < ActiveRecord::Migration
       t.string :email, null: false
       t.string :encrypted_password, null: false
       t.string :reset_password_token
-      t.integer :likes_count, null: false, default: 0
-      t.integer :followers_count, null: false, default: 0
-      t.integer :clips_count, null: false, default: 0
       t.datetime :reset_password_sent_at
       t.timestamps
     end
@@ -37,7 +34,6 @@ class CreateSnowball < ActiveRecord::Migration
       t.uuid :user_id, null: false
       t.string :video_file_name, null: false
       t.integer :zencoder_job_id
-      t.integer :likes_count, null: false, default: 0
       t.timestamps
     end
 
