@@ -20,7 +20,6 @@ describe Clip do
     it { should validate_presence_of :user }
     it { should have_attached_file :video }
     it { should validate_attachment_presence :video }
-    # no shoulda matcher for validates_attachment_file_name, so no spec written
   end
 
   describe 'after_create' do

@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   validates :username, presence: true, format: /\A\w{1,30}\z/, uniqueness: true
   # email/password validations are handled by :validatable in devise
 
+  has_attached_file :avatar
+  validates_attachment_file_name :avatar, matches: [/png\Z/, /jpe?g\Z/]
+
   before_validation(on: :create) do
     generate_auth_token
     generate_username unless username.present?
@@ -30,7 +33,7 @@ class User < ActiveRecord::Base
     unless identity
       user = User.where(email: auth_hash[:email]).first
       unless user
-        user = User.create!(email: auth_hash[:email], name: auth_hash[:name], password: SecureRandom.hex)# , remote_image_url: auth_hash[:remote_image_url]) # Enable once user images have been created
+        user = User.create!(email: auth_hash[:email], name: auth_hash[:name], password: SecureRandom.hex, avatar: auth_hash[:avatar])
       end
       identity = user.identities.create_with_auth_hash auth_hash
     end

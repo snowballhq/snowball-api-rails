@@ -30,6 +30,7 @@ describe User do
     it { should_not allow_value('test test').for :username }
     it { should allow_value('username1').for :username }
     it { should validate_presence_of :name }
+    it { should have_attached_file :avatar }
   end
 
   describe 'before_validation on: :create' do
