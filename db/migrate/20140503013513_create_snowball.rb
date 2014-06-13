@@ -6,6 +6,7 @@ class CreateSnowball < ActiveRecord::Migration
       t.string :name, null: false
       t.string :username, null: false
       t.string :bio
+      t.string :phone_number
       t.string :avatar_file_name
       t.string :auth_token, null: false
       t.string :email, null: false
