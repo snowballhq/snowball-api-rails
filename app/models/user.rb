@@ -40,6 +40,12 @@ class User < ActiveRecord::Base
     identity.user
   end
 
+  def avatar_url
+    # TODO: think of a more elegant solution for default urls
+    return nil if avatar.url == '/avatars/original/missing.png'
+    avatar.url
+  end
+
   private
 
   def generate_auth_token

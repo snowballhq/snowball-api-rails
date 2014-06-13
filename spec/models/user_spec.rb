@@ -105,4 +105,17 @@ describe User do
       end
     end
   end
+
+  describe '#avatar_url' do
+    context 'when an avatar exists' do
+      it 'does not return the paperclip placeholder url' do
+        expect(user.avatar_url).to_not eq '/avatars/original/missing.png'
+      end
+    end
+    context 'when an avatar doesn\'t exist' do
+      it 'returns null' do
+        expect(user.avatar_url).to be_nil
+      end
+    end
+  end
 end
