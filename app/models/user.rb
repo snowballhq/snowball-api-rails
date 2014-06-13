@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   def avatar_url
     # TODO: think of a more elegant solution for default urls
-    return nil if avatar.url == '/avatars/original/missing.png'
+    return nil unless avatar_file_name
     avatar.url
   end
 
