@@ -2,7 +2,7 @@ class Clip < ActiveRecord::Base
   include Orderable
   include VideoEncoder
 
-  belongs_to :reel
+  belongs_to :reel, touch: true
   belongs_to :user
 
   accepts_nested_attributes_for :reel

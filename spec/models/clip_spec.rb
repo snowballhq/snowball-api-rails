@@ -6,7 +6,7 @@ describe Clip do
   it { should be_valid }
 
   describe 'associations' do
-    it { should belong_to :reel }
+    it { should belong_to(:reel).touch true }
     it { should belong_to :user }
   end
 
