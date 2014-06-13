@@ -26,18 +26,18 @@ ActiveRecord::Schema.define(version: 20140503013513) do
     t.datetime 'updated_at'
   end
 
-  create_table 'identities', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.uuid 'user_id',    null: false
-    t.string 'uid',        null: false
-    t.string 'provider',   null: false
+  create_table 'follows', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.uuid 'user_id',         null: false
+    t.uuid 'followable_id',   null: false
+    t.string 'followable_type', null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end
 
-  create_table 'likes', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
-    t.uuid 'user_id',       null: false
-    t.uuid 'likeable_id',   null: false
-    t.string 'likeable_type', null: false
+  create_table 'identities', id: :uuid, default: 'uuid_generate_v4()', force: true do |t|
+    t.uuid 'user_id',    null: false
+    t.string 'uid',        null: false
+    t.string 'provider',   null: false
     t.datetime 'created_at'
     t.datetime 'updated_at'
   end

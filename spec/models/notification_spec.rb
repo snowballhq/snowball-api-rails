@@ -25,19 +25,19 @@ describe Notification do
 
   describe '#action' do
     it 'returns the lowercase notifiable_type' do
-      expect(notification.action).to eq 'like'
+      expect(notification.action).to eq 'follow'
     end
   end
 
-  describe '#clip' do
-    it 'returns the notification\'s clip' do
-      expect(notification.clip).to eq notification.notifiable.likeable
+  describe '#new_follower' do
+    it 'returns the notification\'s user\'s new follower' do
+      expect(notification.new_follower).to eq notification.notifiable.user
     end
   end
 
   describe '#message' do
     it 'returns the correct message by notification type' do
-      expect(notification.message).to eq "#{notification.notifiable.user.username} liked your clip."
+      expect(notification.message).to eq "#{notification.notifiable.user.username} has followed you."
     end
   end
 end

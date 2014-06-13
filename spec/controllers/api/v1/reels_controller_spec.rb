@@ -39,31 +39,6 @@ describe Api::V1::ReelsController do
     end
   end
 
-  describe 'POST create' do
-    describe 'with valid params' do
-      it 'creates a new reel' do
-        expect do
-          post :create, reel: valid_attributes
-        end.to change(Reel, :count).by(1)
-      end
-
-      it 'renders json with the created reel' do
-        post :create, reel: valid_attributes
-        expect(response.status).to eq 201
-        expect(response).to render_template :show
-      end
-    end
-
-    describe 'with invalid params' do
-      it 'raises an error' do
-        bypass_rescue
-        expect do
-          post :create, reel: nil
-        end.to raise_error
-      end
-    end
-  end
-
   describe 'PUT update' do
     before :each do
       reel.save!
@@ -87,23 +62,6 @@ describe Api::V1::ReelsController do
           put :update, id: reel, reel: nil
         end.to raise_error
       end
-    end
-  end
-
-  describe 'DELETE destroy' do
-    before :each do
-      reel.save!
-    end
-    it 'destroys the requested reel' do
-      expect do
-        delete :destroy, id: reel
-      end.to change(Reel, :count).by(-1)
-    end
-
-    it 'renders no content' do
-      delete :destroy, id: reel
-      expect(response.status).to eq 204
-      expect(response.body.length).to eq 0
     end
   end
 

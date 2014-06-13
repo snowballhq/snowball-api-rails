@@ -39,10 +39,10 @@ class CreateSnowball < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :likes, id: :uuid do |t|
+    create_table :follows, id: :uuid do |t|
       t.uuid :user_id, null: false
-      t.uuid :likeable_id, null: false
-      t.string :likeable_type, null: false
+      t.uuid :followable_id, null: false
+      t.string :followable_type, null: false
       t.timestamps
     end
 

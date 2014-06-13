@@ -10,24 +10,23 @@ class Notification < ActiveRecord::Base
   after_create :send_push_notification
 
   def send_push_notification
-    unless Rails.env.test?
-      notification = {
-        aliases: [user.id],
-        aps: { alert: message }
-      }
-      Urbanairship.push(notification)
-    end
+    return if Rails.env.test?
+    notification = {
+      aliases: [user.id],
+      aps: { alert: message }
+    }
+    Urbanairship.push(notification)
   end
 
   def action
     notifiable_type.downcase
   end
 
-  def clip
-    notifiable.likeable if notifiable_type == 'Like'
+  def new_follower
+    notifiable.user if notifiable_type == 'Follow'
   end
 
   def message
-    "#{notifiable.user.username} liked your clip." if notifiable_type == 'Like'
+    "#{notifiable.user.username} has followed you." if notifiable_type == 'Follow'
   end
 end

@@ -8,7 +8,6 @@ describe Clip do
   describe 'associations' do
     it { should belong_to :reel }
     it { should belong_to :user }
-    it { should have_many :likes }
   end
 
   describe 'nested attributes' do
@@ -71,19 +70,6 @@ describe Clip do
       it 'provides the correct encoded_video_url' do
         expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
       end
-    end
-  end
-
-  describe '#user_has_liked?' do
-    before :each do
-      clip.save!
-    end
-    it 'returns true if the user has liked the clip' do
-      clip.likes.create!(user: clip.user)
-      expect(clip.user_has_liked?(clip.user)).to be_true
-    end
-    it 'returns false if the user has not liked the clip' do
-      expect(clip.user_has_liked?(clip.user)).to be_false
     end
   end
 end

@@ -14,7 +14,7 @@ class Api::V1::ApiController < ApplicationController
   # TODO: spec entire APIController using a shared spec
 
   def restrict_access!
-    authenticate_or_request_with_http_basic do |username, password|
+    authenticate_or_request_with_http_basic do |_username, _password|
       user = current_user
       if user.present?
         @current_user = user

@@ -35,14 +35,6 @@ describe Api::V1::ClipsController do
     end
   end
 
-  describe 'GET show' do
-    it 'assigns the requested clip as @clip' do
-      clip.save!
-      get :show, id: clip
-      assigns(:clip).should eq(clip)
-    end
-  end
-
   describe 'POST create' do
     describe 'with valid params' do
       it 'creates a new clip' do

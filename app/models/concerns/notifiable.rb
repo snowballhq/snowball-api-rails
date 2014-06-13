@@ -7,7 +7,7 @@ module Notifiable
   end
 
   def create_notification
-    user_from_class_name.notifications.create(notifiable: self)# unless user == user_from_class_name
+    user_from_class_name.notifications.create(notifiable: self) unless user == user_from_class_name
   end
 
   def destroy_notification
@@ -15,6 +15,6 @@ module Notifiable
   end
 
   def user_from_class_name
-    likeable.user if self.class.name == 'Like'
+    followable if self.class.name == 'Follow'
   end
 end

@@ -1,13 +1,10 @@
 class Api::V1::ClipsController < Api::V1::ApiController
   before_action :restrict_access!
-  before_action :set_clip, only: [:show, :edit, :update, :destroy]
+  before_action :set_clip, only: [:edit, :update, :destroy]
   before_action :set_reel, only: :index
 
   def index
     @clips = @reel.clips.where('zencoder_job_id IS NULL').page(page_params)
-  end
-
-  def show
   end
 
   def create

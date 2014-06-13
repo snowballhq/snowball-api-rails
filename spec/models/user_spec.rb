@@ -7,8 +7,8 @@ describe User do
 
   describe 'associations' do
     it { should have_many :clips }
-    it { should have_many(:liked).class_name 'Like' }
-    it { should have_many(:likes).through :clips }
+    it { should have_many(:follows).dependent(:destroy) }
+    it { should have_many(:followings).dependent(:destroy).class_name 'Follow' }
     it { should have_many(:identities).dependent(:destroy) }
   end
 

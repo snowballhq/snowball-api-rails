@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
   has_many :clips
-  has_many :liked, class_name: 'Like' # likes user has given
-  has_many :likes, through: :clips # likes user has received
+  has_many :follows, dependent: :destroy # follows user has created
+  has_many :followings, as: :followable, dependent: :destroy, class_name: 'Follow' # follows others have created
   has_many :notifications
   has_many :identities, dependent: :destroy
 

@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :notification do
     user
-    association :notifiable, factory: :like
+    association :notifiable, factory: :follow
   end
 end

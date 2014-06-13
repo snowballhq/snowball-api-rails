@@ -4,7 +4,6 @@ class Clip < ActiveRecord::Base
 
   belongs_to :reel
   belongs_to :user
-  has_many :likes, as: :likeable
 
   accepts_nested_attributes_for :reel
 
@@ -16,9 +15,4 @@ class Clip < ActiveRecord::Base
   validates_attachment_file_name :video, matches: [/mp4\Z/]
 
   after_create :encode_video
-
-  def user_has_liked?(user)
-    return true if user.liked.where(likeable: self).count > 0
-    false
-  end
 end
