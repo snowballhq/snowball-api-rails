@@ -105,7 +105,6 @@ describe User do
       end
     end
   end
-
   describe '#avatar_url' do
     context 'when an avatar exists' do
       it 'does not return the paperclip placeholder url' do
@@ -115,6 +114,24 @@ describe User do
     context 'when an avatar doesn\'t exist' do
       it 'returns null' do
         expect(user.avatar_url).to be_nil
+      end
+    end
+  end
+
+  describe '#following?(followable)' do
+    before :each do
+      user.save!
+      @user2 = create :user
+    end
+    context 'when following the followable' do
+      it 'returns true' do
+        user.follows.create!(followable: @user2)
+        expect(user.following?(@user2)).to be_true
+      end
+    end
+    context 'when not following the follable' do
+      it 'returns false' do
+        expect(user.following?(@user2)).to be_false
       end
     end
   end

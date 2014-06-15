@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
     avatar.url
   end
 
+  def following?(followable)
+    return true if self.follows.where(followable: followable).count > 0
+    false
+  end
+
   private
 
   def generate_auth_token
