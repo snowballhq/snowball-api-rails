@@ -32,6 +32,12 @@ class CreateSnowball < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table :participations, id: :uuid do |t|
+      t.uuid :user_id, null: false
+      t.uuid :reel_id, null: false
+      t.timestamps
+    end
+
     create_table :clips, id: :uuid do |t|
       t.uuid :reel_id, null: false
       t.uuid :user_id, null: false

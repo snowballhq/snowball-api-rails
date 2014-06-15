@@ -10,6 +10,8 @@ describe User do
     it { should have_many(:follows).dependent(:destroy) }
     it { should have_many(:followings).dependent(:destroy).class_name 'Follow' }
     it { should have_many(:identities).dependent(:destroy) }
+    it { should have_many :participations }
+    it { should have_many(:reels).through(:participations) }
   end
 
   describe 'validations' do

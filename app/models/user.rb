@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :followings, as: :followable, dependent: :destroy, class_name: 'Follow' # follows others have created
   has_many :notifications
   has_many :identities, dependent: :destroy
+  has_many :participations
+  has_many :reels, through: :participations
 
   validates :name, presence: true
   validates :auth_token, presence: true
@@ -47,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def following?(followable)
-    return true if self.follows.where(followable: followable).count > 0
+    return true if follows.where(followable: followable).count > 0
     false
   end
 

@@ -7,5 +7,7 @@ describe Reel do
 
   describe 'associations' do
     it { should have_many :clips }
+    it { should have_many :participations }
+    it { should have_many(:participants).through(:participations).class_name('User') }
   end
 end
