@@ -4,7 +4,7 @@ class Api::V1::ApiController < ApplicationController
   class Snowball::InvalidCredentials < StandardError
   end
 
-  rescue_from StandardError, with: :render_error
+  # rescue_from StandardError, with: :render_error
   rescue_from Snowball::InvalidCredentials, with: :render_error
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error

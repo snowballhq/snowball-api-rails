@@ -3,5 +3,5 @@ class Reel < ActiveRecord::Base
 
   has_many :clips
   has_many :participations
-  has_many :participants, through: :participations, class_name: 'User'
+  has_many :participants, through: :participations, source: :user
 end

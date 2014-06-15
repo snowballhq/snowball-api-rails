@@ -9,6 +9,12 @@ class Api::V1::ClipsController < Api::V1::ApiController
 
   def create
     @clip = current_user.clips.create! clip_params
+    # TODO: make this cleaner, done in the model
+    # Through the model will allow creation via rails c, etc.
+    if @clip.reel.participants.count == 0
+      @clip.reel.participants << current_user
+      @clip.reel.save!
+    end
     render :show, status: :created, location: api_v1_clip_url(@clip)
   end
 

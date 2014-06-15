@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       match 'users/find_by_contacts', to: 'users#find_by_contacts', via: :post
       resources :clips, only: [:create, :update, :destroy]
       resources :reels, only: [:index, :show, :update] do
-        resources :participants, only: [:create, :destroy]
+        resources :participants, only: [:index, :create, :destroy]
         resources :clips, only: [:index, :create]
       end
       match 'zencoder', to: 'zencoder#create', via: :post
