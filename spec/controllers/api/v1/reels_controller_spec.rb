@@ -16,14 +16,24 @@ describe Api::V1::ReelsController do
   end
 
   describe 'GET index' do
-    it 'assigns all reels as @reels' do
+    it 'assigns all reels that belong to the current user as @reels' do
+      reel.participants << user
       reel.save!
       get :index, {}
-      assigns(:reels).should eq([reel])
+      expect(:reels).to eq([reel])
+    end
+
+    it 'does not assign reels that do not belong to the current user as @reels' do
+      reel.save!
+      get :index
+      expect(:reels).to_not eq([reel])
     end
 
     it 'is paginated' do
-      create_list(:reel, 26)
+      26.times do
+        reel = create :reel
+        reel.participants << user
+      end
       get :index, page: 1
       expect(assigns(:reels).count).to eq 25
       get :index, page: 2

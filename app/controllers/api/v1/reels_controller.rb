@@ -3,7 +3,7 @@ class Api::V1::ReelsController < Api::V1::ApiController
   before_action :set_reel, only: [:show, :edit, :update, :destroy]
 
   def index
-    @reels = Reel.all.page(page_params)
+    @reels = current_user.reels.page(page_params)
   end
 
   def show
