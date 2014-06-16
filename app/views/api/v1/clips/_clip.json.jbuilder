@@ -1,11 +1,9 @@
 json.id clip.id
 json.video_url clip.encoded_video_url
 json.reel do
-  json.id clip.reel.id
-  json.name clip.reel.name
+  json.partial! @reel, partial: 'api/v1/reels/reel', as: :reel
 end
 json.user do
-  json.id clip.user.id
-  json.username clip.user.username
+  json.partial! @user, partial: 'api/v1/users/user', as: :user
 end
 json.created_at clip.created_at.to_time.to_i
