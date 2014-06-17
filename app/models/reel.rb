@@ -9,4 +9,9 @@ class Reel < ActiveRecord::Base
     # TODO: make this display last 5 participants
     participants.last 5
   end
+
+  def friendly_name
+    return name if name
+    recent_participants.map(&:name)
+  end
 end
