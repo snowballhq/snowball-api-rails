@@ -29,7 +29,7 @@ describe Reel do
       end
     end
     context 'when the reel name does not exist' do
-      it 'returns a comma separated list of recent participants' do
+      it 'returns a comma separated list of recent participants first names' do
         reel.name = nil
         clip = build :clip, reel: reel
         user = clip.user
@@ -37,7 +37,9 @@ describe Reel do
         user2 = clip2.user
         reel.participants << user
         reel.participants << user2
-        expect(reel.friendly_name).to eq "#{user.name}, #{user2.name}"
+        user_first_name = user.name.split[0...-1].join ' '
+        user2_first_name = user2.name.split[0...-1].join ' '
+        expect(reel.friendly_name).to eq "#{user_first_name}, #{user2_first_name}"
       end
     end
   end
