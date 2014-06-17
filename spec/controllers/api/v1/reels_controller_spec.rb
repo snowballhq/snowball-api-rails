@@ -20,13 +20,13 @@ describe Api::V1::ReelsController do
       reel.participants << user
       reel.save!
       get :index, {}
-      expect(:reels).to eq([reel])
+      expect(assigns(:reels)).to eq([reel])
     end
 
     it 'does not assign reels that do not belong to the current user as @reels' do
       reel.save!
       get :index
-      expect(:reels).to_not eq([reel])
+      expect(assigns(:reels)).to_not eq([reel])
     end
 
     it 'is paginated' do
