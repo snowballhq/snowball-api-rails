@@ -12,6 +12,6 @@ class Reel < ActiveRecord::Base
 
   def friendly_name
     return name if name
-    recent_participants.map(&:name)
+    recent_participants.map(&:name).join(', ')
   end
 end

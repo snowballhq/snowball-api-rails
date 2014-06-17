@@ -33,8 +33,11 @@ describe Reel do
         reel.name = nil
         clip = build :clip, reel: reel
         user = clip.user
+        clip2 = build :clip, reel: reel
+        user2 = clip2.user
         reel.participants << user
-        expect(reel.friendly_name).to eq [user.name]
+        reel.participants << user2
+        expect(reel.friendly_name).to eq "#{user.name}, #{user2.name}"
       end
     end
   end
