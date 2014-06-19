@@ -52,6 +52,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    countries (0.9.3)
+      currencies (~> 0.4.2)
+    currencies (0.4.2)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -156,6 +159,11 @@ GEM
       ast (~> 1.1)
       slop (~> 3.4, >= 3.4.5)
     pg (0.17.1)
+    phony (2.2.13)
+    phony_rails (0.6.1)
+      activesupport (>= 3.0)
+      countries (>= 0.8.2)
+      phony (~> 2.1)
     polyglot (0.3.4)
     powerpack (0.0.9)
     pry (0.9.12.6)
@@ -286,6 +294,7 @@ DEPENDENCIES
   koala
   paperclip
   pg
+  phony_rails
   rails
   rails_12factor
   rails_stdout_logging

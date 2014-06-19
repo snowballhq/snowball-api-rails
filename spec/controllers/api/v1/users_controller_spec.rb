@@ -59,8 +59,14 @@ describe Api::V1::UsersController do
 
   describe 'POST find_by_contacts' do
     it 'finds all users that have the provided contact information' do
+      user.phone_number = '4151234567'
+      user.save!
       post :find_by_contacts, contacts: [{ phone_number: user.phone_number }]
       expect(assigns :users).to eq [user]
+    end
+    it 'does not return users with null numbers' do
+      post :find_by_contacts, contacts: [{ phone_number: nil }]
+      expect(assigns :users).to eq []
     end
     it 'renders the correct template' do
       post :find_by_contacts, contacts: [{ phone_number: user.phone_number }]

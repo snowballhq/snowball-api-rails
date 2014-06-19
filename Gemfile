@@ -13,6 +13,7 @@ gem 'kaminari'
 gem 'devise'
 gem 'urbanairship'
 gem 'koala'
+gem 'phony_rails'
 
 gem 'sass-rails'
 gem 'uglifier'

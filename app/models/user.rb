@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
   has_attached_file :avatar
   validates_attachment_file_name :avatar, matches: [/png\Z/, /jpe?g\Z/]
 
+  phony_normalize :phone_number, default_country_code: 'US'
+  validates :phone_number, phony_plausible: true
+
   before_validation(on: :create) do
     generate_auth_token
     generate_username unless username.present?

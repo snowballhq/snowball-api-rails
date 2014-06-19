@@ -35,6 +35,22 @@ describe User do
     it { should have_attached_file :avatar }
   end
 
+  describe 'phony' do
+    context 'when saving' do
+      it 'normalizes the phone number' do
+        user.phone_number = '4151234567'
+        user.save!
+        expect(user.phone_number).to eq '14151234567'
+      end
+      it 'validates the phone number is phony plausable' do
+        user.phone_number = '123'
+        expect do
+          user.save
+        end.to change(User, :count).by 0
+      end
+    end
+  end
+
   describe 'before_validation on: :create' do
     describe '#generate_auth_token' do
       it 'generates a new authentication token' do

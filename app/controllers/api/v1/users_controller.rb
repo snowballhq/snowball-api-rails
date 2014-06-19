@@ -12,8 +12,10 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def find_by_contacts
     contacts = params[:contacts]
-    phone_numbers = contacts.map { |c| c[:phone_number] }
-    @users = User.where(phone_number: phone_numbers)
+    phone_numbers = contacts.map do |contact|
+      PhonyRails.normalize_number contact[:phone_number]
+    end
+    @users = User.where.not(phone_number: nil).where(phone_number: phone_numbers)
     render :index, status: :ok, location: api_v1_user_url(@users)
   end
 
