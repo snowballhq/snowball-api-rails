@@ -53,10 +53,24 @@ describe Api::V1::ClipsController do
           @clip_with_new_reel = { clip: attributes_for(:clip).merge(reel_attributes: { name: 'testarola' }) }
         end
 
-        it 'creates a new reel' do
-          expect do
-            post :create, @clip_with_new_reel
-          end.to change(Reel, :count).by 1
+        context 'with reel_attributes' do
+          it 'creates a new reel' do
+            expect do
+              post :create, @clip_with_new_reel
+            end.to change(Reel, :count).by 1
+          end
+        end
+        context 'without reel_attributes' do
+          it 'creates a new reel' do
+            expect do
+              post :create, clip: attributes_for(:clip)
+            end.to change(Reel, :count).by 1
+          end
+          it 'creates a new clip' do
+            expect do
+              post :create, clip: attributes_for(:clip)
+            end.to change(Clip, :count).by 1
+          end
         end
 
         it 'adds the current user to the list of reel participants' do

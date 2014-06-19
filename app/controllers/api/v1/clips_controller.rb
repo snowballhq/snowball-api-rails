@@ -8,9 +8,16 @@ class Api::V1::ClipsController < Api::V1::ApiController
   end
 
   def create
-    @clip = current_user.clips.create! clip_params
-    # TODO: make this cleaner, done in the model
-    # Through the model will allow creation via rails c, etc.
+    # TODO: clean up this ugly black magic. :)
+    # Create a new reel manually unless it's being assigned to an existing reel
+    # or is creating one using nested attributes
+    reel = nil
+    if clip_params[:reel_id].present? || clip_params[:reel_attributes].present?
+      @clip = current_user.clips.create! clip_params
+    else
+      reel = Reel.create! clip_params[:reel_attributes]
+      @clip = reel.clips.create! clip_params.merge(user_id: current_user.id)
+    end
     if @clip.reel.participants.count == 0
       @clip.reel.participants << current_user
       @clip.reel.save!
@@ -41,7 +48,6 @@ class Api::V1::ClipsController < Api::V1::ApiController
   def clip_params
     params[:clip] = {} unless params[:clip].present?
     params[:clip][:reel_id] = params[:reel_id] if params[:reel_id].present?
-    params[:clip][:reel_attributes] = nil unless params[:clip][:reel_attributes][:name].present?
     params.require(:clip).permit(:video, :reel_id, reel_attributes: [:name])
   end
 end
