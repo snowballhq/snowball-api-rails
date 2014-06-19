@@ -12,7 +12,7 @@ class Reel < ActiveRecord::Base
 
   def friendly_name
     return name if name
-    recent_participants.map(&:name).collect do |n|
+    recent_participants.map(&:name).map do |n|
       n.split[0...-1].join ' '
     end.join(', ')
   end
