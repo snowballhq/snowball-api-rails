@@ -23,7 +23,7 @@ module VideoEncoder
           video_bitrate: 1500,
           format: :mp4,
           width: 960,
-          height: 540
+          height: 960
         },
         {
           thumbnails: [{
@@ -34,7 +34,7 @@ module VideoEncoder
             format: :png,
             aspect_mode: :crop,
             width: 640,
-            height: 360,
+            height: 640,
             public: true
           }]
         }
