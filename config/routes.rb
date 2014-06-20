@@ -13,6 +13,9 @@ Rails.application.routes.draw do
       resources :clips, only: [:create, :update, :destroy]
       resources :reels, only: [:index, :show, :update] do
         resources :participants, only: [:index, :create, :destroy]
+        match 'participants', to: 'participations#index', via: :index
+        match 'participants', to: 'participations#create', via: :post
+        match 'participants', to: 'participations#destroy', via: :delete
         resources :clips, only: [:index, :create]
       end
       match 'zencoder', to: 'zencoder#create', via: :post
