@@ -21,7 +21,7 @@ describe Api::V1::UsersController do
   describe 'GET show' do
     it 'assigns the requested user as @user' do
       get :show, id: user
-      assigns(:user).should eq user
+      expect(assigns(:user)).to eq user
     end
   end
 

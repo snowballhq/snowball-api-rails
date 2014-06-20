@@ -16,16 +16,16 @@ describe User do
 
   describe 'validations' do
     it 'validates presence of :auth_token' do
-      user.stub(:generate_auth_token)
-      user.should validate_presence_of :auth_token
+      allow(user).to receive(:generate_auth_token)
+      expect(user).to validate_presence_of :auth_token
     end
     it 'validates presence of :username' do
-      user.stub(:generate_username)
-      user.should validate_presence_of :username
+      allow(user).to receive(:generate_username)
+      expect(user).to validate_presence_of :username
     end
     it 'validates uniqueness of :username' do
       user.save! # generates username
-      user.should validate_uniqueness_of :username
+      expect(user).to validate_uniqueness_of :username
     end
 
     it { should_not allow_value('test@test').for :username }
@@ -78,13 +78,13 @@ describe User do
     describe '.get_facebook_profile' do
       context 'with a valid access token' do
         it 'returns the facebook profile' do
-          Koala::Facebook::API.any_instance.should_receive :get_object
+          expect_any_instance_of(Koala::Facebook::API).to receive :get_object
           User.get_facebook_profile '1'
         end
       end
       context 'without a valid access token' do
         it 'returns nil' do
-          Koala::Facebook::API.any_instance.stub(:get_object).and_return nil
+          allow_any_instance_of(Koala::Facebook::API).to receive(:get_object).and_return nil
           expect(User.get_facebook_profile '1').to be_nil
         end
       end

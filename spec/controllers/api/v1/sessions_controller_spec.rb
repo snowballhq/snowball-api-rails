@@ -17,7 +17,7 @@ describe Api::V1::SessionsController do
 
         it 'assigns the logged in user as @user' do
           @valid_request.call
-          assigns(:user).should eq user
+          expect(assigns(:user)).to eq user
         end
 
         it 'renders the correct template' do
@@ -55,11 +55,11 @@ describe Api::V1::SessionsController do
       describe 'with valid params' do
         before :each do
           facebook_profile = { id: '1238783003', name: user.name, email: user.email }
-          User.stub(:get_facebook_profile).and_return facebook_profile
+          allow(User).to receive(:get_facebook_profile).and_return facebook_profile
           @valid_request = proc { post :create,  provider: 'facebook', access_token: '12345', format: :json }
         end
         it 'gets the Facebook profile' do
-          User.stub(:find_or_create_by_auth_hash).and_return(user)
+          allow(User).to receive(:find_or_create_by_auth_hash).and_return(user)
           expect(User).to receive :get_facebook_profile
           @valid_request.call
         end
@@ -69,7 +69,7 @@ describe Api::V1::SessionsController do
             @valid_request.call
           end
           it 'renders the correct template' do
-            User.stub(:find_or_create_by_auth_hash).and_return(create: user)
+            allow(User).to receive(:find_or_create_by_auth_hash).and_return(create: user)
             @valid_request.call
             expect(response).to render_template :create
           end
@@ -78,7 +78,7 @@ describe Api::V1::SessionsController do
           it 'raises an error' do
             expect do
               bypass_rescue
-              User.stub(:get_facebook_profile).and_return nil
+              allow(User).to receive(:get_facebook_profile).and_return nil
               @valid_request.call
             end.to raise_error
           end

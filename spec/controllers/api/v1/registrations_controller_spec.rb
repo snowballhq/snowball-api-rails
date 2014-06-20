@@ -20,8 +20,8 @@ describe Api::V1::RegistrationsController do
 
     it 'assigns a newly created user as @user' do
       @valid_request.call
-      assigns(:user).should be_a User
-      assigns(:user).should be_persisted
+      expect(assigns(:user)).to be_a User
+      expect(assigns(:user)).to be_persisted
     end
 
     it 'renders the correct template' do

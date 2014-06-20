@@ -45,7 +45,7 @@ describe Api::V1::ReelsController do
     it 'assigns the requested reel as @reel' do
       reel.save!
       get :show, id: reel
-      assigns(:reel).should eq(reel)
+      expect(assigns(:reel)).to eq(reel)
     end
   end
 
@@ -55,7 +55,7 @@ describe Api::V1::ReelsController do
     end
     describe 'with valid params' do
       it 'updates the requested reel' do
-        Reel.any_instance.should_receive(:update!).with(valid_attributes)
+        expect_any_instance_of(Reel).to receive(:update!).with(valid_attributes)
         put :update, id: reel, reel: valid_attributes
       end
 
