@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       match 'users/find_by_contacts', to: 'users#find_by_contacts', via: :post
       resources :clips, only: [:create, :update, :destroy]
       resources :reels, only: [:index, :show, :update] do
-        match 'participants', to: 'participations#index', via: :index
+        match 'participants', to: 'participations#index', via: :get
         match 'participants', to: 'participations#create', via: :post
         match 'participants', to: 'participations#destroy', via: :delete
         resources :clips, only: [:index, :create]
