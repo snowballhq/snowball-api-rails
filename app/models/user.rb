@@ -56,6 +56,18 @@ class User < ActiveRecord::Base
     false
   end
 
+  def friends # users this user is following
+    follows.map { |f| f.followable }
+  end
+
+  def followers # users following this user
+    # The reason we have to query for the user is because .user is the same as
+    # .followable. I don't know why. Possibly because of the polymorphic type?
+    # Anyway, the user_id is correct, so we query using it.
+    # f.user.id != f.user_id
+    followings.map { |f| User.find(f.user_id) }
+  end
+
   private
 
   def generate_auth_token

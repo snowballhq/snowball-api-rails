@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       match 'users/sign_up', to: 'registrations#create', via: :post
       match 'auth/:provider', to: 'sessions#create', via: :post
       resources :users, only: [:show, :update] do
+        match 'following', to: 'follows#following', via: :get
+        match 'followers', to: 'follows#followers', via: :get
         match 'follow', to: 'follows#create', via: :post
         match 'follow', to: 'follows#destroy', via: :delete
       end

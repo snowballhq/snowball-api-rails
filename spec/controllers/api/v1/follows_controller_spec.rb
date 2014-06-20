@@ -13,6 +13,22 @@ describe Api::V1::FollowsController, type: :controller do
     let(:action) { proc { post :create, user_id: follow.followable } }
   end
 
+  describe 'GET following' do
+    it 'assigns the users the user is following as @following' do
+      follow.save!
+      get :following, user_id: follow.user
+      expect(assigns(:users)).to eq([follow.followable])
+    end
+  end
+
+  describe 'GET followers' do
+    it 'assigns the users followers as @followers' do
+      follow.save!
+      get :followers, user_id: follow.followable
+      expect(assigns(:users)).to eq([follow.user])
+    end
+  end
+
   describe 'POST create' do
     describe 'with valid params' do
       it 'creates a new follow' do

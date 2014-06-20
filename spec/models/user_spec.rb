@@ -153,4 +153,26 @@ describe User, type: :model do
       end
     end
   end
+
+  describe '#friends' do
+    before :each do
+      user.save!
+      @user2 = create :user
+    end
+    it 'returns a list of users the current user is following' do
+      user.follows.create!(followable: @user2)
+      expect(user.friends).to eq([@user2])
+    end
+  end
+
+  describe '#followers' do
+    before :each do
+      user.save!
+      @user2 = create :user
+    end
+    it 'returns a list of users who are following the current user' do
+      user.follows.create!(followable: @user2)
+      expect(@user2.followers).to eq([user])
+    end
+  end
 end
