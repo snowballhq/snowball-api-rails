@@ -19,3 +19,6 @@ CyclomaticComplexity:
 
 ClassAndModuleChildren:
   Enabled: false
+
+BlockComments:
+  Enabled: false

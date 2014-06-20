@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'controllers/shared_controller_behaviors'
 
 describe Api::V1::FollowsController, type: :controller do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Follow, type: :model do
   subject(:follow) { build :follow }

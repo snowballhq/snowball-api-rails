@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Reel, type: :model do
   subject(:reel) { build :reel }

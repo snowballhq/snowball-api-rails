@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Notification, type: :model do
   subject(:notification) { build :notification }

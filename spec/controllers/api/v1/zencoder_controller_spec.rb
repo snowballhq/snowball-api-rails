@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Api::V1::ZencoderController, type: :controller do
   let(:clip) { build :clip }
