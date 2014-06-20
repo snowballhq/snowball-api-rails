@@ -24,8 +24,8 @@ class Api::V1::ParticipationsController < Api::V1::ApiController
   end
 
   def set_participant
-    if params[:id]
-      @participant = User.find(params[:id])
+    if params[:user_id]
+      @participant = User.find(params[:user_id])
     else
       @participant = User.find(params[:user][:id])
     end

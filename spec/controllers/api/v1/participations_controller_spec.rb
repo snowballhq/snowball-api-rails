@@ -39,7 +39,7 @@ describe Api::V1::ParticipationsController, type: :controller do
       it 'raises an error' do
         bypass_rescue
         expect do
-          post :create, valid_request.merge(user: {} )
+          post :create, valid_request.merge(user: {})
         end.to raise_error
       end
     end
@@ -51,11 +51,11 @@ describe Api::V1::ParticipationsController, type: :controller do
     end
     it 'destroys the requested participation' do
       expect do
-        delete :destroy, valid_request.merge(id: user)
-      end.to change(Participation, :count).by -1
+        delete :destroy, valid_request.merge(user_id: user)
+      end.to change(Participation, :count).by(-1)
     end
     it 'renders a 204' do
-      delete :destroy, valid_request.merge(id: user)
+      delete :destroy, valid_request.merge(user_id: user)
       expect(response.status).to eq 204
       expect(response.body.length).to eq 0
     end

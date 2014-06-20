@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :reels, only: [:index, :show, :update] do
         match 'participants', to: 'participations#index', via: :get
         match 'participants', to: 'participations#create', via: :post
-        match 'participants', to: 'participations#destroy', via: :delete
+        match 'participants/:user_id', to: 'participations#destroy', via: :delete
         resources :clips, only: [:index, :create]
       end
       match 'zencoder', to: 'zencoder#create', via: :post
