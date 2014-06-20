@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::V1::RegistrationsController do
+describe Api::V1::RegistrationsController, type: :controller do
   let(:user) { build :user }
   let(:valid_attributes) { attributes_for(:user).stringify_keys! }
 

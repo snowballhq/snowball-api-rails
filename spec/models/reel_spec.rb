@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Reel do
+describe Reel, type: :model do
   subject(:reel) { build :reel }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should have_many :clips }
-    it { should have_many :participations }
-    it { should have_many(:participants).through(:participations).source(:user) }
+    it { is_expected.to have_many :clips }
+    it { is_expected.to have_many :participations }
+    it { is_expected.to have_many(:participants).through(:participations).source(:user) }
   end
 
   describe '#recent_participants' do

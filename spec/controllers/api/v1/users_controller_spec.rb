@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'controllers/shared_controller_behaviors'
 
-describe Api::V1::UsersController do
+describe Api::V1::UsersController, type: :controller do
   let(:user) { create :user }
   let(:valid_attributes) { attributes_for(:user).stringify_keys! }
 

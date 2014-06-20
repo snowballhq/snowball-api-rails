@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Notification do
+describe Notification, type: :model do
   subject(:notification) { build :notification }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should belong_to :user }
-    it { should belong_to :notifiable }
+    it { is_expected.to belong_to :user }
+    it { is_expected.to belong_to :notifiable }
   end
 
   describe 'validations' do
-    it { should validate_presence_of :user }
-    it { should validate_presence_of :notifiable }
+    it { is_expected.to validate_presence_of :user }
+    it { is_expected.to validate_presence_of :notifiable }
   end
 
   describe 'after_create' do

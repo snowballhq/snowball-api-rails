@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe User do
+describe User, type: :model do
   subject(:user) { build :user }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should have_many :clips }
-    it { should have_many(:follows).dependent(:destroy) }
-    it { should have_many(:followings).dependent(:destroy).class_name 'Follow' }
-    it { should have_many(:identities).dependent(:destroy) }
-    it { should have_many :participations }
-    it { should have_many(:reels).through(:participations) }
+    it { is_expected.to have_many :clips }
+    it { is_expected.to have_many(:follows).dependent(:destroy) }
+    it { is_expected.to have_many(:followings).dependent(:destroy).class_name 'Follow' }
+    it { is_expected.to have_many(:identities).dependent(:destroy) }
+    it { is_expected.to have_many :participations }
+    it { is_expected.to have_many(:reels).through(:participations) }
   end
 
   describe 'validations' do
@@ -28,11 +28,11 @@ describe User do
       expect(user).to validate_uniqueness_of :username
     end
 
-    it { should_not allow_value('test@test').for :username }
-    it { should_not allow_value('test test').for :username }
-    it { should allow_value('username1').for :username }
-    it { should validate_presence_of :name }
-    it { should have_attached_file :avatar }
+    it { is_expected.not_to allow_value('test@test').for :username }
+    it { is_expected.not_to allow_value('test test').for :username }
+    it { is_expected.to allow_value('username1').for :username }
+    it { is_expected.to validate_presence_of :name }
+    it { is_expected.to have_attached_file :avatar }
   end
 
   describe 'phony' do
@@ -144,12 +144,12 @@ describe User do
     context 'when following the followable' do
       it 'returns true' do
         user.follows.create!(followable: @user2)
-        expect(user.following?(@user2)).to be_true
+        expect(user.following?(@user2)).to be_truthy
       end
     end
     context 'when not following the follable' do
       it 'returns false' do
-        expect(user.following?(@user2)).to be_false
+        expect(user.following?(@user2)).to be_falsey
       end
     end
   end

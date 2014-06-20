@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'controllers/shared_controller_behaviors'
 
-describe Api::V1::FollowsController do
+describe Api::V1::FollowsController, type: :controller do
   let(:follow) { build :follow }
 
   before :each do
@@ -27,7 +27,7 @@ describe Api::V1::FollowsController do
         end.to change(Follow, :count).by 1
         expect do
           post :create, user_id: follow.followable
-        end.to_not change(Follow, :count).by 1
+        end.to change(Follow, :count).by 0
       end
 
       it 'renders created' do

@@ -1,17 +1,17 @@
 require 'spec_helper'
 
-describe Participation do
+describe Participation, type: :model do
   subject(:participation) { build :participation }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should belong_to :user }
-    it { should belong_to :reel }
+    it { is_expected.to belong_to :user }
+    it { is_expected.to belong_to :reel }
   end
 
   describe 'validations' do
-    it { should validate_presence_of :user }
-    it { should validate_presence_of :reel }
+    it { is_expected.to validate_presence_of :user }
+    it { is_expected.to validate_presence_of :reel }
   end
 end

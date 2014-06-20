@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Identity do
+describe Identity, type: :model do
   subject(:identity) { build :identity }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should belong_to :user }
+    it { is_expected.to belong_to :user }
   end
 
   describe 'validations' do
-    it { should validate_presence_of :uid }
-    it { should validate_presence_of :provider }
-    it { should validate_presence_of :user }
+    it { is_expected.to validate_presence_of :uid }
+    it { is_expected.to validate_presence_of :provider }
+    it { is_expected.to validate_presence_of :user }
   end
 
   describe 'authentication' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::V1::ZencoderController do
+describe Api::V1::ZencoderController, type: :controller do
   let(:clip) { build :clip }
   let(:valid_params) { { job: { id: 172151 } } }
 

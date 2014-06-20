@@ -1,24 +1,24 @@
 require 'spec_helper'
 
-describe Clip do
+describe Clip, type: :model do
   subject(:clip) { build :clip }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'associations' do
-    it { should belong_to(:reel).touch true }
-    it { should belong_to :user }
+    it { is_expected.to belong_to(:reel).touch true }
+    it { is_expected.to belong_to :user }
   end
 
   describe 'nested attributes' do
-    it { should accept_nested_attributes_for :reel }
+    it { is_expected.to accept_nested_attributes_for :reel }
   end
 
   describe 'validations' do
-    it { should validate_presence_of :reel }
-    it { should validate_presence_of :user }
-    it { should have_attached_file :video }
-    it { should validate_attachment_presence :video }
+    it { is_expected.to validate_presence_of :reel }
+    it { is_expected.to validate_presence_of :user }
+    it { is_expected.to have_attached_file :video }
+    it { is_expected.to validate_attachment_presence :video }
   end
 
   describe 'after_create' do

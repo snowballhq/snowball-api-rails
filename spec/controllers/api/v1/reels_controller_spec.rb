@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::V1::ReelsController do
+describe Api::V1::ReelsController, type: :controller do
   let(:reel) { build :reel }
   let(:user) { create :user }
   let(:valid_attributes) { attributes_for(:reel).stringify_keys! }

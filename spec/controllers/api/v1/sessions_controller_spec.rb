@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::V1::SessionsController do
+describe Api::V1::SessionsController, type: :controller do
 
   let(:user) { build :user }
 

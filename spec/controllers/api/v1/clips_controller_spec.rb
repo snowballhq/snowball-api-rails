@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::V1::ClipsController do
+describe Api::V1::ClipsController, type: :controller do
   let(:clip) { build :clip }
   let(:user) { create :user }
   let(:valid_request) { { reel_id: clip.reel } }

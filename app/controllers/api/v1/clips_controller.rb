@@ -11,7 +11,6 @@ class Api::V1::ClipsController < Api::V1::ApiController
     # TODO: clean up this ugly black magic. :)
     # Create a new reel manually unless it's being assigned to an existing reel
     # or is creating one using nested attributes
-    reel = nil
     if clip_params[:reel_id].present? || clip_params[:reel_attributes].present?
       @clip = current_user.clips.create! clip_params
     else
