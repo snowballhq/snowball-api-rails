@@ -128,6 +128,9 @@ describe User, type: :model do
       it 'does not return the paperclip placeholder url' do
         expect(user.avatar_url).to_not eq '/avatars/original/missing.png'
       end
+      it 'returns the correct url' do
+        # expect(user.avatar_url).to eq "https://snowball-development.s3.amazonaws.com/users/avatars/#{user.id}/original/data.png"
+      end
     end
     context 'when an avatar doesn\'t exist' do
       it 'returns null' do

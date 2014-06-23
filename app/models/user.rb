@@ -47,8 +47,8 @@ class User < ActiveRecord::Base
 
   def avatar_url
     # TODO: think of a more elegant solution for default urls
-    return nil unless avatar_file_name
-    avatar.url
+    return unless avatar_file_name
+    'https://' + ENV['S3_BUCKET_NAME'] + '.s3.amazonaws.com/' + avatar.path
   end
 
   def following?(followable)
