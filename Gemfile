@@ -14,6 +14,7 @@ gem 'devise'
 gem 'urbanairship'
 gem 'koala'
 gem 'phony_rails'
+gem 'newrelic_rpm'
 
 gem 'sass-rails'
 gem 'uglifier'
@@ -38,7 +39,6 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'newrelic_rpm'
 end
 
 group :production, :development do
