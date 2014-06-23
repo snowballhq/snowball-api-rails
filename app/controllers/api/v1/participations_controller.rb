@@ -4,7 +4,7 @@ class Api::V1::ParticipationsController < Api::V1::ApiController
   before_action :set_participant, only: [:create, :destroy]
 
   def index
-    @participants = @reel.participants.page(page_params)
+    @users = @reel.participants.page(page_params)
   end
 
   def create

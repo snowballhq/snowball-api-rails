@@ -18,7 +18,7 @@ describe Api::V1::ParticipationsController, type: :controller do
     it 'assigns all participants for the reel as @participants' do
       reel.participants << user
       get :index, valid_request
-      expect(assigns(:participants)).to eq([user])
+      expect(assigns(:users)).to eq([user])
     end
   end
 

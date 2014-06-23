@@ -1,3 +1,3 @@
-json.participants do
-  json.partial! collection: @participants, partial: 'api/v1/users/user', as: :user
+json.users do
+  json.partial! collection: @users, partial: 'api/v1/users/user', as: :user
 end
