@@ -54,3 +54,7 @@ Our Git Flow is based off of [Scott Chacon's blog post on GitHub Flow](http://sc
 ### Heroku Setup
 1. `heroku keys:add`
 1. `heroku git:remote -a snowball`
+
+### Copy Production Database
+1. `heroku pgbackups:capture`
+1. `pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $USER -d snowball_development latest.dump`
