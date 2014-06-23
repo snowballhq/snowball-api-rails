@@ -215,7 +215,7 @@ GEM
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
-    rspec-support (3.0.1)
+    rspec-support (3.0.2)
     rubocop (0.23.0)
       json (>= 1.7.7, < 2)
       parser (~> 2.1.9)
