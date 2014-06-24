@@ -22,10 +22,6 @@ class Notification < ActiveRecord::Base
     notifiable_type.downcase
   end
 
-  def new_follower
-    notifiable.user if notifiable_type == 'Follow'
-  end
-
   def message
     "#{notifiable.user.username} has followed you." if notifiable_type == 'Follow'
   end
