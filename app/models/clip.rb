@@ -1,5 +1,6 @@
 class Clip < ActiveRecord::Base
   include Orderable
+  include Notifiable
   include VideoEncoder
 
   belongs_to :reel, touch: true

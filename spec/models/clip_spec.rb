@@ -72,4 +72,29 @@ describe Clip, type: :model do
       end
     end
   end
+
+  describe 'notifiable' do
+    before :each do
+      clip.reel.participants = create_list(:user, 3)
+    end
+    describe 'after_create' do
+      describe '#create_notification' do
+        it 'creates a new notification for every user in the reel' do
+          expect do
+            clip.save!
+          end.to change(Notification, :count).by 3
+        end
+      end
+    end
+    describe 'after_destroy' do
+      describe '#destroy_notification' do
+        it 'creates a new notification for every user in the reel' do
+          clip.save!
+          expect do
+            clip.destroy!
+          end.to change(Notification, :count).by(-3)
+        end
+      end
+    end
+  end
 end
