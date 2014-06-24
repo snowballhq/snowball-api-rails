@@ -7,19 +7,18 @@ module Notifiable
   end
 
   def create_notification
-    return if user == user_from_class_name # don't create a notification for user on actions user takes
     if self.class.name == 'Clip'
-      self.reel.participants.each do |u|
-        u.notifications.create(notifiable: self)
+      reel.participants.each do |u|
+        u.notifications.create(notifiable: self) unless u == user
       end
     else
-      user_from_class_name.notifications.create(notifiable: self)
+      user_from_class_name.notifications.create(notifiable: self) unless user == user_from_class_name
     end
   end
 
   def destroy_notification
     if self.class.name == 'Clip'
-      self.reel.participants.each do |u|
+      reel.participants.each do |u|
         u.notifications.where(notifiable: self).destroy_all
       end
     else
