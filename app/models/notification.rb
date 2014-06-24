@@ -23,6 +23,7 @@ class Notification < ActiveRecord::Base
   end
 
   def message
-    "#{notifiable.user.username} has followed you." if notifiable_type == 'Follow'
+    return "#{notifiable.user.username} has followed you." if notifiable_type == 'Follow'
+    return "#{notifiable.user.username} sent you a clip." if notifiable_type == 'Clip'
   end
 end
