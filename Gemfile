@@ -15,6 +15,7 @@ gem 'urbanairship'
 gem 'koala'
 gem 'phony_rails'
 gem 'newrelic_rpm'
+gem 'rollbar'
 
 gem 'sass-rails'
 gem 'uglifier'
