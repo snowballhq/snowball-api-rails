@@ -1,10 +1,8 @@
-$default_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 $home = '/home/vagrant'
 $ruby_version = '2.1.2'
 
 Exec {
-  user => 'vagrant',
-  path => $default_path
+  path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 }
 
 # --- Preinstall ---------------------------------------------------------------
@@ -27,11 +25,11 @@ class { 'apt_get_update':
 
 # --- Packages -----------------------------------------------------------------
 
-package { 'build-essential':
+package { 'git-core':
   ensure => installed
 }
 
-package { 'git-core':
+package { 'libssl-dev':
   ensure => installed
 }
 
@@ -40,7 +38,7 @@ package { 'git-core':
 exec { 'install rbenv':
   command => "git clone https://github.com/sstephenson/rbenv.git ${home}/.rbenv",
   creates => "${home}/.rbenv",
-  require => Package['git-core']
+  require => Package['git-core', 'libssl-dev']
 }
 
 exec { 'install ruby-build':
@@ -56,8 +54,8 @@ exec { 'install ruby':
   timeout => 900 # 15 minutes
 }
 
-exec { 'set global ruby':
-  command => "echo ${ruby_version} > ${home}/.rbenv/version",
-  creates => "${home}/.rbenv/version",
-  require => Exec['install ruby']
+file { 'set global ruby':
+  content => "${ruby_version}",
+  ensure => file,
+  path => "${home}/.rbenv/version"
 }
