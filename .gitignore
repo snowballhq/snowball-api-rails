@@ -20,3 +20,7 @@
 
 # Ignore Vagrant
 .vagrant
+
+# Ignore Puppet Librarian
+/puppet/modules
+/puppet/tmp

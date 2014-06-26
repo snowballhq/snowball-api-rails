@@ -1,0 +1,16 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    jdowning/rbenv (1.2.1)
+      puppetlabs/git (>= 0.0.3)
+    puppetlabs/apt (1.5.0)
+      puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/git (0.1.0)
+      puppetlabs/vcsrepo (>= 0.1.0)
+    puppetlabs/stdlib (4.2.2)
+    puppetlabs/vcsrepo (1.0.1)
+
+DEPENDENCIES
+  jdowning/rbenv (>= 0)
+  puppetlabs/apt (>= 0)
+
