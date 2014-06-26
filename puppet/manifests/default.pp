@@ -57,5 +57,6 @@ exec { 'install ruby':
 file { 'set global ruby':
   content => "${ruby_version}",
   ensure => file,
-  path => "${home}/.rbenv/version"
+  path => "${home}/.rbenv/version",
+  require => Exec['install ruby']
 }
