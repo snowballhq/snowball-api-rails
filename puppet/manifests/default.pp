@@ -33,6 +33,13 @@ package { 'libssl-dev':
   ensure => installed
 }
 
+package { 'foreman':
+  ensure => 'installed',
+  provider => 'gem',
+  require => File['set global ruby']
+}
+
+
 # --- Ruby ---------------------------------------------------------------------
 
 exec { 'install rbenv':
