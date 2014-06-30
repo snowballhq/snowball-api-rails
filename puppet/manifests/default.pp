@@ -13,10 +13,14 @@ rbenv::build { "${ruby_version}":
 rbenv::gem { 'rails':
   ruby_version => "${ruby_version}",
   skip_docs => true,
-  timeout => 600
+  timeout => 1800
 }
 
 rbenv::gem { 'foreman':
   ruby_version => "${ruby_version}",
   skip_docs => true
 }
+
+# --- PostgreSQL ---------------------------------------------------------------
+
+class { 'postgresql::server': }
