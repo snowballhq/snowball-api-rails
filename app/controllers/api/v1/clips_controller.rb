@@ -6,12 +6,11 @@ class Api::V1::ClipsController < Api::V1::ApiController
   def index
     @clips = @reel.clips.where('zencoder_job_id IS NULL')
     if params[:max_date].present?
-      @clips = @clips.where("created_at <= ?", Time.at(params[:max_date].to_i)).last 10
+      # @clips = @clips.where("created_at <= ?", Time.at(params[:max_date].to_i))
     elsif params[:since_date].present?
       @clips = @clips.where("created_at >= ?", Time.at(params[:since_date].to_i))
     end
-    # since last (in max_date) returns an array of 10, do not limit it.
-    @clips = @clips.limit(10) if @clips.count > 10
+    @clips = @clips.last(10)
   end
 
   def create
