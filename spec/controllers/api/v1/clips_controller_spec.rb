@@ -26,12 +26,33 @@ describe Api::V1::ClipsController, type: :controller do
       expect(assigns(:clips)).to eq([clip])
     end
 
-    it 'is paginated' do
-      create_list(:clip, 26, reel: clip.reel)
-      get :index, valid_request.merge(page: 1)
-      expect(assigns(:clips).count).to eq 25
-      get :index, valid_request.merge(page: 2)
-      expect(assigns(:clips).count).to eq 1
+    describe 'when cursoring' do
+      before :each do
+        # doing this to create clips that are separated by date
+        @clips = create_list(:clip, 12, reel: clip.reel)
+        i = 0
+        @clips.each do |c|
+          c.created_at = c.created_at+i.days
+          c.save!
+          i = i+1
+        end
+      end
+      context 'with a since date' do
+        it 'gets 10 clips created after (including) the since date' do
+          get :index, valid_request.merge(since_date: @clips.first.created_at.to_time.to_i)
+          expect(assigns(:clips).count).to eq 10
+          expect(assigns(:clips).first).to eq @clips.first
+          expect(assigns(:clips).last).to eq @clips[9]
+        end
+      end
+      context 'with a max date' do
+        it 'gets 10 clips created before (including) the max date' do
+          # get :index, valid_request.merge(max_date: @clips.last.created_at.to_time.to_i)
+          # expect(assigns(:clips).count).to eq 10
+          # expect(assigns(:clips).last).to eq @clips.last
+          # expect(assigns(:clips).first).to eq @clips[1]
+        end
+      end
     end
   end
 
