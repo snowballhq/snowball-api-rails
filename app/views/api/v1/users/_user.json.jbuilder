@@ -10,6 +10,7 @@ if controller_name == 'sessions' || controller_name == 'registrations'
   json.auth_token user.auth_token
 elsif user == current_user
   json.email user.email
+  json.phone_number user.phone_number
 else
   json.following current_user.following?(user)
 end
