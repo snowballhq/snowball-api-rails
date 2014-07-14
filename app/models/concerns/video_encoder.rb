@@ -17,13 +17,14 @@ module VideoEncoder
         {
           url: output_url,
           public: true,
-          audio_bitrate: 56,
-          audio_sample_rate: 22050,
+          audio_bitrate: 64,
+          audio_sample_rate: 44100,
           aspect_mode: :crop,
-          video_bitrate: 1500,
+          video_bitrate: 700,
           format: :mp4,
-          width: 960,
-          height: 960
+          width: 640,
+          height: 640,
+          frame_rate: 24
         },
         {
           thumbnails: [{
