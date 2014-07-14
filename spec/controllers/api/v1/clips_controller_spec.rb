@@ -32,9 +32,9 @@ describe Api::V1::ClipsController, type: :controller do
         @clips = create_list(:clip, 12, reel: clip.reel)
         i = 0
         @clips.each do |c|
-          c.created_at = c.created_at+i.days
+          c.created_at = c.created_at + i.days
           c.save!
-          i = i+1
+          i += 1
         end
       end
       context 'with a since date' do

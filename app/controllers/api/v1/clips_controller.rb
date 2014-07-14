@@ -8,7 +8,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
     if params[:max_date].present?
       # @clips = @clips.where("created_at <= ?", Time.at(params[:max_date].to_i))
     elsif params[:since_date].present?
-      @clips = @clips.where("created_at >= ?", Time.at(params[:since_date].to_i))
+      @clips = @clips.where('created_at >= ?', Time.at(params[:since_date].to_i))
     end
     @clips = @clips.last(10)
   end

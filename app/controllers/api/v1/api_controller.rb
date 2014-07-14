@@ -32,13 +32,13 @@ class Api::V1::ApiController < ApplicationController
   end
 
   def render_error(error)
-    if error.kind_of? ActiveRecord::RecordInvalid
+    if error.is_a? ActiveRecord::RecordInvalid
       message = error.record.errors.full_messages.first
       status = :unprocessable_entity
-    elsif error.kind_of? Snowball::InvalidCredentials
+    elsif error.is_a? Snowball::InvalidCredentials
       message = error.message
       status = :bad_request
-    elsif error.kind_of? ActionController::ParameterMissing
+    elsif error.is_a? ActionController::ParameterMissing
       message = error.message
       status = :unprocessable_entity
     else

@@ -12,6 +12,7 @@ class Notification < ActiveRecord::Base
   def send_push_notification
     return if Rails.env.test?
     notification = {
+      schedule_for: [2.minutes.from_now], # allows time for encoding
       aliases: [user.id],
       aps: { alert: message }
     }
