@@ -32,7 +32,7 @@ describe Clip, type: :model do
   describe 'VideoEncoder' do
     describe '#thumbnail_filename' do
       it 'provides the correct thumbnail_filename' do
-        expect(clip.thumbnail_filename).to eq '640x360'
+        expect(clip.thumbnail_filename).to eq '640x640'
       end
     end
 
@@ -56,19 +56,19 @@ describe Clip, type: :model do
 
     describe '#thumbnail_url' do
       it 'provides the correct thumbnail_url' do
-        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x360.png")
+        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x640.png")
       end
     end
 
     describe '#encoded_video_path' do
       it 'provides the correct encoded_video_path' do
-        expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/540p/video.mp4"
+        expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/encoded/video.mp4"
       end
     end
 
     describe '#encoded_video_url' do
       it 'provides the correct encoded_video_url' do
-        expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/540p/video.mp4")
+        expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/encoded/video.mp4")
       end
     end
   end

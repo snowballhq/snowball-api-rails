@@ -52,7 +52,7 @@ module VideoEncoder
   end
 
   def thumbnail_filename
-    '640x360'
+    '640x640'
   end
 
   def thumbnail_extension
@@ -76,7 +76,7 @@ module VideoEncoder
   end
 
   def encoded_video_path
-    video.path.sub('/original/', '/540p/')
+    video.path.sub('/original/', '/encoded/')
   end
 
   def encoded_video_url
