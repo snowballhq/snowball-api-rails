@@ -10,4 +10,9 @@ class Reel < ActiveRecord::Base
       [n.split.first].join ' '
     end.join(', ')
   end
+
+  def friendly_name
+    return name if name
+    recent_participants_names
+  end
 end

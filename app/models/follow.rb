@@ -6,4 +6,8 @@ class Follow < ActiveRecord::Base
 
   validates :user, presence: true
   validates :followable, presence: true
+
+  def push_notification_message
+    "#{user.username} has followed you."
+  end
 end

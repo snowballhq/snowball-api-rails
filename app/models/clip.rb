@@ -16,4 +16,8 @@ class Clip < ActiveRecord::Base
   validates_attachment_file_name :video, matches: [/mp4\Z/]
 
   after_create :encode_video
+
+  def push_notification_message
+    "#{user.username} added a clip to \"#{reel.friendly_name}\""
+  end
 end

@@ -21,12 +21,7 @@ class Notification < ActiveRecord::Base
     Urbanairship.push(push.merge(version: 3))
   end
 
-  def action
-    notifiable_type.downcase
-  end
-
   def message
-    return "#{notifiable.user.username} has followed you." if notifiable_type == 'Follow'
-    return "#{notifiable.user.username} added a clip to \"#{notifiable.reel.friendly_name}\"" if notifiable_type == 'Clip'
+    notifiable.push_notification_message
   end
 end

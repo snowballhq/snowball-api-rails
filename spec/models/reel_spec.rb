@@ -25,4 +25,24 @@ describe Reel, type: :model do
       expect(reel.recent_participants_names).to eq "#{user_first_name}, #{user2_first_name}"
     end
   end
+
+  describe '#friendly_name' do
+    context 'when the reel name exists' do
+      it 'returns the name if a name exists' do
+        expect(reel.friendly_name).to eq reel.name
+      end
+    end
+    context 'when the reel name does not exist' do
+      it 'returns #recent_participants_names' do
+        reel.name = nil
+        clip = build :clip, reel: reel
+        user = clip.user
+        clip2 = build :clip, reel: reel
+        user2 = clip2.user
+        reel.participants << user
+        reel.participants << user2
+        expect(reel.friendly_name).to eq reel.recent_participants_names
+      end
+    end
+  end
 end

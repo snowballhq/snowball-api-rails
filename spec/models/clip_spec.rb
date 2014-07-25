@@ -29,6 +29,12 @@ describe Clip, type: :model do
     end
   end
 
+  describe '#push_notification_message' do
+    it 'returns a push notification message' do
+      "#{clip.user.username} added a clip to \"#{clip.reel.friendly_name}\""
+    end
+  end
+
   describe 'VideoEncoder' do
     describe '#thumbnail_filename' do
       it 'provides the correct thumbnail_filename' do

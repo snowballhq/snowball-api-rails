@@ -23,15 +23,10 @@ describe Notification, type: :model do
     end
   end
 
-  describe '#action' do
-    it 'returns the lowercase notifiable_type' do
-      expect(notification.action).to eq 'follow'
-    end
-  end
-
   describe '#message' do
     it 'returns the correct message by notification type' do
-      expect(notification.message).to eq "#{notification.notifiable.user.username} has followed you."
+      expect(notification.notifiable).to receive :push_notification_message
+      notification.message
     end
   end
 end

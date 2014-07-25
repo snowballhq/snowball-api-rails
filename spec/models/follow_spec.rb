@@ -15,6 +15,12 @@ describe Follow, type: :model do
     it { is_expected.to validate_presence_of :followable }
   end
 
+  describe '#push_notification_message' do
+    it 'returns a push notification message' do
+      expect(follow.push_notification_message).to eq "#{follow.user.username} has followed you."
+    end
+  end
+
   describe 'notifiable' do
     describe 'after_create' do
       describe '#create_notification' do
