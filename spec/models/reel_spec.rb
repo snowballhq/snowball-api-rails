@@ -20,8 +20,8 @@ describe Reel, type: :model do
       user2 = clip2.user
       reel.participants << user
       reel.participants << user2
-      user_first_name = user.name.split[0...-1].join ' '
-      user2_first_name = user2.name.split[0...-1].join ' '
+      user_first_name = [user.name.split.first].join ' '
+      user2_first_name = [user2.name.split.first].join ' '
       expect(reel.recent_participants_names).to eq "#{user_first_name}, #{user2_first_name}"
     end
   end

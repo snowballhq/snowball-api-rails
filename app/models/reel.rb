@@ -7,7 +7,7 @@ class Reel < ActiveRecord::Base
 
   def recent_participants_names
     participants.last(5).map(&:name).map do |n|
-      n.split[0...-1].join ' '
+      [n.split.first].join ' '
     end.join(', ')
   end
 end
