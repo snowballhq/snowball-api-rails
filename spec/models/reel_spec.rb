@@ -11,17 +11,6 @@ describe Reel, type: :model do
     it { is_expected.to have_many(:participants).through(:participations).source(:user) }
   end
 
-  describe '#recent_participants' do
-    it 'returns the 5 most recent participants' do
-      6.times do
-        u = build :user
-        reel.participants << u
-      end
-      reel.save
-      expect(reel.recent_participants.count).to eq 5
-    end
-  end
-
   describe '#recent_participants_names' do
     it 'returns a comma separated list of recent participants first names' do
       reel.name = nil
@@ -33,7 +22,7 @@ describe Reel, type: :model do
       reel.participants << user2
       user_first_name = user.name.split[0...-1].join ' '
       user2_first_name = user2.name.split[0...-1].join ' '
-      expect(reel.friendly_name).to eq "#{user_first_name}, #{user2_first_name}"
+      expect(reel.recent_participants_names).to eq "#{user_first_name}, #{user2_first_name}"
     end
   end
 end
