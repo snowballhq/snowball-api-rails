@@ -22,25 +22,18 @@ describe Reel, type: :model do
     end
   end
 
-  describe '#friendly_name' do
-    context 'when the reel name exists' do
-      it 'returns the name if a name exists' do
-        expect(reel.friendly_name).to eq reel.name
-      end
-    end
-    context 'when the reel name does not exist' do
-      it 'returns a comma separated list of recent participants first names' do
-        reel.name = nil
-        clip = build :clip, reel: reel
-        user = clip.user
-        clip2 = build :clip, reel: reel
-        user2 = clip2.user
-        reel.participants << user
-        reel.participants << user2
-        user_first_name = user.name.split[0...-1].join ' '
-        user2_first_name = user2.name.split[0...-1].join ' '
-        expect(reel.friendly_name).to eq "#{user_first_name}, #{user2_first_name}"
-      end
+  describe '#recent_participants_names' do
+    it 'returns a comma separated list of recent participants first names' do
+      reel.name = nil
+      clip = build :clip, reel: reel
+      user = clip.user
+      clip2 = build :clip, reel: reel
+      user2 = clip2.user
+      reel.participants << user
+      reel.participants << user2
+      user_first_name = user.name.split[0...-1].join ' '
+      user2_first_name = user2.name.split[0...-1].join ' '
+      expect(reel.friendly_name).to eq "#{user_first_name}, #{user2_first_name}"
     end
   end
 end

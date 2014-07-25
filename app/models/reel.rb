@@ -5,14 +5,9 @@ class Reel < ActiveRecord::Base
   has_many :participations
   has_many :participants, through: :participations, source: :user
 
-  def recent_participants
-    # TODO: make this display last 5 participants
-    participants.last 5
-  end
-
-  def friendly_name
+  def recent_participants_names
     return name if name
-    recent_participants.map(&:name).map do |n|
+    participants.last(5).map(&:name).map do |n|
       n.split[0...-1].join ' '
     end.join(', ')
   end
