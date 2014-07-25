@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/groupon/urbanairship.git
+  revision: 05cde15352f6bf4552e31833e80c1007e424eb31
+  specs:
+    urbanairship (2.3.3)
+      json
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -269,8 +276,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    urbanairship (2.3.3)
-      json
     warden (1.2.3)
       rack (>= 1.0)
     zencoder (2.4.6)
@@ -313,6 +318,6 @@ DEPENDENCIES
   turbolinks
   uglifier
   unicorn
-  urbanairship
+  urbanairship!
   zencoder
   zencoder-fetcher
