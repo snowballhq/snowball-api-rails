@@ -38,11 +38,11 @@ describe Api::V1::ClipsController, type: :controller do
         end
       end
       context 'with a since date' do
-        it 'gets 10 clips created after (including) the since date' do
+        it 'gets most recent 10 clips created after (including) the since date' do
           get :index, valid_request.merge(since_date: @clips.first.created_at.to_time.to_i)
           expect(assigns(:clips).count).to eq 10
-          expect(assigns(:clips).first).to eq @clips.first
-          expect(assigns(:clips).last).to eq @clips[9]
+          expect(assigns(:clips).first).to eq @clips[2]
+          expect(assigns(:clips).last).to eq @clips[11]
         end
       end
       context 'with a max date' do
