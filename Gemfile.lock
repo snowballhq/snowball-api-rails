@@ -278,7 +278,7 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
-    zencoder (2.4.6)
+    zencoder (2.5.0)
       multi_json
     zencoder-fetcher (0.2.8)
       activesupport
