@@ -1,5 +1,6 @@
 json.id clip.id
 json.video_url clip.encoded_video_url
+json.thumbnail_url clip.thumbnail_url
 json.reel do
   json.partial! clip.reel, partial: 'api/v1/reels/reel', as: :reel
 end
