@@ -15,9 +15,9 @@ class Notification < ActiveRecord::Base
     push = {
       audience: { alias: [user.id] },
       notification: { alert: message },
-      device_types: "all"
+      device_types: 'all'
     }
-    push[:notification][:actions] = { app_defined: { "^d" => "snowball://reel/#{notifiable.reel.id}" } } if notifiable.type == 'Clip'
+    push[:notification][:actions] = { app_defined: { '^d' => "snowball://reel/#{notifiable.reel.id}" } } if notifiable.type == 'Clip'
     Urbanairship.push(push.merge(version: 3))
   end
 
