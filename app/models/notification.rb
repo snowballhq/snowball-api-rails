@@ -17,8 +17,7 @@ class Notification < ActiveRecord::Base
       notification: { alert: message },
       device_types: "all"
     }
-    # TODO: send push actions (inside notification object) if it is a reel: :actions=>{:open=>{:type=>"deep_link", :content=>"snowball://reel/12345"}}}
-    # push[:notification].merge(actions: { open: { type: 'deep_link', content: "snowball://reel/#{notifiable.reel.id}" } }) if notifiable.type == 'Clip'
+    push[:notification][:actions] = { app_defined: { "^d" => "snowball://reel/#{notifiable.reel.id}" } } if notifiable.type == 'Clip'
     Urbanairship.push(push.merge(version: 3))
   end
 
