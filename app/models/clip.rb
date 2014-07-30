@@ -17,11 +17,6 @@ class Clip < ActiveRecord::Base
 
   after_create :encode_video
 
-  def video_url
-    return encoded_video_url unless zencoder_job_id.present?
-    return 'https://' + ENV['S3_BUCKET_NAME'] + '.s3.amazonaws.com/' + video.path
-  end
-
   def push_notification_message
     "#{user.username} added a clip to \"#{reel.friendly_name}\""
   end

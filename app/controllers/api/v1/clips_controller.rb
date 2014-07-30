@@ -4,7 +4,7 @@ class Api::V1::ClipsController < Api::V1::ApiController
   before_action :set_reel, only: :index
 
   def index
-    @clips = @reel.clips
+    @clips = @reel.clips.where('zencoder_job_id IS NULL')
     if params[:max_date].present?
       # @clips = @clips.where("created_at <= ?", Time.at(params[:max_date].to_i))
     elsif params[:since_date].present?

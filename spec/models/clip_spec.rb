@@ -29,22 +29,6 @@ describe Clip, type: :model do
     end
   end
 
-  describe '#video_url' do
-    context 'when encoded' do
-      it 'returns the encoded video url' do
-        clip.save!
-        expect(clip.video_url).to eq clip.encoded_video_url
-      end
-    end
-    context 'when not encoded' do
-      it 'reuturns the original video url' do
-        clip.update!(zencoder_job_id: 12345)
-        video_url = 'https://' + ENV['S3_BUCKET_NAME'] + '.s3.amazonaws.com/' + clip.video.path
-        expect(clip.video_url).to eq video_url
-      end
-    end
-  end
-
   describe '#push_notification_message' do
     it 'returns a push notification message' do
       "#{clip.user.username} added a clip to \"#{clip.reel.friendly_name}\""
