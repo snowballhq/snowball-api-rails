@@ -83,18 +83,22 @@ describe Clip, type: :model do
     before :each do
       clip.reel.participants = create_list(:user, 3)
     end
-    describe 'after_create' do
+    describe 'when the zencoder_job_id is set to nil' do
       describe '#create_notification' do
         it 'creates a new notification for every user in the reel' do
           expect do
-            clip.save!
+            clip.zencoder_job_id = 12345
+          end.to change(Notification, :count).by 0
+          expect do
+            clip.zencoder_job_id = nil
           end.to change(Notification, :count).by 3
         end
       end
     end
     describe 'after_destroy' do
       describe '#destroy_notification' do
-        it 'creates a new notification for every user in the reel' do
+        it 'deletes the notifications for every user in the reel' do
+          clip.zencoder_job_id = nil
           clip.save!
           expect do
             clip.destroy!
