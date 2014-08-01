@@ -22,8 +22,8 @@ module VideoEncoder
           aspect_mode: :crop,
           video_bitrate: 700,
           format: :mp4,
-          width: 640,
-          height: 640,
+          width: 480,
+          height: 480,
           frame_rate: 24
         },
         {
@@ -34,8 +34,8 @@ module VideoEncoder
             number: 1,
             format: :png,
             aspect_mode: :crop,
-            width: 640,
-            height: 640,
+            width: 130,
+            height: 130,
             public: true
           }]
         }
@@ -52,7 +52,7 @@ module VideoEncoder
   end
 
   def thumbnail_filename
-    '640x640'
+    'thumbnail'
   end
 
   def thumbnail_extension
