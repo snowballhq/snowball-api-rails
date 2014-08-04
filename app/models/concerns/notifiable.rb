@@ -6,7 +6,7 @@ module Notifiable
   end
 
   def create_notification
-    if self.class.name == 'Clip'
+    if self.instance_of?(Clip)
       reel.participants.each do |u|
         u.notifications.create(notifiable: self) unless u == user
       end
@@ -16,7 +16,7 @@ module Notifiable
   end
 
   def destroy_notification
-    if self.class.name == 'Clip'
+    if self.instance_of?(Clip)
       reel.participants.each do |u|
         u.notifications.where(notifiable: self).destroy_all
       end
@@ -26,6 +26,6 @@ module Notifiable
   end
 
   def user_from_class_name
-    return followable if self.class.name == 'Follow'
+    return followable if self.instance_of?(Follow)
   end
 end

@@ -29,6 +29,20 @@ describe Clip, type: :model do
     end
   end
 
+  describe '#zencoder_job_id=(value)' do
+    before :each do
+      clip.reel.participants = create_list(:user, 3)
+    end
+    it 'creates a new notification for every user in the reel' do
+      expect do
+        clip.zencoder_job_id = 12345
+      end.to change(Notification, :count).by 0
+      expect do
+        clip.zencoder_job_id = nil
+      end.to change(Notification, :count).by 3
+    end
+  end
+
   describe '#push_notification_message' do
     it 'returns a push notification message' do
       "#{clip.user.username} added a clip to \"#{clip.reel.friendly_name}\""
@@ -38,7 +52,7 @@ describe Clip, type: :model do
   describe 'VideoEncoder' do
     describe '#thumbnail_filename' do
       it 'provides the correct thumbnail_filename' do
-        expect(clip.thumbnail_filename).to eq '640x640'
+        expect(clip.thumbnail_filename).to eq 'thumbnail'
       end
     end
 
@@ -62,7 +76,7 @@ describe Clip, type: :model do
 
     describe '#thumbnail_url' do
       it 'provides the correct thumbnail_url' do
-        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/640x640.png")
+        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/thumbnail.png")
       end
     end
 
@@ -82,18 +96,6 @@ describe Clip, type: :model do
   describe 'notifiable' do
     before :each do
       clip.reel.participants = create_list(:user, 3)
-    end
-    describe 'when the zencoder_job_id is set to nil' do
-      describe '#create_notification' do
-        it 'creates a new notification for every user in the reel' do
-          expect do
-            clip.zencoder_job_id = 12345
-          end.to change(Notification, :count).by 0
-          expect do
-            clip.zencoder_job_id = nil
-          end.to change(Notification, :count).by 3
-        end
-      end
     end
     describe 'after_destroy' do
       describe '#destroy_notification' do
