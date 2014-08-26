@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - bin/*
+    - 'Guardfile'
 
 Documentation:
   Enabled: false
