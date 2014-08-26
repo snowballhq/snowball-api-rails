@@ -72,6 +72,7 @@ module VideoEncoder
   end
 
   def thumbnail_url
+    return if zencoder_job_id
     thumbnail_base_url + thumbnail_filename + thumbnail_extension
   end
 
@@ -80,6 +81,7 @@ module VideoEncoder
   end
 
   def encoded_video_url
+    return if zencoder_job_id
     return unless video.path && video.path.length > 0
     url = 'https://' + ENV['S3_BUCKET_NAME'] +
     '.s3.amazonaws.com/' + encoded_video_path

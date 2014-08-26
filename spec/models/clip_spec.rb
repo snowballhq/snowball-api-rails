@@ -78,6 +78,10 @@ describe Clip, type: :model do
       it 'provides the correct thumbnail_url' do
         expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/thumbnail.png")
       end
+      it 'returns nil if zencoder_job_id exists' do
+        clip.zencoder_job_id = '123'
+        expect(clip.thumbnail_url).to be_nil
+      end
     end
 
     describe '#encoded_video_path' do
@@ -89,6 +93,10 @@ describe Clip, type: :model do
     describe '#encoded_video_url' do
       it 'provides the correct encoded_video_url' do
         expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/encoded/video.mp4")
+      end
+      it 'returns nil if zencoder_job_id exists' do
+        clip.zencoder_job_id = '123'
+        expect(clip.encoded_video_url).to be_nil
       end
     end
   end
