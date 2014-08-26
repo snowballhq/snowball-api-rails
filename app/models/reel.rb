@@ -15,4 +15,8 @@ class Reel < ActiveRecord::Base
     return name if name
     recent_participants_names
   end
+
+  def encoded_clips
+    clips.where('zencoder_job_id IS NULL')
+  end
 end
