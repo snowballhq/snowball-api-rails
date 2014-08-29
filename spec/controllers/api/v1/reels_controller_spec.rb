@@ -41,6 +41,38 @@ describe Api::V1::ReelsController, type: :controller do
     end
   end
 
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new reel' do
+        expect do
+          post :create, reel: valid_attributes
+        end.to change(Reel, :count).by 1
+      end
+      it 'adds the current user as a participant' do
+        expect(reel.participants).to eq []
+        post :create, reel: valid_attributes
+        expect(Reel.last.participants).to eq [user]
+      end
+      it 'adds all users specified in participant_ids as a participant' do
+        user2 = create :user
+        post :create, reel: valid_attributes.merge(participant_ids: [user2.id])
+        expect(Reel.last.participants.count).to eq 2
+      end
+      it 'responds with a 201' do
+        post :create, reel: valid_attributes
+        expect(response.status).to eq 201
+      end
+    end
+    describe 'with invalid params' do
+      it 'raises an error' do
+        bypass_rescue
+        expect do
+          post :create, reel: nil
+        end.to raise_error
+      end
+    end
+  end
+
   describe 'GET show' do
     it 'assigns the requested reel as @reel' do
       reel.save!
@@ -62,6 +94,12 @@ describe Api::V1::ReelsController, type: :controller do
       it 'renders json with the updated reel' do
         put :update, id: reel, reel: valid_attributes
         expect(response).to render_template :show
+      end
+
+      it 'does not allow the editing of participants' do
+        user2 = create :user
+        put :update, id: reel, reel: valid_attributes.merge(participant_ids: [user2.id])
+        expect(reel.participants).to_not eq [user2]
       end
     end
 
