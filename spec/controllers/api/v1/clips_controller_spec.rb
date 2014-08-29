@@ -69,38 +69,6 @@ describe Api::V1::ClipsController, type: :controller do
         expect(Clip.last.user_id).to eq user.id
       end
 
-      context 'with a new reel' do
-        before :each do
-          @clip_with_new_reel = { clip: attributes_for(:clip).merge(reel_attributes: { name: 'testarola' }) }
-        end
-
-        context 'with reel_attributes' do
-          it 'creates a new reel' do
-            expect do
-              post :create, @clip_with_new_reel
-            end.to change(Reel, :count).by 1
-          end
-        end
-        context 'without reel_attributes' do
-          it 'creates a new reel' do
-            expect do
-              post :create, clip: attributes_for(:clip)
-            end.to change(Reel, :count).by 1
-          end
-          it 'creates a new clip' do
-            expect do
-              post :create, clip: attributes_for(:clip)
-            end.to change(Clip, :count).by 1
-          end
-        end
-
-        it 'adds the current user to the list of reel participants' do
-          expect do
-            post :create, @clip_with_new_reel
-          end.to change(Participation, :count).by 1
-        end
-      end
-
       it 'renders json with the created clip' do
         post :create, valid_request.merge(clip: valid_attributes)
         expect(response.status).to eq 201
@@ -113,32 +81,6 @@ describe Api::V1::ClipsController, type: :controller do
         bypass_rescue
         expect do
           post :create, valid_request.merge(clip: invalid_attributes)
-        end.to raise_error ActiveRecord::RecordInvalid
-      end
-    end
-  end
-
-  describe 'PUT update' do
-    before :each do
-      clip.save!
-    end
-    describe 'with valid params' do
-      it 'updates the requested clip' do
-        expect_any_instance_of(Clip).to receive(:update!).with(valid_attributes)
-        put :update, id: clip, clip: valid_attributes
-      end
-
-      it 'renders json with the updated clip' do
-        put :update, id: clip, clip: valid_attributes
-        expect(response).to render_template :show
-      end
-    end
-
-    describe 'with invalid params' do
-      it 'raises ActiveRecord::RecordInvalid' do
-        bypass_rescue
-        expect do
-          put :update, id: clip, clip: invalid_attributes
         end.to raise_error ActiveRecord::RecordInvalid
       end
     end

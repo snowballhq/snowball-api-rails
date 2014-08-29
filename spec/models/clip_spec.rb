@@ -10,10 +10,6 @@ describe Clip, type: :model do
     it { is_expected.to belong_to :user }
   end
 
-  describe 'nested attributes' do
-    it { is_expected.to accept_nested_attributes_for :reel }
-  end
-
   describe 'validations' do
     it { is_expected.to validate_presence_of :reel }
     it { is_expected.to validate_presence_of :user }
