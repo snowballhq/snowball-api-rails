@@ -6,14 +6,6 @@ class Api::V1::ReelsController < Api::V1::ApiController
     @reels = current_user.reels.page(page_params)
   end
 
-  def create
-    participant_ids = [current_user.id]
-    # union the two arrays
-    participant_ids |= reel_params[:participant_ids] unless reel_params[:participant_ids].nil?
-    @reel = Reel.create! reel_params.merge!(participant_ids: participant_ids)
-    render :show, status: :created, location: api_v1_reel_url(@reel)
-  end
-
   def show
   end
 

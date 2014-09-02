@@ -13,8 +13,8 @@ Rails.application.routes.draw do
         match 'follow', to: 'follows#destroy', via: :delete
       end
       match 'users/find_by_contacts', to: 'users#find_by_contacts', via: :post
-      resources :clips, only: :destroy
-      resources :reels, only: [:index, :create, :show, :update] do
+      resources :clips, only: [:create, :destroy]
+      resources :reels, only: [:index, :show, :update] do
         match 'participants', to: 'participations#index', via: :get
         match 'participants/:user_id', to: 'participations#create', via: :post
         match 'participants/:user_id', to: 'participations#destroy', via: :delete

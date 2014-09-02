@@ -69,6 +69,36 @@ describe Api::V1::ClipsController, type: :controller do
         expect(Clip.last.user_id).to eq user.id
       end
 
+      context 'with reel_attributes' do
+        before :each do
+          @attrs = valid_attributes.except('reel_id')
+          @attrs[:reel_attributes] = { name: 'test' }
+        end
+
+        it 'creates a new reel' do
+          expect do
+            post :create, clip: @attrs
+          end.to change(Reel, :count).by(1)
+        end
+        it 'adds the current user as a participant' do
+          post :create, clip: @attrs
+          expect(Reel.last.participants).to eq [user]
+        end
+        it 'adds all users specified in participant_ids as a participant' do
+          user2 = create :user
+          @attrs[:reel_attributes][:participant_ids] = [user2.id]
+          post :create, clip: @attrs
+          expect(Reel.last.participants.count).to eq 2
+        end
+      end
+
+      context 'with a reel id' do
+        it 'scopes the clip to the specified reel' do
+          post :create, valid_request.merge(clip: valid_attributes)
+          expect(Clip.last.reel).to eq(clip.reel)
+        end
+      end
+
       it 'renders json with the created clip' do
         post :create, valid_request.merge(clip: valid_attributes)
         expect(response.status).to eq 201

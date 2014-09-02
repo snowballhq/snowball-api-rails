@@ -6,6 +6,8 @@ class Clip < ActiveRecord::Base
   belongs_to :reel, touch: true
   belongs_to :user
 
+  accepts_nested_attributes_for :reel
+
   validates :reel, presence: true
   validates :user, presence: true
 
