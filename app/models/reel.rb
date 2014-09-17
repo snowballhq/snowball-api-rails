@@ -12,7 +12,7 @@ class Reel < ActiveRecord::Base
   end
 
   def friendly_name
-    return name if name
+    return title if title
     recent_participants_names
   end
 

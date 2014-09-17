@@ -72,7 +72,7 @@ describe Api::V1::ClipsController, type: :controller do
       context 'with reel_attributes' do
         before :each do
           @attrs = valid_attributes.except('reel_id')
-          @attrs[:reel_attributes] = { name: 'test' }
+          @attrs[:reel_attributes] = { title: 'test' }
         end
 
         it 'creates a new reel' do

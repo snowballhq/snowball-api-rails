@@ -13,7 +13,7 @@ describe Reel, type: :model do
 
   describe '#recent_participants_names' do
     it 'returns a comma separated list of recent participants first names' do
-      reel.name = nil
+      reel.title = nil
       clip = build :clip, reel: reel
       user = clip.user
       clip2 = build :clip, reel: reel
@@ -29,12 +29,12 @@ describe Reel, type: :model do
   describe '#friendly_name' do
     context 'when the reel name exists' do
       it 'returns the name if a name exists' do
-        expect(reel.friendly_name).to eq reel.name
+        expect(reel.friendly_name).to eq reel.title
       end
     end
     context 'when the reel name does not exist' do
       it 'returns #recent_participants_names' do
-        reel.name = nil
+        reel.title = nil
         clip = build :clip, reel: reel
         user = clip.user
         clip2 = build :clip, reel: reel

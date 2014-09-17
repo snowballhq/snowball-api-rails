@@ -4,7 +4,7 @@ describe Api::V1::ReelsController, type: :controller do
   let(:reel) { build :reel }
   let(:user) { create :user }
   let(:valid_attributes) { attributes_for(:reel).stringify_keys! }
-  let(:invalid_attributes) { { name: nil } }
+  let(:invalid_attributes) { { title: nil } }
 
   before :each do
     login_api user.auth_token

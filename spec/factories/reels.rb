@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :reel do
-    name { Faker::Internet.domain_word }
+    title { Faker::Internet.domain_word }
   end
 end

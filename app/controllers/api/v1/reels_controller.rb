@@ -21,6 +21,6 @@ class Api::V1::ReelsController < Api::V1::ApiController
   end
 
   def reel_params
-    params.require(:reel).permit(:name, participant_ids: [])
+    params.require(:reel).permit(:title, participant_ids: [])
   end
 end
