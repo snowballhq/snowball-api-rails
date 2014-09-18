@@ -41,11 +41,41 @@ describe Api::V1::ReelsController, type: :controller do
     end
   end
 
-  describe 'GET show' do
-    it 'assigns the requested reel as @reel' do
-      reel.save!
-      get :show, id: reel
-      expect(assigns(:reel)).to eq(reel)
+  # TODO
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new reel' do
+        expect do
+          post :create, reel: valid_attributes
+        end.to change(Reel, :count).by(1)
+      end
+
+      it 'adds the current user as a participant' do
+        post :create, reel: valid_attributes
+        expect(Reel.last.participants).to eq [user]
+      end
+
+      it 'adds all users specified in participant_ids as a participant' do
+        user2 = create :user
+        attrs = valid_attributes
+        attrs[:participant_ids] = [user2.id]
+        post :create, reel: attrs
+        expect(Reel.last.participants.count).to eq 2
+      end
+
+      it 'renders json with the updated reel' do
+        post :create, reel: valid_attributes
+        expect(response).to render_template :create
+      end
+    end
+
+    describe 'with invalid params' do
+      it 'raises an error' do
+        bypass_rescue
+        expect do
+          put :update, id: reel, reel: nil
+        end.to raise_error
+      end
     end
   end
 

@@ -9,12 +9,6 @@ class Api::V1::ParticipationsController < Api::V1::ApiController
 
   def create
     @reel.participants << @participant
-    head :created
-  end
-
-  def destroy
-    @reel.participants.delete(@participant)
-    head :no_content
   end
 
   private

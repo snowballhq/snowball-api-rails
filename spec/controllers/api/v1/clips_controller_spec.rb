@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Api::V1::ClipsController, type: :controller do
   let(:clip) { build :clip }
   let(:user) { create :user }
-  let(:valid_request) { { reel_id: clip.reel } }
-  let(:valid_attributes) { attributes_for(:clip).merge(reel_id: clip.reel.id).stringify_keys! }
+  let(:valid_request) { { reel_id: clip.reel.id } }
+  let(:valid_attributes) { attributes_for(:clip).stringify_keys! }
   let(:invalid_attributes) { { video: nil } }
 
   before :each do
@@ -69,40 +69,14 @@ describe Api::V1::ClipsController, type: :controller do
         expect(Clip.last.user_id).to eq user.id
       end
 
-      context 'with reel_attributes' do
-        before :each do
-          @attrs = valid_attributes.except('reel_id')
-          @attrs[:reel_attributes] = { title: 'test' }
-        end
-
-        it 'creates a new reel' do
-          expect do
-            post :create, clip: @attrs
-          end.to change(Reel, :count).by(1)
-        end
-        it 'adds the current user as a participant' do
-          post :create, clip: @attrs
-          expect(Reel.last.participants).to eq [user]
-        end
-        it 'adds all users specified in participant_ids as a participant' do
-          user2 = create :user
-          @attrs[:reel_attributes][:participant_ids] = [user2.id]
-          post :create, clip: @attrs
-          expect(Reel.last.participants.count).to eq 2
-        end
-      end
-
-      context 'with a reel id' do
-        it 'scopes the clip to the specified reel' do
-          post :create, valid_request.merge(clip: valid_attributes)
-          expect(Clip.last.reel).to eq(clip.reel)
-        end
+      it 'scopes the clip to the specified reel' do
+        post :create, valid_request.merge(clip: valid_attributes)
+        expect(Clip.last.reel).to eq(clip.reel)
       end
 
       it 'renders json with the created clip' do
         post :create, valid_request.merge(clip: valid_attributes)
-        expect(response.status).to eq 201
-        expect(response).to render_template :show
+        expect(response).to render_template :create
       end
     end
 
@@ -111,25 +85,8 @@ describe Api::V1::ClipsController, type: :controller do
         bypass_rescue
         expect do
           post :create, valid_request.merge(clip: invalid_attributes)
-        end.to raise_error ActiveRecord::RecordInvalid
+        end.to raise_error
       end
-    end
-  end
-
-  describe 'DELETE destroy' do
-    before :each do
-      clip.save!
-    end
-    it 'destroys the requested clip' do
-      expect do
-        delete :destroy, id: clip
-      end.to change(Clip, :count).by(-1)
-    end
-
-    it 'renders no content' do
-      delete :destroy, id: clip
-      expect(response.status).to eq 204
-      expect(response.body.length).to eq 0
     end
   end
 

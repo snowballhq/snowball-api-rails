@@ -13,14 +13,14 @@ describe Api::V1::UsersController, type: :controller do
   it_behaves_like 'a restricted api controller' do
     let(:action) do
       proc do
-        get :show, id: user
+        get :show, id: 'me'
       end
     end
   end
 
   describe 'GET show' do
     it 'assigns the requested user as @user' do
-      get :show, id: user
+      get :show, id: 'me'
       expect(assigns(:user)).to eq user
     end
   end
@@ -33,16 +33,16 @@ describe Api::V1::UsersController, type: :controller do
       it 'updates the requested user' do
         expected_attributes = valid_attributes.extract!('name', 'username', 'email')
         expect_any_instance_of(User).to receive(:update!).with expected_attributes
-        put :update, id: user, user: expected_attributes
+        put :update, id: 'me', user: expected_attributes
       end
 
       it 'assigns the requested user as @user' do
-        put :update, id: user, user: valid_attributes
+        put :update, id: 'me', user: valid_attributes
         expect(assigns :user).to eq user
       end
 
       it 'renders the correct template' do
-        put :update, id: user, user: valid_attributes
+        put :update, id: 'me', user: valid_attributes
         expect(response).to render_template :show
       end
     end
@@ -51,7 +51,7 @@ describe Api::V1::UsersController, type: :controller do
       it 'raises an error' do
         expect do
           bypass_rescue
-          put :update, id: user, user: {}
+          put :update, id: 'me', user: {}
         end.to raise_error
       end
     end

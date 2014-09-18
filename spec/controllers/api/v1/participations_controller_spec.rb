@@ -34,9 +34,9 @@ describe Api::V1::ParticipationsController, type: :controller do
         post :create, valid_request.merge(user_id: user.id)
         expect(reel.reload.participants).to eq [user]
       end
-      it 'responds with a 201' do
+      it 'renders the correct template' do
         post :create, valid_request.merge(user_id: user.id)
-        expect(response.status).to eq 201
+        expect(response).to render_template :create
       end
     end
     describe 'with invalid params' do
@@ -46,22 +46,6 @@ describe Api::V1::ParticipationsController, type: :controller do
           post :create, valid_request.merge(user_id: nil)
         end.to raise_error
       end
-    end
-  end
-
-  describe 'DELETE destroy' do
-    before :each do
-      reel.participants << user
-    end
-    it 'destroys the requested participation' do
-      expect do
-        delete :destroy, valid_request.merge(user_id: user)
-      end.to change(Participation, :count).by(-1)
-    end
-    it 'renders a 204' do
-      delete :destroy, valid_request.merge(user_id: user)
-      expect(response.status).to eq 204
-      expect(response.body.length).to eq 0
     end
   end
 end

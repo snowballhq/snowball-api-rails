@@ -21,14 +21,6 @@ describe Api::V1::FollowsController, type: :controller do
     end
   end
 
-  describe 'GET followers' do
-    it 'assigns the users followers as @followers' do
-      follow.save!
-      get :followers, user_id: follow.followable
-      expect(assigns(:users)).to eq([follow.user])
-    end
-  end
-
   describe 'POST create' do
     describe 'with valid params' do
       it 'creates a new follow' do
@@ -46,10 +38,9 @@ describe Api::V1::FollowsController, type: :controller do
         end.to change(Follow, :count).by 0
       end
 
-      it 'renders created' do
+      it 'renders the correct template' do
         post :create, user_id: follow.followable.id
-        expect(response.status).to eq 201
-        expect(response.body.length).to eq 1
+        expect(response).to render_template :create
       end
     end
 
@@ -73,10 +64,9 @@ describe Api::V1::FollowsController, type: :controller do
       end.to change(Follow, :count).by(-1)
     end
 
-    it 'returns a 204 with an empty body' do
+    it 'renders the correct template' do
       delete :destroy, user_id: follow.followable.id
-      expect(response.status).to eq 204
-      expect(response.body.length).to eq 0
+      expect(response).to render_template :destroy
     end
   end
 end

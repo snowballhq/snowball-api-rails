@@ -9,6 +9,15 @@ class Api::V1::ReelsController < Api::V1::ApiController
   def show
   end
 
+  def create
+    params = reel_params
+    participant_ids = [current_user.id]
+    # union the two arrays to add the current user as a participant
+    participant_ids |= params[:participant_ids] unless params[:participant_ids].nil?
+    params[:participant_ids] = participant_ids
+    @reel = Reel.create! params
+  end
+
   def update
     @reel.update! reel_params.except(:participant_ids)
     render :show, status: :ok, location: api_v1_reel_url(@reel)
