@@ -1,7 +1,7 @@
 class Api::V1::ParticipationsController < Api::V1::ApiController
   before_action :restrict_access!
   before_action :set_reel
-  before_action :set_participant, only: [:create, :destroy]
+  before_action :set_participant, only: :create
 
   def index
     @users = @reel.participants.page(page_params)
@@ -9,6 +9,10 @@ class Api::V1::ParticipationsController < Api::V1::ApiController
 
   def create
     @reel.participants << @participant
+  end
+
+  def destroy
+    @reel.participants.destroy(current_user)
   end
 
   private

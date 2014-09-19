@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :reels, only: [:create, :update] do
         match 'participants', to: 'participations#index', via: :get
         match 'participants/:user_id', to: 'participations#create', via: :post
+        match 'participants/:user_id', to: 'participations#destroy', via: :delete
         # Clip
         resources :clips, only: [:index, :create]
       end

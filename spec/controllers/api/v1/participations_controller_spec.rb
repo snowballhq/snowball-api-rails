@@ -48,4 +48,19 @@ describe Api::V1::ParticipationsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    before :each do
+      reel.participants << user
+    end
+    it 'destroys the current user\'s participation' do
+      expect do
+        delete :destroy, valid_request.merge(user_id: 'me')
+      end.to change(Participation, :count).by(-1)
+    end
+    it 'renders the correct template' do
+      delete :destroy, valid_request.merge(user_id: 'me')
+      expect(response).to render_template :destroy
+    end
+  end
 end
