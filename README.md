@@ -1,5 +1,6 @@
 Snowball
 ======
+[![wercker status](https://app.wercker.com/status/936a68dcdc9c7d2132c392a9fbf17b01/m "wercker status")](https://app.wercker.com/project/bykey/936a68dcdc9c7d2132c392a9fbf17b01)
 
 ### System Dependencies
 We recommend using [Homebrew](http://brew.sh/) whenever possible.
