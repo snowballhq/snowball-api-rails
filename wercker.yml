@@ -1,0 +1,23 @@
+box: wercker/rvm
+services:
+    - wercker/postgresql
+build:
+    steps:
+        - bundle-install
+        - rails-database-yml:
+            service: postgresql
+        - script:
+            name: db setup
+            code: bundle exec rake db:schema:load RAILS_ENV=test
+        - script:
+            name: rspec
+            code: bundle exec rspec
+        - script:
+            name: rubocop
+            code: bundle exec rubocop
+deploy:
+    steps:
+        - heroku-deploy
+        - script:
+            name: db migration
+            code: heroku run rake db:migrate --app $TARGET_NAME
