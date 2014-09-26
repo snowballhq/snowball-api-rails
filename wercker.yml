@@ -15,6 +15,11 @@ build:
         - script:
             name: rubocop
             code: bundle exec rubocop
+    after-steps:
+        - sherzberg/slack-notify:
+            subdomain: snbl
+            token: $SLACK_TOKEN
+            channel: "#engineering"
 deploy:
     steps:
         - heroku-deploy
