@@ -50,6 +50,9 @@ describe Clip, type: :model do
   end
 
   describe 'VideoEncoder' do
+    before :all do
+      ENV['S3_BUCKET_NAME'] = 'snowball-development'
+    end
     describe '#thumbnail_filename' do
       it 'provides the correct thumbnail_filename' do
         expect(clip.thumbnail_filename).to eq 'thumbnail'
