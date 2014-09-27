@@ -22,7 +22,8 @@ build:
             channel: "#engineering"
 deploy:
     steps:
-        - heroku-deploy
+        - heroku-deploy:
+            install-toolbelt: true
         - script:
             name: db migration
             code: heroku run rake db:migrate --app $TARGET_NAME
