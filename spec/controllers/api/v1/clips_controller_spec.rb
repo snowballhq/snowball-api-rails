@@ -17,11 +17,8 @@ describe Api::V1::ClipsController, type: :controller do
   end
 
   describe 'GET index' do
-    it 'assigns all encoded clips scoped to the reel id as @clips' do
-      clip.update!(zencoder_job_id: 12345)
-      get :index, valid_request
-      expect(assigns(:clips)).to eq([])
-      clip.update!(zencoder_job_id: nil)
+    it 'assigns all clips scoped to the reel id as @clips' do
+      clip.save!
       get :index, valid_request
       expect(assigns(:clips)).to eq([clip])
     end

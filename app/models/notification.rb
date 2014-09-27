@@ -11,7 +11,6 @@ class Notification < ActiveRecord::Base
 
   def send_push_notification
     return if Rails.env.test?
-    # TODO: schedule this for after the clip is saved with no zencoder ID
     push = {
       audience: { alias: [user.id] },
       notification: { alert: message },

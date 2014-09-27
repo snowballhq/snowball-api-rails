@@ -21,86 +21,16 @@ describe Clip, type: :model do
     it { is_expected.to validate_attachment_presence :video }
   end
 
-  describe 'after_create' do
-    it 'calls #encode_video' do
-      # no testing since this is hitting a remote service
-      expect(clip).to receive :encode_video
-      clip.save!
-    end
-  end
-
-  describe '#zencoder_job_id=(value)' do
-    before :each do
-      clip.reel.participants = create_list(:user, 3)
-    end
-    it 'creates a new notification for every user in the reel' do
-      expect do
-        clip.zencoder_job_id = 12345
-      end.to change(Notification, :count).by 0
-      expect do
-        clip.zencoder_job_id = nil
-      end.to change(Notification, :count).by 3
-    end
-  end
-
   describe '#push_notification_message' do
     it 'returns a push notification message' do
       "#{clip.user.username} added a clip to \"#{clip.reel.friendly_name}\""
     end
   end
 
-  describe 'VideoEncoder' do
-    before :all do
+  describe '#video_url' do
+    it 'provides the correct video url' do
       ENV['S3_BUCKET_NAME'] = 'snowball-development'
-    end
-    describe '#thumbnail_filename' do
-      it 'provides the correct thumbnail_filename' do
-        expect(clip.thumbnail_filename).to eq 'thumbnail'
-      end
-    end
-
-    describe '#thumbnail_path' do
-      it 'provides the correct thumbnail_path_without_filename' do
-        expect(clip.thumbnail_path_without_filename).to eq "clips/videos/#{clip.id}/thumbnails/"
-      end
-    end
-
-    describe '#thumbnail_extension' do
-      it 'provides the correct thumbnail_extension' do
-        expect(clip.thumbnail_extension).to eq '.png'
-      end
-    end
-
-    describe '#thumbnail_base_url' do
-      it 'provides the correct thumbnail_base_url' do
-        expect(clip.thumbnail_base_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/")
-      end
-    end
-
-    describe '#thumbnail_url' do
-      it 'provides the correct thumbnail_url' do
-        expect(clip.thumbnail_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/thumbnails/thumbnail.png")
-      end
-      it 'returns nil if zencoder_job_id exists' do
-        clip.zencoder_job_id = '123'
-        expect(clip.thumbnail_url).to be_nil
-      end
-    end
-
-    describe '#encoded_video_path' do
-      it 'provides the correct encoded_video_path' do
-        expect(clip.encoded_video_path).to eq "clips/videos/#{clip.id}/encoded/video.mp4"
-      end
-    end
-
-    describe '#encoded_video_url' do
-      it 'provides the correct encoded_video_url' do
-        expect(clip.encoded_video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/encoded/video.mp4")
-      end
-      it 'returns nil if zencoder_job_id exists' do
-        clip.zencoder_job_id = '123'
-        expect(clip.encoded_video_url).to be_nil
-      end
+      expect(clip.video_url).to eq("https://snowball-development.s3.amazonaws.com/clips/videos/#{clip.id}/original/video.mp4")
     end
   end
 
@@ -108,10 +38,16 @@ describe Clip, type: :model do
     before :each do
       clip.reel.participants = create_list(:user, 3)
     end
+    describe '#create_notification' do
+      it 'creates a new notification for every user in the reel' do
+        expect do
+          clip.save!
+        end.to change(Notification, :count).by 3
+      end
+    end
     describe 'after_destroy' do
       describe '#destroy_notification' do
         it 'deletes the notifications for every user in the reel' do
-          clip.zencoder_job_id = nil
           clip.save!
           expect do
             clip.destroy!

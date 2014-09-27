@@ -23,8 +23,6 @@ Rails.application.routes.draw do
         # Clip
         resources :clips, only: [:index, :create]
       end
-      # Other
-      match 'zencoder', to: 'zencoder#create', via: :post
     end
   end
 end

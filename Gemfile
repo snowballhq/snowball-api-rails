@@ -8,7 +8,6 @@ gem 'unicorn'
 gem 'jbuilder'
 gem 'paperclip'
 gem 'fog'
-gem 'zencoder'
 gem 'kaminari'
 gem 'devise'
 gem 'urbanairship', github: 'groupon/urbanairship'
@@ -32,10 +31,6 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'better_errors'
   gem 'dotenv-rails'
-end
-
-group :development do
-  gem 'zencoder-fetcher'
 end
 
 group :production do

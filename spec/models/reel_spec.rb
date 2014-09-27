@@ -45,15 +45,4 @@ describe Reel, type: :model do
       end
     end
   end
-
-  describe '#encoded_clips' do
-    it 'returns the clips where zencoder id is nil' do
-      reel.save
-      clips = create_list :clip, 2, reel: reel
-      clip = clips.last
-      clip.zencoder_job_id = '123'
-      clip.save!
-      expect(reel.encoded_clips).to eq [clips.first]
-    end
-  end
 end
