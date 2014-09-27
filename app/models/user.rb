@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def friends # users this user is following
-    follows.map { |f| f.followable }
+    follows.map(&:followable)
   end
 
   def followers # users following this user
