@@ -1,9 +1,9 @@
 class Api::V1::FollowsController < Api::V1::ApiController
   before_action :restrict_access!
-  before_action :set_user
+  before_action :set_user, only: [:create, :destroy]
 
   def following
-    @users = @user.friends
+    @users = current_user.friends
   end
 
   def create

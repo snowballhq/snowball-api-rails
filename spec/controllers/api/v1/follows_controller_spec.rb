@@ -14,9 +14,9 @@ describe Api::V1::FollowsController, type: :controller do
   end
 
   describe 'GET following' do
-    it 'assigns the users the user is following as @following' do
+    it 'assigns the users the current user is following as @users' do
       follow.save!
-      get :following, user_id: follow.user
+      get :following
       expect(assigns(:users)).to eq([follow.followable])
     end
   end

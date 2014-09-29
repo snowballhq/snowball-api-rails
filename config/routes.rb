@@ -9,10 +9,10 @@ Rails.application.routes.draw do
       match 'auth/:provider', to: 'sessions#create', via: :post
       # User
       resources :users, only: [:show, :update] do
-        match 'following', to: 'follows#following', via: :get
         match 'follow', to: 'follows#create', via: :post
         match 'follow', to: 'follows#destroy', via: :delete
       end
+      match 'users/me/following', to: 'follows#following', via: :get
       match 'users/find_by_contacts', to: 'users#find_by_contacts', via: :post
       # Reel
       match 'reels/stream', to: 'reels#index', via: :get
