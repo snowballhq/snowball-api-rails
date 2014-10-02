@@ -46,7 +46,7 @@ class Api::V1::ApiController < ApplicationController
       message = 'An unexpected error has occured.'
       status = :internal_server_error
     end
-    render json: { message: message }, status: status
+    render json: { error: { message: message } }, status: status
   end
 
   def page_params
