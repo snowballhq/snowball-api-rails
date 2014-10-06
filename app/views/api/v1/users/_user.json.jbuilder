@@ -8,5 +8,5 @@ if controller_name == 'sessions' || controller_name == 'registrations' || user =
   json.email user.email
   json.phone_number user.phone_number
 else
-  json.following current_user.following?(user)
+  json.you_follow current_user.following?(user)
 end
