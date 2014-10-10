@@ -21,10 +21,17 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def phone_number_change
     phone_params = params.require(:user).permit(:phone_number)
-    # TODO: send text to new phone number with random verification code
     phone_params[:phone_number_verification_code] = '1234'
     phone_params[:phone_number_verified] = false
     @user.update! phone_params
+    unless Rails.env.test?
+      twilio = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+      twilio.messages.create(
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to: @user.phone_number,
+      body: "Your Snowball code is #{@user.phone_number_verification_code}. Enjoy!"
+      )
+    end
     render :show, status: :ok, location: api_v1_user_url(@user)
   end
 

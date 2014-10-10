@@ -15,6 +15,7 @@ gem 'koala'
 gem 'phony_rails'
 gem 'newrelic_rpm'
 gem 'rollbar'
+gem 'twilio-ruby'
 
 gem 'sass-rails'
 gem 'uglifier'

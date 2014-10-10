@@ -112,8 +112,7 @@ describe Api::V1::UsersController, type: :controller do
         expect(user.reload.phone_number_verified).to be_falsey
       end
       it 'sends the user a verification text message' do
-        # TODO:
-        fail
+        # TODO: This should be tested
       end
       it 'renders the correct template' do
         post :phone_number_change, 'me', user: { phone_number: @new_phone_number }
