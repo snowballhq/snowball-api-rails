@@ -67,6 +67,7 @@ describe Api::V1::UsersController, type: :controller do
   describe 'POST find_by_contacts' do
     it 'finds all users that have the provided contact information that is verified' do
       user.phone_number = '4151234567'
+      user.phone_number_verified = true
       user.save!
       post :find_by_contacts, contacts: [{ phone_number: user.phone_number }]
       expect(assigns :users).to eq [user]
@@ -76,8 +77,10 @@ describe Api::V1::UsersController, type: :controller do
       expect(assigns :users).to eq []
     end
     it 'does not return users with unverified numbers' do
-      # TODO:
-      fail
+      user.phone_number = '4151234567'
+      user.save!
+      post :find_by_contacts, contacts: [{ phone_number: user.phone_number }]
+      expect(assigns :users).to eq []
     end
     it 'renders the correct template' do
       post :find_by_contacts, contacts: [{ phone_number: user.phone_number }]

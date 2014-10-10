@@ -15,7 +15,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     phone_numbers = contacts.map do |contact|
       PhonyRails.normalize_number(contact[:phone_number], default_country_code: 'US')
     end
-    @users = User.where.not(phone_number: nil).where(phone_number: phone_numbers)
+    @users = User.where.not(phone_number: nil, phone_number_verified: false).where(phone_number: phone_numbers)
     render :index, status: :ok, location: api_v1_user_url(@users)
   end
 
