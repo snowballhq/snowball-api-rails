@@ -41,7 +41,7 @@ class Api::V1::ApiController < ApplicationController
     elsif error.is_a? Snowball::InvalidCredentials
       message = error.message
       status = :bad_request
-    elseif error.is_a? Snowball::InvalidPhoneNumberVerificationCode
+    elsif error.is_a? Snowball::InvalidPhoneNumberVerificationCode
       message = 'Looks like you typed in incorrect numbers. Please try again.'
       status = :bad_request
     elsif error.is_a? ActionController::ParameterMissing

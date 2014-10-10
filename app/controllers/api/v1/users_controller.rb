@@ -31,7 +31,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   def phone_number_verification
     phone_params = params.require(:user).permit(:phone_number_verification_code)
     phone_number_verification_code = phone_params[:phone_number_verification_code]
-    raise Snowball::InvalidPhoneNumberVerificationCode unless phone_number_verification_code == @user.phone_number_verification_code
+    fail Snowball::InvalidPhoneNumberVerificationCode unless phone_number_verification_code == @user.phone_number_verification_code
     @user.phone_number_verification_code = nil
     @user.phone_number_verified = true
     @user.save!
@@ -47,5 +47,4 @@ class Api::V1::UsersController < Api::V1::ApiController
   def user_params
     params.require(:user).permit(:name, :username, :password, :email)
   end
-
 end
