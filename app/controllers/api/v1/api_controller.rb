@@ -3,11 +3,14 @@ class Api::V1::ApiController < ApplicationController
 
   class Snowball::InvalidCredentials < StandardError
   end
+  class Snowball::InvalidPhoneNumberVerificationCode < StandardError
+  end
 
   # rescue_from StandardError, with: :render_error
   rescue_from Snowball::InvalidCredentials, with: :render_error
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
+  rescue_from Snowball::InvalidPhoneNumberVerificationCode, with: :render_error
 
   protected
 
@@ -37,6 +40,9 @@ class Api::V1::ApiController < ApplicationController
       status = :unprocessable_entity
     elsif error.is_a? Snowball::InvalidCredentials
       message = error.message
+      status = :bad_request
+    elseif error.is_a? Snowball::InvalidPhoneNumberVerificationCode
+      message = 'Looks like you typed in incorrect numbers. Please try again.'
       status = :bad_request
     elsif error.is_a? ActionController::ParameterMissing
       message = error.message

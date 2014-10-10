@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
       match 'users/me/following', to: 'follows#following', via: :get
       match 'users/find_by_contacts', to: 'users#find_by_contacts', via: :post
+      match 'users/me/phone_number_change', to: 'users#phone_number_change', via: :post
+      match 'users/me/phone_number_verification', to: 'users#phone_number_verification', via: :post
       # Reel
       match 'reels/stream', to: 'reels#index', via: :get
       resources :reels, only: [:create, :update] do
