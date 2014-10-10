@@ -21,7 +21,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def phone_number_change
     phone_params = params.require(:user).permit(:phone_number)
-    phone_params[:phone_number_verification_code] = "#{Array.new(4){rand 10}.join}"
+    phone_params[:phone_number_verification_code] = "#{Array.new(4) { rand 10 }.join}"
     phone_params[:phone_number_verified] = false
     @user.update! phone_params
     unless Rails.env.test?
