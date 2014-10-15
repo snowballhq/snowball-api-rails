@@ -1,0 +1,26 @@
+AllCops:
+  Exclude:
+    - bin/*
+    - 'db/**/*'
+    - 'Guardfile'
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Enabled: false
+
+MethodLength:
+  Enabled: false
+
+NumericLiterals:
+  Enabled: false
+
+CyclomaticComplexity:
+  Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
+
+BlockComments:
+  Enabled: false
