@@ -35,7 +35,7 @@ module Snowball
       g.stylesheets false
       g.javascripts false
       g.helper false
-      g.test_framework :rspec, view_specs: false, request_specs: false, routing_specs: false
+      g.test_framework :rspec, controller_specs: false, routing_specs: false, view_specs: false
     end
   end
 end
