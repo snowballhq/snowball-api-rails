@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject(:user) { build(:user) }
 
-  it { should be_valid }
+  it { is_expected.to be_valid }
 
   describe 'validations' do
-    it { should validate_presence_of(:phone_number) }
+    it { is_expected.to validate_presence_of(:phone_number) }
     it 'validates presence of :auth_token' do
       allow(user).to receive(:generate_and_set_auth_token)
       expect(user).to validate_presence_of(:auth_token)
