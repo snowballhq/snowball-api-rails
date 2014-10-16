@@ -1,5 +1,6 @@
-class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+class Api::V1::UsersController < ApiController
+  before_action :authenticate!, except: [:phone_authentication]
+  before_action :set_user, only: [:show, :update]
 
   def index
     @users = User.all
@@ -7,13 +8,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-  end
-
-  def new
-    @user = User.new
-  end
-
-  def edit
   end
 
   def create
@@ -42,14 +36,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   def phone_authentication
     @user = User.where(user_params).first_or_initialize
     if @user.new_record?
@@ -61,7 +47,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = @current_user
   end
 
   def user_params
