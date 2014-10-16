@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
 
   describe 'before_validation(on: :create)' do
     it 'generates and sets a new auth token' do
-      expect{ user.save }.to change{ user.auth_token }.from(nil).to(a_string_matching(/[0-9a-f]{32}/))
+      expect { user.save }.to change { user.auth_token }.from(nil).to(a_string_matching(/[0-9a-f]{32}/))
     end
   end
 end
