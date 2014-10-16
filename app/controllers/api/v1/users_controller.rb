@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     @users = User.all
-    @users = @users.where(phone_number: params[:phone_number]) if params[:phone_number].present?
+    @users = @users.where(phone_number: params[:phone_number].split(',')) if params[:phone_number].present?
   end
 
   def show
