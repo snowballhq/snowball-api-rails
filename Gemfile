@@ -16,6 +16,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'guard-rspec'
   gem 'dotenv-rails'
+  gem 'fuubar'
 end
 
 group :production do
