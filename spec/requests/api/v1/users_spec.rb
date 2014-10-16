@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :request do
+RSpec.describe User, type: :request do
   describe 'GET /users?phone_number=' do
     it 'returns users with specified phone number(s)' do
       user = create(:user)

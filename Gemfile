@@ -14,6 +14,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rubocop'
+  gem 'rubocop-rspec'
   gem 'guard-rspec'
   gem 'dotenv-rails'
   gem 'fuubar'
