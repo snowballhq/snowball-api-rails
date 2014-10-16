@@ -50,6 +50,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def phone_authentication
+    @user = User.where(user_params).first_or_initialize
+    if @user.new_record?
+      @user.save!
+      render status: :created
+    end
+  end
+
   private
 
   def set_user
@@ -57,6 +65,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_params
-    params[:user]
+    params.permit(
+      :phone_number
+    )
   end
 end
