@@ -18,25 +18,23 @@ class Api::V1::UsersController < ApiController
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @user.update!(user_params)
+    head :no_content
   end
 
   private
 
   def set_user
-    @user = @current_user
+    if params[:id] = 'me'
+      @user = @current_user
+      return
+    end
+    @user = User.find(params[:id])
   end
 
   def user_params
     params.permit(
+      :name,
       :phone_number
     )
   end

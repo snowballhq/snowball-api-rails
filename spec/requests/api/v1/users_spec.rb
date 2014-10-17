@@ -20,10 +20,10 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /users/me' do
-    it 'returns the current user' do
+  describe 'GET /users/:id' do
+    it 'returns the user' do
       user = create(:user)
-      get '/api/v1/users/me'
+      get "/api/v1/users/#{user.id}"
       expect(response).to have_http_status(200)
       expect(response.body).to eq({
         id: user.id,
@@ -58,6 +58,17 @@ RSpec.describe 'Users', type: :request do
           name: user.name
         }.to_json)
       end
+    end
+  end
+
+  describe 'PATCH /users/:id' do
+    it 'updates the user' do
+      user = create(:user)
+      name = 'John Doe'
+      params = { name: name }
+      patch "/api/v1/users/#{user.id}", params
+      expect(response).to have_http_status(204)
+      expect(user.reload.name).to eq name
     end
   end
 end
