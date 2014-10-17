@@ -38,10 +38,9 @@ class Api::V1::UsersController < ApiController
 
   def phone_authentication
     @user = User.where(user_params).first_or_initialize
-    if @user.new_record?
-      @user.save!
-      render status: :created
-    end
+    return unless @user.new_record?
+    @user.save!
+    render status: :created
   end
 
   private
