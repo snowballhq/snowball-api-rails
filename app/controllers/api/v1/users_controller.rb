@@ -17,6 +17,7 @@ class Api::V1::UsersController < ApiController
 
   def phone_auth
     @user = User.where(user_params).first_or_initialize
+    @user.send_verification_text
     return unless @user.new_record?
     @user.save!
     render status: :created

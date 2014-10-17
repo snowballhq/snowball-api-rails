@@ -14,4 +14,15 @@ class User < ActiveRecord::Base
       break unless self.class.exists?(auth_token: auth_token)
     end
   end
+
+  def send_verification_text
+    update!(phone_number_verification_code: "#{Array.new(4) { rand 10 }.join}")
+    return if Rails.env.test?
+    twilio = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+    twilio.messages.create(
+    from: ENV['TWILIO_PHONE_NUMBER'],
+    to: phone_number,
+    body: "Your Snowball code is #{phone_number_verification_code}. Enjoy!"
+    )
+  end
 end

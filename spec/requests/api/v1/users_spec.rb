@@ -57,9 +57,14 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'POST /users/phone-authentication' do
+  describe 'POST /users/phone-auth' do
     context 'with a valid phone number' do
-      it 'sends the user a text message with a new verification code'
+      it 'sends the user a text message with a new verification code' do
+        user = create(:user)
+        params = { phone_number: user.phone_number }
+        expect_any_instance_of(User).to receive(:send_verification_text)
+        post '/api/v1/users/phone-auth', params
+      end
       context 'when the user exists' do
         it 'returns the user' do
           user = create(:user)

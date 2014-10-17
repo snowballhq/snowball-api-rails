@@ -7,6 +7,7 @@ gem 'pg'
 gem 'jbuilder'
 gem 'unicorn'
 gem 'phony_rails'
+gem 'twilio-ruby'
 
 group :development, :test do
   gem 'spring'

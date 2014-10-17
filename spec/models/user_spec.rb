@@ -25,4 +25,13 @@ RSpec.describe User, type: :model do
       expect { user.save }.to change { user.auth_token }.from(nil).to(a_string_matching(/[0-9a-f]{32}/))
     end
   end
+
+  describe '#send_verification_text' do
+    it 'generates a new verification code' do
+      expect { user.send_verification_text }.to change { user.phone_number_verification_code }.from(nil).to(a_string_matching(/[0-9]{4}/))
+    end
+    it 'sends the user a text message with the verification code' do
+      # TODO: finish writing this spec with webmock
+    end
+  end
 end
