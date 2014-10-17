@@ -4,9 +4,7 @@ RSpec.describe 'Users', type: :request do
   let(:user) { create(:user) }
 
   before do |example|
-    unless example.metadata[:no_auth]
-      auth(user.auth_token)
-    end
+    auth(user.auth_token) unless example.metadata[:no_auth]
   end
 
   describe 'POST /users/phone_authentication', :no_auth do
@@ -14,7 +12,7 @@ RSpec.describe 'Users', type: :request do
     context 'when the user exists' do
       it 'returns the user' do
         params = { phone_number: user.phone_number }
-        post '/api/v1/users/phone_authentication', params, @env
+        post '/api/v1/users/phone_authentication', params
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
@@ -26,7 +24,7 @@ RSpec.describe 'Users', type: :request do
       it 'creates and returns the user' do
         user = build(:user)
         params = { phone_number: user.phone_number }
-        post '/api/v1/users/phone_authentication', params, @env
+        post '/api/v1/users/phone_authentication', params
         expect(response).to have_http_status(201)
         user = User.last
         expect(response.body).to eq({
