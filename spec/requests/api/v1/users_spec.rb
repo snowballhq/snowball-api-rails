@@ -10,11 +10,13 @@ RSpec.describe 'Users', type: :request do
       expect(response.body).to eq([
         {
           id: user.id,
-          name: user.name
+          name: user.name,
+          avatar_url: nil
         },
         {
           id: user2.id,
-          name: user2.name
+          name: user2.name,
+          avatar_url: nil
         }
       ].to_json)
     end
@@ -27,7 +29,8 @@ RSpec.describe 'Users', type: :request do
       expect(response).to have_http_status(200)
       expect(response.body).to eq({
         id: user.id,
-        name: user.name
+        name: user.name,
+        avatar_url: nil
       }.to_json)
     end
   end
@@ -54,7 +57,8 @@ RSpec.describe 'Users', type: :request do
           expect(response).to have_http_status(200)
           expect(response.body).to eq({
             id: user.id,
-            name: user.name
+            name: user.name,
+            avatar_url: nil
           }.to_json)
         end
       end
@@ -67,7 +71,8 @@ RSpec.describe 'Users', type: :request do
           user = User.last
           expect(response.body).to eq({
             id: user.id,
-            name: user.name
+            name: user.name,
+            avatar_url: nil
           }.to_json)
         end
       end
@@ -98,7 +103,9 @@ RSpec.describe 'Users', type: :request do
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
-          name: user.name
+          name: user.name,
+          avatar_url: nil,
+          auth_token: user.reload.auth_token
         }.to_json)
       end
     end

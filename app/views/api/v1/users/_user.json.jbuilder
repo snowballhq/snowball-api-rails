@@ -1,5 +1,6 @@
 json.cache! user do
   json.id user.id
   json.name user.name
-  # json.phone_number user.phone_number
+  json.avatar_url nil
+  json.auth_token user.auth_token if action_name == 'phone_verification'
 end
