@@ -44,12 +44,57 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /users/phone-authentication' do
-    it 'sends the user a text message with a verification code'
-    context 'when the user exists' do
+    context 'with a valid phone number' do
+      it 'sends the user a text message with a new verification code'
+      context 'when the user exists' do
+        it 'returns the user' do
+          user = create(:user)
+          params = { phone_number: user.phone_number }
+          post '/api/v1/users/phone-auth', params
+          expect(response).to have_http_status(200)
+          expect(response.body).to eq({
+            id: user.id,
+            name: user.name
+          }.to_json)
+        end
+      end
+      context 'when the user does not exist' do
+        it 'creates and returns the user' do
+          user = build(:user)
+          params = { phone_number: user.phone_number }
+          post '/api/v1/users/phone-auth', params
+          expect(response).to have_http_status(201)
+          user = User.last
+          expect(response.body).to eq({
+            id: user.id,
+            name: user.name
+          }.to_json)
+        end
+      end
+    end
+    context 'with an invalid phone number'
+  end
+
+  describe 'POST /users/:user_id/phone_verification' do
+    context 'when the code is valid' do
+      it 'clears the verification code' do
+        user = create(:user, phone_number_verification_code: '1234')
+        verification_code = user.phone_number_verification_code
+        params = { phone_number_verification_code: verification_code }
+        post "/api/v1/users/#{user.id}/phone-verification", params
+        expect(user.reload.phone_number_verification_code).to_not eq(verification_code)
+      end
+      it 'generates a new auth token' do
+        user = create(:user, phone_number_verification_code: '1234')
+        auth_token = user.auth_token
+        params = { phone_number_verification_code: user.phone_number_verification_code }
+        post "/api/v1/users/#{user.id}/phone-verification", params
+        expect(user.reload.auth_token).to_not eq(auth_token)
+      end
       it 'returns the user' do
-        user = create(:user)
-        params = { phone_number: user.phone_number }
-        post '/api/v1/users/phone-auth', params
+        user = create(:user, phone_number_verification_code: '1234')
+        params = { phone_number_verification_code: user.phone_number_verification_code }
+        post "/api/v1/users/#{user.id}/phone-verification", params
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
@@ -57,18 +102,6 @@ RSpec.describe 'Users', type: :request do
         }.to_json)
       end
     end
-    context 'when the user does not exist' do
-      it 'creates and returns the user' do
-        user = build(:user)
-        params = { phone_number: user.phone_number }
-        post '/api/v1/users/phone-auth', params
-        expect(response).to have_http_status(201)
-        user = User.last
-        expect(response.body).to eq({
-          id: user.id,
-          name: user.name
-        }.to_json)
-      end
-    end
+    context 'when the code is invalid'
   end
 end

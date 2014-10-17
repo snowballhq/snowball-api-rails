@@ -6,8 +6,6 @@ class User < ActiveRecord::Base
     generate_auth_token
   end
 
-  private
-
   def generate_auth_token
     loop do
       self.auth_token = SecureRandom.hex

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApiController
   before_action :authenticate!, except: [:create]
-  before_action :set_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :update, :phone_verification]
 
   def index
     @users = User.all
@@ -20,6 +20,13 @@ class Api::V1::UsersController < ApiController
     return unless @user.new_record?
     @user.save!
     render status: :created
+  end
+
+  def phone_verification
+    return if @user.phone_number_verification_code != params[:phone_number_verification_code]
+    @user.generate_auth_token
+    @user.phone_number_verification_code = nil
+    @user.save!
   end
 
   private
