@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  validates :phone_number, presence: true
+  validates :phone_number, presence: true, phony_plausible: true
   validates :auth_token, presence: true
+
+  phony_normalize :phone_number, default_country_code: 'US'
 
   before_validation(on: :create) do
     generate_auth_token

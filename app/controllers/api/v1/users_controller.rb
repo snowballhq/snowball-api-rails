@@ -23,7 +23,7 @@ class Api::V1::UsersController < ApiController
   end
 
   def phone_verification
-    return if @user.phone_number_verification_code != params[:phone_number_verification_code]
+    fail Snowball::InvalidPhoneNumberVerificationCode if @user.phone_number_verification_code != params[:phone_number_verification_code]
     @user.generate_auth_token
     @user.phone_number_verification_code = nil
     @user.save!

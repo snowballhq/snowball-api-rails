@@ -36,13 +36,24 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'PATCH /users/:id' do
-    it 'updates the user' do
-      user = create(:user)
-      name = 'John Doe'
-      params = { name: name }
-      patch "/api/v1/users/#{user.id}", params
-      expect(response).to have_http_status(204)
-      expect(user.reload.name).to eq name
+    context 'with valid params' do
+      it 'updates the user' do
+        user = create(:user)
+        name = 'John Doe'
+        params = { name: name }
+        patch "/api/v1/users/#{user.id}", params
+        expect(response).to have_http_status(204)
+        expect(user.reload.name).to eq name
+      end
+    end
+    context 'with invalid params' do
+      it 'returns an error' do
+        post '/api/v1/users/phone-auth'
+        expect(response).to have_http_status(400)
+        expect(response.body).to eq({
+          message: 'Phone number can\'t be blank'
+        }.to_json)
+      end
     end
   end
 
@@ -77,7 +88,16 @@ RSpec.describe 'Users', type: :request do
         end
       end
     end
-    context 'with an invalid phone number'
+    context 'with an invalid phone number' do
+      it 'returns an error' do
+        params = { phone_number: '123' }
+        post '/api/v1/users/phone-auth', params
+        expect(response).to have_http_status(400)
+        expect(response.body).to eq({
+          message: 'Phone number is an invalid number'
+        }.to_json)
+      end
+    end
   end
 
   describe 'POST /users/:user_id/phone_verification' do
@@ -109,6 +129,16 @@ RSpec.describe 'Users', type: :request do
         }.to_json)
       end
     end
-    context 'when the code is invalid'
+    context 'when the code is invalid' do
+      it 'returns an error' do
+        user = create(:user, phone_number_verification_code: '1234')
+        params = { phone_number_verification_code: '1235' }
+        post "/api/v1/users/#{user.id}/phone-verification", params
+        expect(response).to have_http_status(400)
+        expect(response.body).to eq({
+          message: 'Looks like you typed in incorrect numbers. Please try again.'
+        }.to_json)
+      end
+    end
   end
 end
