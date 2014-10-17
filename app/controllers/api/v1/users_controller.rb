@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApiController
-  before_action :authenticate!, except: [:phone_authentication]
+  before_action :authenticate!, except: [:create]
   before_action :set_user, only: [:show, :update]
 
   def index
@@ -11,17 +11,10 @@ class Api::V1::UsersController < ApiController
   end
 
   def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @user = User.where(user_params).first_or_initialize
+    return unless @user.new_record?
+    @user.save!
+    render status: :created
   end
 
   def update
@@ -34,13 +27,6 @@ class Api::V1::UsersController < ApiController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def phone_authentication
-    @user = User.where(user_params).first_or_initialize
-    return unless @user.new_record?
-    @user.save!
-    render status: :created
   end
 
   private
