@@ -17,10 +17,11 @@ class Api::V1::UsersController < ApiController
 
   def phone_auth
     @user = User.where(user_params).first_or_initialize
+    user_is_new = @user.new_record?
+    @user.generate_phone_number_verification_code
     @user.send_verification_text
-    return unless @user.new_record?
     @user.save!
-    render status: :created
+    render status: :created if user_is_new
   end
 
   def phone_verification
