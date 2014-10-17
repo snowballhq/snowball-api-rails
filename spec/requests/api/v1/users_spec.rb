@@ -32,13 +32,24 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'POST /users' do
+  describe 'PATCH /users/:id' do
+    it 'updates the user' do
+      user = create(:user)
+      name = 'John Doe'
+      params = { name: name }
+      patch "/api/v1/users/#{user.id}", params
+      expect(response).to have_http_status(204)
+      expect(user.reload.name).to eq name
+    end
+  end
+
+  describe 'POST /users/phone-authentication' do
     it 'sends the user a text message with a verification code'
     context 'when the user exists' do
       it 'returns the user' do
         user = create(:user)
         params = { phone_number: user.phone_number }
-        post '/api/v1/users', params
+        post '/api/v1/users/phone-auth', params
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
@@ -50,7 +61,7 @@ RSpec.describe 'Users', type: :request do
       it 'creates and returns the user' do
         user = build(:user)
         params = { phone_number: user.phone_number }
-        post '/api/v1/users', params
+        post '/api/v1/users/phone-auth', params
         expect(response).to have_http_status(201)
         user = User.last
         expect(response.body).to eq({
@@ -58,17 +69,6 @@ RSpec.describe 'Users', type: :request do
           name: user.name
         }.to_json)
       end
-    end
-  end
-
-  describe 'PATCH /users/:id' do
-    it 'updates the user' do
-      user = create(:user)
-      name = 'John Doe'
-      params = { name: name }
-      patch "/api/v1/users/#{user.id}", params
-      expect(response).to have_http_status(204)
-      expect(user.reload.name).to eq name
     end
   end
 end

@@ -10,16 +10,16 @@ class Api::V1::UsersController < ApiController
   def show
   end
 
-  def create
+  def update
+    @user.update!(user_params)
+    head :no_content
+  end
+
+  def phone_auth
     @user = User.where(user_params).first_or_initialize
     return unless @user.new_record?
     @user.save!
     render status: :created
-  end
-
-  def update
-    @user.update!(user_params)
-    head :no_content
   end
 
   private
