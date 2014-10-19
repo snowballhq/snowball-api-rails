@@ -4,7 +4,9 @@ class ApiController < ApplicationController
   class Snowball::InvalidPhoneNumberVerificationCode < StandardError
   end
 
-  rescue_from StandardError, with: :render_error
+  rescue_from ActiveRecord::RecordInvalid, with: :render_error
+  rescue_from ActionController::ParameterMissing, with: :render_error
+  rescue_from Snowball::InvalidPhoneNumberVerificationCode, with: :render_error
 
   def render_error(error)
     if error.is_a? ActiveRecord::RecordInvalid

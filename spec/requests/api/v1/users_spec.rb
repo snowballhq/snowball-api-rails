@@ -39,7 +39,7 @@ RSpec.describe 'Users', type: :request do
     context 'with valid params' do
       it 'updates the user' do
         user = create(:user)
-        name = 'John Doe'
+        name = build(:user).name
         params = { name: name }
         patch "/api/v1/users/#{user.id}", params
         expect(response).to have_http_status(204)
