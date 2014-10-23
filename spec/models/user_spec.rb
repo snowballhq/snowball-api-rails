@@ -13,6 +13,11 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:participations) }
+    it { is_expected.to have_many(:reels).through(:participations) }
+  end
+
   describe 'before_validation(on: :create)' do
     it 'generates a new auth token' do
       expect(user).to receive(:generate_auth_token)

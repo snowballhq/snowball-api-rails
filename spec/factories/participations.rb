@@ -2,5 +2,7 @@
 
 FactoryGirl.define do
   factory :participation do
+    reel
+    user
   end
 end
