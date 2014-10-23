@@ -1,24 +1,15 @@
 class Api::V1::ParticipationsController < ApiController
   before_action :authenticate!
   before_action :set_participation, only: [:update, :destroy]
-  before_action :set_reel, only: [:index, :create]
+  before_action :set_reel, only: :index
 
   def index
     @participations = @reel.participations
   end
 
   def create
-    @participation = Participation.new(participation_params)
-
-    respond_to do |format|
-      if @participation.save
-        format.html { redirect_to @participation, notice: 'Participation was successfully created.' }
-        format.json { render :show, status: :created, location: @participation }
-      else
-        format.html { render :new }
-        format.json { render json: @participation.errors, status: :unprocessable_entity }
-      end
-    end
+    @participation = Participation.create!(participation_params)
+    render status: :created
   end
 
   def update
