@@ -1,28 +1,12 @@
-class ParticipationsController < ApplicationController
-  before_action :set_participation, only: [:show, :edit, :update, :destroy]
+class Api::V1::ParticipationsController < ApiController
+  before_action :authenticate!
+  before_action :set_participation, only: [:update, :destroy]
+  before_action :set_reel, only: [:index, :create]
 
-  # GET /participations
-  # GET /participations.json
   def index
-    @participations = Participation.all
+    @participations = @reel.participations
   end
 
-  # GET /participations/1
-  # GET /participations/1.json
-  def show
-  end
-
-  # GET /participations/new
-  def new
-    @participation = Participation.new
-  end
-
-  # GET /participations/1/edit
-  def edit
-  end
-
-  # POST /participations
-  # POST /participations.json
   def create
     @participation = Participation.new(participation_params)
 
@@ -37,8 +21,6 @@ class ParticipationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /participations/1
-  # PATCH/PUT /participations/1.json
   def update
     respond_to do |format|
       if @participation.update(participation_params)
@@ -51,8 +33,6 @@ class ParticipationsController < ApplicationController
     end
   end
 
-  # DELETE /participations/1
-  # DELETE /participations/1.json
   def destroy
     @participation.destroy
     respond_to do |format|
@@ -63,13 +43,19 @@ class ParticipationsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_participation
     @participation = Participation.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  def set_reel
+    @reel = Reel.find(params[:reel_id])
+  end
+
   def participation_params
-    params[:participation]
+    params.permit(
+      :reel_id,
+      :user_id,
+      :last_watched_clip_id
+    )
   end
 end
