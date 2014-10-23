@@ -6,8 +6,6 @@ RSpec.describe 'Reels', type: :request do
   describe 'GET /reels' do
     it 'returns the current user\'s stream' do
       participation = create(:participation, user: user)
-      participation2 = create(:participation)
-      expect(Participation.count).to eq(2)
       get '/api/v1/reels'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
