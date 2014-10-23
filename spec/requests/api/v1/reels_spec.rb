@@ -5,15 +5,15 @@ RSpec.describe 'Reels', type: :request do
 
   describe 'GET /reels' do
     it 'returns the current user\'s stream' do
-      # TODO: add relationships spec
-      reel = create(:reel) # , users: [user])
-      # expect(user).to receive(:reels)
+      participation = create(:participation, user: user)
+      participation2 = create(:participation)
+      expect(Participation.count).to eq(2)
       get '/api/v1/reels'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
-          id: reel.id,
-          title: reel.title
+          id: participation.reel.id,
+          title: participation.reel.title
         }
       ].to_json)
     end

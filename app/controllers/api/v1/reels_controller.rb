@@ -1,8 +1,10 @@
 class Api::V1::ReelsController < ApiController
+  before_action :authenticate!
   before_action :set_reel, only: :update
+  before_action :set_user, only: :index
 
   def index
-    @reels = Reel.all
+    @reels = @user.reels
   end
 
   def create
@@ -19,6 +21,10 @@ class Api::V1::ReelsController < ApiController
 
   def set_reel
     @reel = Reel.find(params[:id])
+  end
+
+  def set_user
+    @user = @current_user
   end
 
   def reel_params
