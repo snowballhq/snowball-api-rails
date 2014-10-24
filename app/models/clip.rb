@@ -1,4 +1,6 @@
 class Clip < ActiveRecord::Base
+  include Orderable
+
   has_attached_file :video
 
   validates :reel, presence: true

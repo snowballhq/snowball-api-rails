@@ -1,4 +1,6 @@
 class Participation < ActiveRecord::Base
+  include Orderable
+
   validates :reel, presence: true
   validates :user, presence: true
 
