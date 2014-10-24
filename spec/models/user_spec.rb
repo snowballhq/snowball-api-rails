@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to be_valid }
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:phone_number) }
     it 'validates presence of :auth_token' do
       allow(user).to receive(:generate_auth_token)

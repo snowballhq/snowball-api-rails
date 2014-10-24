@@ -11,14 +11,14 @@ RSpec.describe Reel, type: :model do
     it { is_expected.to have_many(:users).through(:participations) }
   end
 
-  describe '#subtitle' do
+  describe '#users_title' do
     it 'returns the first names of the last five users' do
       reel = create(:reel)
       create_list(:participation, 6, reel: reel)
-      subtitle = reel.reload.users.last(5).map(&:name).map do |n|
+      users_title = reel.reload.users.last(5).map(&:name).map do |n|
         [n.split.first].join ' '
       end.join(', ')
-      expect(reel.subtitle).to eq(subtitle)
+      expect(reel.users_title).to eq(users_title)
     end
   end
 end
