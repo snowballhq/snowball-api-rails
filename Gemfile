@@ -8,6 +8,7 @@ gem 'jbuilder'
 gem 'unicorn'
 gem 'phony_rails'
 gem 'twilio-ruby'
+gem 'paperclip'
 
 group :development, :test do
   gem 'spring'
