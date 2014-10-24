@@ -13,6 +13,18 @@ RSpec.describe 'Reels', type: :request do
           id: participation.reel.id,
           title: participation.reel.title,
           users_title: participation.reel.users_title
+          # TODO: send next clip to client
+          # next_clip: {
+          #   id: clip.id,
+          #   reel_id: participation.reel.id,
+          #   video_url: clip.video.url,
+          #   user: {
+          #     id: clip.user.id,
+          #     name: clip.user.name,
+          #     avatar_url: nil
+          #   },
+          #   created_at: clip.created_at.to_time.to_i
+          # }
         }
       ].to_json)
     end
