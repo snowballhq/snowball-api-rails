@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :update]
       resources :reels, only: [:index, :create, :update] do
         resources :participations, only: [:index, :create]
+        resources :clips, only: [:index, :create]
       end
       resources :participations, only: [:update, :destroy]
     end
