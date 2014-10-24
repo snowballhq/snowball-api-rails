@@ -61,7 +61,7 @@ RSpec.describe 'Clips', type: :request do
     end
     context 'with invalid params' do
       it 'returns an error' do
-        user = create(:user) # current user
+        create(:user) # current user
         reel = create(:reel)
         post "/api/v1/reels/#{reel.id}/clips"
         expect(response).to have_http_status(400)
