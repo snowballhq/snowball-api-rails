@@ -18,11 +18,8 @@ class Api::V1::ParticipationsController < ApiController
   end
 
   def destroy
-    @participation.destroy
-    respond_to do |format|
-      format.html { redirect_to participations_url, notice: 'Participation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @participation.destroy!
+    head :no_content
   end
 
   private

@@ -87,4 +87,13 @@ RSpec.describe 'Participations', type: :request do
       end
     end
   end
+
+  describe 'DELETE /participations/:id' do
+    it 'destroys the participation' do
+      participation = create(:participation)
+      delete "/api/v1/participations/#{participation.id}"
+      expect(response).to have_http_status(204)
+      expect(Participation.count).to eq(0)
+    end
+  end
 end
