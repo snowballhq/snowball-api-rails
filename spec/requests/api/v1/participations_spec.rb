@@ -11,6 +11,7 @@ RSpec.describe 'Participations', type: :request do
       expect(response.body).to eq([
         {
           id: participation.id,
+          reel_id: reel.id,
           user: {
             id: participation.user.id,
             name: participation.user.name,
@@ -19,6 +20,7 @@ RSpec.describe 'Participations', type: :request do
         },
         {
           id: participation2.id,
+          reel_id: reel.id,
           user: {
             id: participation2.user.id,
             name: participation2.user.name,
@@ -40,6 +42,7 @@ RSpec.describe 'Participations', type: :request do
         expect(response.body).to eq(
         {
           id: participation.id,
+          reel_id: participation.reel.id,
           user: {
             id: participation.user.id,
             name: participation.user.name,
