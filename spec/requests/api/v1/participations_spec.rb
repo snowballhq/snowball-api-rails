@@ -67,8 +67,8 @@ RSpec.describe 'Participations', type: :request do
     context 'with valid params' do
       it 'updates the participation' do
         participation = create(:participation)
-        # TODO: use clip instead of random generated uuid for this
-        last_watched_clip_id = SecureRandom.uuid
+        clip = create(:clip, reel: participation.reel)
+        last_watched_clip_id = clip.id
         params = { last_watched_clip_id: last_watched_clip_id }
         patch "/api/v1/participations/#{participation.id}", params
         expect(response).to have_http_status(204)
