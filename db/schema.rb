@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20141019045932) do
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "participations", force: true do |t|
+  create_table "participations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",              null: false
     t.uuid     "reel_id",              null: false
     t.uuid     "last_watched_clip_id"
