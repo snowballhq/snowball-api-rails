@@ -5,7 +5,7 @@ class Reel < ActiveRecord::Base
 
   def users_title
     users.last(5).map(&:name).map do |n|
-      [n.split.first].join ' '
+      [n.split.first].join(' ') unless n.nil?
     end.join(', ')
   end
 end

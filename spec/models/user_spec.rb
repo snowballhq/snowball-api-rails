@@ -26,6 +26,24 @@ RSpec.describe User, type: :model do
     end
   end
 
+  # TODO: write validation to ensure name exists after initial sign up
+  # describe 'before_validation(on: :update)' do
+  #   context 'when the user is verified' do
+  #     it 'is not valid without a name' do
+  #       user.name = nil
+  #       user.phone_number_verification_code = nil
+  #       expect(user.valid?).to be_falsy
+  #     end
+  #   end
+  #   context 'when the user is not verified' do
+  #     it 'is valid without a name' do
+  #       user.name = nil
+  #       user.phone_number_verification_code = '1234'
+  #       expect(user.valid?).to be_truthy
+  #     end
+  #   end
+  # end
+
   describe '#generate_auth_token' do
     it 'generates a new auth token' do
       expect { user.save }.to change { user.auth_token }.from(nil).to(a_string_matching(/[0-9a-f]{32}/))

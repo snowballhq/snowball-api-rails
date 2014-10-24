@@ -16,7 +16,7 @@ RSpec.describe Reel, type: :model do
       reel = create(:reel)
       create_list(:participation, 6, reel: reel)
       users_title = reel.reload.users.last(5).map(&:name).map do |n|
-        [n.split.first].join ' '
+        [n.split.first].join(' ') unless n.nil?
       end.join(', ')
       expect(reel.users_title).to eq(users_title)
     end
