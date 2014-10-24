@@ -13,15 +13,8 @@ class Api::V1::ParticipationsController < ApiController
   end
 
   def update
-    respond_to do |format|
-      if @participation.update(participation_params)
-        format.html { redirect_to @participation, notice: 'Participation was successfully updated.' }
-        format.json { render :show, status: :ok, location: @participation }
-      else
-        format.html { render :edit }
-        format.json { render json: @participation.errors, status: :unprocessable_entity }
-      end
-    end
+    @participation.update!(participation_params)
+    head :no_content
   end
 
   def destroy
