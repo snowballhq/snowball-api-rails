@@ -1,1 +1,1 @@
-json.partial! 'api/v1/reels/reel', collection: @reels, as: :reel
+json.partial! 'api/v1/clips/clip', collection: @clips, as: :clip

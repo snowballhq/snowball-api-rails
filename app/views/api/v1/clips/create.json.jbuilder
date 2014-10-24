@@ -1,1 +1,1 @@
-json.partial! 'api/v1/reels/reel', reel: @reel
+json.partial! 'api/v1/clips/clip', clip: @clip

@@ -14,6 +14,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
+    it { is_expected.to have_many(:clips) }
     it { is_expected.to have_many(:participations) }
     it { is_expected.to have_many(:reels).through(:participations) }
   end

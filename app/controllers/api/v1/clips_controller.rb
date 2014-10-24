@@ -1,61 +1,27 @@
 class Api::V1::ClipsController < ApiController
-  before_action :set_clip, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate!
+  before_action :set_reel, only: :index
 
   def index
-    @clips = Clip.all
-  end
-
-  def show
-  end
-
-  def new
-    @clip = Clip.new
-  end
-
-  def edit
+    # TODO: pagination
+    @clips = @reel.clips
   end
 
   def create
-    @clip = Clip.new(clip_params)
-
-    respond_to do |format|
-      if @clip.save
-        format.html { redirect_to @clip, notice: 'Clip was successfully created.' }
-        format.json { render :show, status: :created, location: @clip }
-      else
-        format.html { render :new }
-        format.json { render json: @clip.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @clip.update(clip_params)
-        format.html { redirect_to @clip, notice: 'Clip was successfully updated.' }
-        format.json { render :show, status: :ok, location: @clip }
-      else
-        format.html { render :edit }
-        format.json { render json: @clip.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @clip.destroy
-    respond_to do |format|
-      format.html { redirect_to clips_url, notice: 'Clip was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @clip = @current_user.clips.create!(clip_params)
+    render status: :created
   end
 
   private
 
-  def set_clip
-    @clip = Clip.find(params[:id])
+  def set_reel
+    @reel = Reel.find(params[:reel_id])
   end
 
   def clip_params
-    params[:clip]
+    params.permit(
+      :reel_id,
+      :video
+    )
   end
 end

@@ -39,12 +39,11 @@ module Snowball
     end
 
     config.paperclip_defaults = {
-      storage: :fog,
-      fog_directory: ENV['S3_BUCKET_NAME'],
-      fog_credentials: {
-        provider: :aws,
-        aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-        aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      storage: :s3,
+      s3_credentials: {
+        bucket: ENV['S3_BUCKET_NAME'],
+        access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
       }
     }
   end

@@ -9,7 +9,7 @@ gem 'unicorn'
 gem 'phony_rails'
 gem 'twilio-ruby'
 gem 'paperclip'
-gem 'fog'
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'spring'

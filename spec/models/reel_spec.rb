@@ -6,6 +6,7 @@ RSpec.describe Reel, type: :model do
   it { is_expected.to be_valid }
 
   describe 'associations' do
+    it { is_expected.to have_many(:clips) }
     it { is_expected.to have_many(:participations) }
     it { is_expected.to have_many(:users).through(:participations) }
   end
