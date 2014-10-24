@@ -42,7 +42,9 @@ RSpec.describe 'Clips', type: :request do
         clip = build(:clip)
         video = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/video.mp4', 'video/mp4')
         params = { video: video }
+        p params
         post "/api/v1/reels/#{clip.reel.id}/clips", params
+        p response
         expect(response).to have_http_status(201)
         clip = Clip.last
         expect(response.body).to eq(
