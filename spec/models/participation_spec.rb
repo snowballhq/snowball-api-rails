@@ -13,5 +13,6 @@ RSpec.describe Participation, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:reel) }
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:last_watched_clip).class_name('Clip') }
   end
 end

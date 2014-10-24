@@ -7,4 +7,5 @@ class Clip < ActiveRecord::Base
 
   belongs_to :reel
   belongs_to :user
+  has_many :participations, foreign_key: :last_watched_clip_id
 end
