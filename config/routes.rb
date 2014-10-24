@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :reels, only: [:index, :create, :update] do
         resources :participations, only: [:index, :create]
       end
-      resources :participaitons, only: [:update, :destroy]
+      resources :participations, only: [:update, :destroy]
     end
   end
 end
