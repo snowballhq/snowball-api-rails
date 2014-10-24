@@ -11,7 +11,8 @@ RSpec.describe 'Reels', type: :request do
       expect(response.body).to eq([
         {
           id: participation.reel.id,
-          title: participation.reel.title
+          title: participation.reel.title,
+          users_title: participation.reel.users_title
         }
       ].to_json)
     end
@@ -28,7 +29,8 @@ RSpec.describe 'Reels', type: :request do
         expect(response.body).to eq(
         {
           id: reel.id,
-          title: reel.title
+          title: reel.title,
+          users_title: reel.users_title
         }.to_json)
       end
     end
