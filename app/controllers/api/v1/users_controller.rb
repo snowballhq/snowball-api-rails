@@ -5,6 +5,7 @@ class Api::V1::UsersController < ApiController
   def index
     @users = User.all
     @users = @users.where(phone_number: params[:phone_number].split(',')) if params[:phone_number].present?
+    @users = @users.where(username: params[:username]) if params[:username].present?
   end
 
   def show

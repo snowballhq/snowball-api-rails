@@ -22,6 +22,21 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
+  describe 'GET /users?username=' do
+    it 'returns users with specified username' do
+      user = create(:user, username: 'user')
+      get "/api/v1/users?username=#{user.username}"
+      expect(response).to have_http_status(200)
+      expect(response.body).to eq([
+        {
+          id: user.id,
+          username: user.username,
+          avatar_url: nil
+        }
+      ].to_json)
+    end
+  end
+
   describe 'GET /users/:id' do
     it 'returns the user' do
       user = create(:user)
