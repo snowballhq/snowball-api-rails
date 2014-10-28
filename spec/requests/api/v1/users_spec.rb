@@ -11,7 +11,8 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil
+          avatar_url: nil,
+          you_follow: user2.following?(user)
         },
         {
           id: user2.id,
@@ -39,7 +40,7 @@ RSpec.describe 'Users', type: :request do
 
   describe 'GET /users/:id' do
     context 'getting current user' do
-      it 'returns the user with a phone number' do
+      it 'returns the user with phone number without follow status' do
         user = create(:user)
         get "/api/v1/users/#{user.id}"
         expect(response).to have_http_status(200)
@@ -52,15 +53,16 @@ RSpec.describe 'Users', type: :request do
       end
     end
     context 'getting another user' do
-      it 'returns the user without a phone number' do
+      it 'returns the user without phone number with follow status' do
         user = create(:user)
-        create(:user)
+        user2 = create(:user)
         get "/api/v1/users/#{user.id}"
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
           username: user.username,
-          avatar_url: nil
+          avatar_url: nil,
+          you_follow: user2.following?(user)
         }.to_json)
       end
     end
