@@ -6,6 +6,10 @@ RSpec.describe 'Clips', type: :request do
     it 'returns the feed of clips' do
       clip = create(:clip)
       clip2 = create(:clip)
+      create(:clip) # not following user, won't show in feed
+      user = create(:user)
+      user.follows.create!(following: clip.user)
+      user.follows.create!(following: clip2.user)
       get '/api/v1/clips/feed'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
@@ -16,7 +20,7 @@ RSpec.describe 'Clips', type: :request do
             id: clip.user.id,
             username: clip.user.username,
             avatar_url: nil,
-            you_follow: clip2.user.following?(clip.user)
+            you_follow: user.following?(clip.user)
           },
           created_at: clip.created_at.to_time.to_i
         },
@@ -26,7 +30,8 @@ RSpec.describe 'Clips', type: :request do
           user: {
             id: clip2.user.id,
             username: clip2.user.username,
-            avatar_url: nil
+            avatar_url: nil,
+            you_follow: user.following?(clip2.user)
           },
           created_at: clip2.created_at.to_time.to_i
         }

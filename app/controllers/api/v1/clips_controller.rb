@@ -3,8 +3,8 @@ class Api::V1::ClipsController < ApiController
 
   def index
     # TODO: pagination
-    # TODO: scope to user following
-    @clips = Clip.all
+    user_ids = @current_user.follows.pluck(:following_id)
+    @clips = Clip.where(user_id: user_ids)
   end
 
   def create
