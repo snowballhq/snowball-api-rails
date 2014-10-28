@@ -19,29 +19,14 @@ ActiveRecord::Schema.define(version: 20141015213216) do
 
   create_table "clips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.uuid     "user_id",            null: false
-    t.uuid     "reel_id",            null: false
     t.string   "video_file_name",    null: false
     t.string   "video_content_type", null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end
 
-  create_table "participations", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.uuid     "user_id",              null: false
-    t.uuid     "reel_id",              null: false
-    t.uuid     "last_watched_clip_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  create_table "reels", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "name"
+    t.string   "username"
     t.string   "phone_number",                   null: false
     t.string   "phone_number_verification_code"
     t.string   "auth_token",                     null: false
@@ -51,5 +36,6 @@ ActiveRecord::Schema.define(version: 20141015213216) do
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
   add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end
