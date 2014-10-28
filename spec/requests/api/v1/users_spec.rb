@@ -38,15 +38,31 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'GET /users/:id' do
-    it 'returns the user' do
-      user = create(:user)
-      get "/api/v1/users/#{user.id}"
-      expect(response).to have_http_status(200)
-      expect(response.body).to eq({
-        id: user.id,
-        username: user.username,
-        avatar_url: nil
-      }.to_json)
+    context 'getting current user' do
+      it 'returns the user with a phone number' do
+        user = create(:user)
+        get "/api/v1/users/#{user.id}"
+        expect(response).to have_http_status(200)
+        expect(response.body).to eq({
+          id: user.id,
+          username: user.username,
+          avatar_url: nil,
+          phone_number: user.phone_number
+        }.to_json)
+      end
+    end
+    context 'getting another user' do
+      it 'returns the user without a phone number' do
+        user = create(:user)
+        user2 = create(:user)
+        get "/api/v1/users/#{user.id}"
+        expect(response).to have_http_status(200)
+        expect(response.body).to eq({
+          id: user.id,
+          username: user.username,
+          avatar_url: nil
+        }.to_json)
+      end
     end
   end
 
