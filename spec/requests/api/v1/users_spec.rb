@@ -10,12 +10,12 @@ RSpec.describe 'Users', type: :request do
       expect(response.body).to eq([
         {
           id: user.id,
-          name: user.name,
+          username: user.username,
           avatar_url: nil
         },
         {
           id: user2.id,
-          name: user2.name,
+          username: user.username,
           avatar_url: nil
         }
       ].to_json)
@@ -29,7 +29,7 @@ RSpec.describe 'Users', type: :request do
       expect(response).to have_http_status(200)
       expect(response.body).to eq({
         id: user.id,
-        name: user.name,
+        username: user.username,
         avatar_url: nil
       }.to_json)
     end
@@ -39,11 +39,11 @@ RSpec.describe 'Users', type: :request do
     context 'with valid params' do
       it 'updates the user' do
         user = create(:user)
-        name = build(:user).name
-        params = { name: name }
+        username = build(:user).username
+        params = { username: username }
         patch "/api/v1/users/#{user.id}", params
         expect(response).to have_http_status(204)
-        expect(user.reload.name).to eq name
+        expect(user.reload.username).to eq username
       end
     end
     context 'with invalid params' do
@@ -73,7 +73,7 @@ RSpec.describe 'Users', type: :request do
           expect(response).to have_http_status(200)
           expect(response.body).to eq({
             id: user.id,
-            name: user.name,
+            username: user.username,
             avatar_url: nil
           }.to_json)
         end
@@ -87,7 +87,7 @@ RSpec.describe 'Users', type: :request do
           user = User.last
           expect(response.body).to eq({
             id: user.id,
-            name: user.name,
+            username: user.username,
             avatar_url: nil
           }.to_json)
         end
@@ -128,7 +128,7 @@ RSpec.describe 'Users', type: :request do
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
-          name: user.name,
+          username: user.username,
           avatar_url: nil,
           auth_token: user.reload.auth_token
         }.to_json)

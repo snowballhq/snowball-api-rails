@@ -1,10 +1,10 @@
 class Api::V1::ClipsController < ApiController
   before_action :authenticate!
-  before_action :set_reel, only: :index
 
   def index
     # TODO: pagination
-    @clips = @reel.clips
+    # TODO: scope to user following
+    @clips = Clip.all
   end
 
   def create
@@ -14,13 +14,8 @@ class Api::V1::ClipsController < ApiController
 
   private
 
-  def set_reel
-    @reel = Reel.find(params[:reel_id])
-  end
-
   def clip_params
     params.permit(
-      :reel_id,
       :video
     )
   end

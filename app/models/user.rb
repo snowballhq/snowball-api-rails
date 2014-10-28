@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   phony_normalize :phone_number, default_country_code: 'US'
 
   has_many :clips
-  has_many :participations
-  has_many :reels, through: :participations
 
   before_validation(on: :create) do
     generate_auth_token

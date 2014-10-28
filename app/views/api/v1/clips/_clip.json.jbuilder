@@ -1,6 +1,5 @@
 json.cache! clip do
   json.id clip.id
-  json.reel_id clip.reel.id
   json.video_url clip.video.url
   json.user do
     json.partial! 'api/v1/users/user', user: clip.user

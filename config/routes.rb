@@ -4,11 +4,8 @@ Rails.application.routes.draw do
       match 'users/phone-auth', to: 'users#phone_auth', via: :post
       match 'users/:user_id/phone-verification', to: 'users#phone_verification', via: :post
       resources :users, only: [:index, :show, :update]
-      resources :reels, only: [:index, :create, :update] do
-        resources :participations, only: [:index, :create]
-        resources :clips, only: [:index, :create]
-      end
-      resources :participations, only: [:update, :destroy]
+      resources :clips, only: :create
+      match 'clips/feed', to: 'clips#index', via: :get
     end
   end
 end

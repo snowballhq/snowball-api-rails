@@ -43,7 +43,7 @@ class Api::V1::UsersController < ApiController
 
   def user_params
     params.permit(
-      :name,
+      :username,
       :phone_number
     )
   end
