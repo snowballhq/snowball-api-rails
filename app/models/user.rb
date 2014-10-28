@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   phony_normalize :phone_number, default_country_code: 'US'
 
   has_many :clips
+  has_many :follows, class_name: 'Follow', foreign_key: :follower_id # follows user has created
+  has_many :followings, class_name: 'Follow', foreign_key: :following_id # follows others have created
 
   before_validation(on: :create) do
     generate_auth_token
@@ -31,5 +33,9 @@ class User < ActiveRecord::Base
     to: phone_number,
     body: "Your Snowball code is #{phone_number_verification_code}. Enjoy!"
     )
+  end
+
+  def following?(user)
+    0 < follows.where(following: user).count
   end
 end

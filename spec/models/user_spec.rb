@@ -15,6 +15,8 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:clips) }
+    it { is_expected.to have_many(:followings).class_name('Follow') }
+    it { is_expected.to have_many(:follows).class_name('Follow') }
   end
 
   describe 'before_validation(on: :create)' do
@@ -57,6 +59,18 @@ RSpec.describe User, type: :model do
   describe '#send_verification_text' do
     it 'sends the user a text message with the verification code' do
       # TODO: finish writing this spec with webmock
+    end
+  end
+
+  describe '#following?(user)' do
+    it 'returns true if the user is following the user' do
+      follow = create(:follow)
+      expect(follow.follower.following?(follow.following)).to be_truthy
+    end
+    it 'returns false if the user is not following the user' do
+      user = create(:user)
+      user2 = create(:user)
+      expect(user.following?(user2)).to be_falsy
     end
   end
 end
