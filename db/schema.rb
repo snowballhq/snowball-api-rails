@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 20141015213216) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "flags", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "clip_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "follows", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+    t.uuid     "following_id", null: false
+    t.uuid     "follower_id",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.string   "username"
     t.string   "phone_number",                   null: false

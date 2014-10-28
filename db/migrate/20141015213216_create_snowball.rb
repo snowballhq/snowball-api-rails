@@ -13,10 +13,21 @@ class CreateSnowball < ActiveRecord::Migration
     add_index :users, :phone_number, unique: true
     add_index :users, :auth_token, unique: true
 
+    create_table :follows, id: :uuid do |t|
+      t.uuid :following_id, null: false
+      t.uuid :follower_id, null: false
+      t.timestamps null: false
+    end
+
     create_table :clips, id: :uuid do |t|
       t.uuid :user_id, null: false
       t.string :video_file_name, null: false
       t.string :video_content_type, null: false
+      t.timestamps null: false
+    end
+
+    create_table :flags, id: :uuid do |t|
+      t.uuid :clip_id, null: false
       t.timestamps null: false
     end
   end
