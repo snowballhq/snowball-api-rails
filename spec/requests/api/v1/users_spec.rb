@@ -54,7 +54,7 @@ RSpec.describe 'Users', type: :request do
     context 'getting another user' do
       it 'returns the user without a phone number' do
         user = create(:user)
-        user2 = create(:user)
+        create(:user)
         get "/api/v1/users/#{user.id}"
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
