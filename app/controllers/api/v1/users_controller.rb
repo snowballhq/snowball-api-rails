@@ -35,11 +35,13 @@ class Api::V1::UsersController < ApiController
   private
 
   def set_user
-    if params[:id] = 'me'
+    user_id = params[:id] if params[:id].present?
+    user_id = params[:user_id] if params[:user_id].present?
+    if user_id == 'me'
       @user = @current_user
       return
     end
-    @user = User.find(params[:id])
+    @user = User.find(user_id)
   end
 
   def user_params
