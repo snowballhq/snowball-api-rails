@@ -7,4 +7,5 @@ class Clip < ActiveRecord::Base
   validates_attachment :video, presence: true, content_type: { content_type: 'video/mp4' }
 
   belongs_to :user
+  has_many :flags
 end

@@ -7,7 +7,9 @@ Rails.application.routes.draw do
         resources :follows, only: :create
         match '/follows', to: 'follows#destroy', via: :delete
       end
-      resources :clips, only: :create
+      resources :clips, only: :create do
+        resources :flags, only: :create
+      end
       match 'clips/feed', to: 'clips#index', via: :get
     end
   end
