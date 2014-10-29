@@ -22,6 +22,9 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'dotenv-rails'
   gem 'fuubar'
+end
+
+group :test do
   gem 'webmock'
 end
 
