@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApiController
-  before_action :authenticate!, except: [:create]
+  before_action :authenticate!, except: [:phone_auth]
   before_action :set_user, only: [:show, :update, :phone_verification]
 
   def index
