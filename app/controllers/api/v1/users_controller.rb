@@ -17,7 +17,8 @@ class Api::V1::UsersController < ApiController
   end
 
   def phone_auth
-    @user = User.where(user_params).first_or_initialize
+    phone_number = PhonyRails.normalize_number(user_params[:phone_number])
+    @user = User.where(phone_number: phone_number).first_or_initialize
     user_is_new = @user.new_record?
     @user.generate_phone_number_verification_code
     @user.send_verification_text
