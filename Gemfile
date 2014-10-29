@@ -10,7 +10,6 @@ gem 'phony_rails'
 gem 'twilio-ruby'
 gem 'paperclip'
 gem 'aws-sdk'
-gem 'webmock'
 
 group :development, :test do
   gem 'spring'
@@ -23,6 +22,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'dotenv-rails'
   gem 'fuubar'
+  gem 'webmock'
 end
 
 group :production do
