@@ -4,12 +4,11 @@ RSpec.describe 'Clips', type: :request do
   describe 'GET /clips/feed' do
     # TODO: since_id
     it 'returns the feed of clips' do
-      clip = create(:clip)
-      clip2 = create(:clip)
       create(:clip) # not following user, won't show in feed
+      clip = create(:clip)
       user = create(:user)
+      clip2 = create(:clip, user: user) # own clip should show in feed
       user.follows.create!(following: clip.user)
-      user.follows.create!(following: clip2.user)
       get '/api/v1/clips/feed'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
@@ -30,8 +29,7 @@ RSpec.describe 'Clips', type: :request do
           user: {
             id: clip2.user.id,
             username: clip2.user.username,
-            avatar_url: nil,
-            you_follow: user.following?(clip2.user)
+            avatar_url: nil
           },
           created_at: clip2.created_at.to_time.to_i
         }

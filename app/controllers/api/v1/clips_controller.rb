@@ -3,7 +3,7 @@ class Api::V1::ClipsController < ApiController
 
   def index
     # TODO: pagination
-    user_ids = @current_user.follows.pluck(:following_id)
+    user_ids = @current_user.follows.pluck(:following_id).append(@current_user.id)
     @clips = Clip.where(user_id: user_ids)
   end
 
