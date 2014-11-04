@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Clips', type: :request do
-  describe 'GET /clips/feed' do
+  describe 'GET /clips/stream' do
     # TODO: since_id
-    it 'returns the feed of clips' do
-      create(:clip) # not following user, won't show in feed
+    it 'returns the stream of clips' do
+      create(:clip) # not following user, won't show in stream
       clip = create(:clip)
       user = create(:user)
-      clip2 = create(:clip, user: user) # own clip should show in feed
+      clip2 = create(:clip, user: user) # own clip should show in stream
       user.follows.create!(following: clip.user)
-      get '/api/v1/clips/feed'
+      get '/api/v1/clips/stream'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {

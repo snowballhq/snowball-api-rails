@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :clips, only: :create do
         resources :flags, only: :create
       end
-      match 'clips/feed', to: 'clips#index', via: :get
+      match 'clips/stream', to: 'clips#index', via: :get
     end
   end
 end
