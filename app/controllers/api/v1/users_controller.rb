@@ -4,7 +4,12 @@ class Api::V1::UsersController < ApiController
 
   def index
     @users = User.all
-    @users = @users.where(phone_number: params[:phone_number].split(',')) if params[:phone_number].present?
+    if params[:phone_number].present?
+      phone_numbers = params[:phone_number].split(',').map do |phone_number|
+        PhonyRails.normalize_number(phone_number)
+      end
+      @users = @users.where(phone_number: phone_numbers)
+    end
     @users = @users.where(username: params[:username]) if params[:username].present?
   end
 
