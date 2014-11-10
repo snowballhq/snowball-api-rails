@@ -18,7 +18,7 @@ RSpec.describe 'Users', type: :request do
         },
         {
           id: user2.id,
-          username: user.username,
+          username: user2.username,
           avatar_url: nil
         }
       ].to_json)
