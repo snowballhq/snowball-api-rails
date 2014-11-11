@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApiController
-  before_action :authenticate!, except: [:phone_auth, :phone_verification]
+  before_action :authenticate!, except: [:phone_auth, :phone_verification, :sign_in, :sign_up]
   before_action :set_user, only: [:show, :update, :phone_verification]
 
   def index
@@ -38,6 +38,23 @@ class Api::V1::UsersController < ApiController
     @user.save!
   end
 
+  def sign_in
+    fail Snowball::InvalidUsername unless user_params[:username].present?
+    fail Snowball::InvalidPassword unless user_params[:password].present?
+    @user = User.where(username: user_params[:username]).first
+    fail Snowball::InvalidUsername if @user.nil?
+    @user.authenticate(user_params[:password])
+    fail Snowball::InvalidPassword if @user.nil?
+  end
+
+  def sign_up
+    fail Snowball::InvalidUsername unless user_params[:username].present?
+    fail Snowball::InvalidPassword unless user_params[:password].present?
+    @user = User.where(username: user_params[:username]).first
+    fail Snowball::UsernameInUse if @user.present?
+    @user = User.create!(user_params)
+  end
+
   private
 
   def set_user
@@ -53,6 +70,7 @@ class Api::V1::UsersController < ApiController
   def user_params
     params.permit(
       :username,
+      :password,
       :phone_number
     )
   end

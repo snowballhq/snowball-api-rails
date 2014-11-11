@@ -181,4 +181,82 @@ RSpec.describe 'Users', type: :request do
       end
     end
   end
+
+  describe 'POST /users/sign_in' do
+    it 'returns an error when the username is invalid or doesn\'t exist' do
+      params = { username: nil, password: nil }
+      post '/api/v1/users/sign-in', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Invalid username. Please try again.'
+      }.to_json)
+    end
+    it 'returns an error when the password is invalid or doesn\'t match' do
+      user = create(:user)
+      params = { username: user.username, password: nil }
+      post '/api/v1/users/sign-in', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Invalid password. Please try again.'
+      }.to_json)
+    end
+    context 'when everything is valid' do
+      it 'returns the user' do
+        user = create(:user)
+        params = { username: user.username, password: user.password }
+        post '/api/v1/users/sign-in', params
+        expect(response).to have_http_status(200)
+        expect(response.body).to eq({
+          id: user.id,
+          username: user.username,
+          avatar_url: nil,
+          auth_token: user.reload.auth_token
+        }.to_json)
+      end
+    end
+  end
+
+  describe 'POST /users/sign_up' do
+    it 'returns an error when the username is invalid' do
+      params = { username: nil, password: nil }
+      post '/api/v1/users/sign-up', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Invalid username. Please try again.'
+      }.to_json)
+    end
+    it 'returns an error when the username is already in use' do
+      user = create(:user)
+      params = { username: user.username, password: user.password }
+      post '/api/v1/users/sign-up', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Username is already in use. Please select another or try to sign in.'
+      }.to_json)
+    end
+    it 'returns an error when the password is invalid' do
+      user = build(:user)
+      params = { username: user.username, password: nil }
+      post '/api/v1/users/sign-up', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Invalid password. Please try again.'
+      }.to_json)
+    end
+    context 'when everything is valid' do
+      it 'returns the user' do
+        user = build(:user)
+        params = { username: user.username, password: user.password }
+        post '/api/v1/users/sign-up', params
+        expect(response).to have_http_status(200)
+        user = User.where(username: user.username).first
+        expect(response.body).to eq({
+          id: user.id,
+          username: user.username,
+          avatar_url: nil,
+          auth_token: user.auth_token
+        }.to_json)
+      end
+    end
+  end
 end
