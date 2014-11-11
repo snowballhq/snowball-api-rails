@@ -74,19 +74,21 @@ RSpec.describe 'Users', type: :request do
     context 'with valid params' do
       it 'updates the user' do
         user = create(:user)
-        username = build(:user).username
-        params = { username: username }
+        user2 = build(:user)
+        params = { username: user2.username, password: user2.password }
         patch "/api/v1/users/#{user.id}", params
         expect(response).to have_http_status(204)
-        expect(user.reload.username).to eq username
+        expect(user.reload.username).to eq user2.username
       end
     end
     context 'with invalid params' do
       it 'returns an error' do
-        post '/api/v1/users/phone-auth'
+        user = create(:user)
+        params = { username: nil, password: 'password' }
+        patch "/api/v1/users/#{user.id}", params
         expect(response).to have_http_status(400)
         expect(response.body).to eq({
-          message: 'Phone number can\'t be blank'
+          message: 'Username can\'t be blank'
         }.to_json)
       end
     end
@@ -140,14 +142,14 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'POST /users/:user_id/phone_verification' do
+  describe 'POST /users/:user_id/phone-verification' do
     context 'when the code is valid' do
       it 'clears the verification code' do
         user = create(:user, phone_number_verification_code: '1234')
         verification_code = user.phone_number_verification_code
         params = { phone_number_verification_code: verification_code }
         post "/api/v1/users/#{user.id}/phone-verification", params
-        expect(user.reload.phone_number_verification_code).to_not eq(verification_code)
+        expect(user.reload.phone_number_verification_code).to be_nil
       end
       it 'generates a new auth token' do
         user = create(:user, phone_number_verification_code: '1234')

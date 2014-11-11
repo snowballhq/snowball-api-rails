@@ -20,6 +20,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of(:username) }
     it 'validates presence of :auth_token' do
       allow(user).to receive(:generate_auth_token)
       expect(user).to validate_presence_of(:auth_token)

@@ -3,9 +3,10 @@ class User < ActiveRecord::Base
 
   include Orderable
 
+  validates :username, presence: true
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
-  validates :password, length: { minimum: 5 }
+  validates :password, length: { minimum: 5 }, allow_blank: true
 
   phony_normalize :phone_number, default_country_code: 'US'
 

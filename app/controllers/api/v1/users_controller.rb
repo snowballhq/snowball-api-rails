@@ -25,6 +25,8 @@ class Api::V1::UsersController < ApiController
     phone_number = PhonyRails.normalize_number(user_params[:phone_number])
     @user = User.where(phone_number: phone_number).first_or_initialize
     user_is_new = @user.new_record?
+    @user.username = SecureRandom.urlsafe_base64(5) if user_is_new
+    @user.password = SecureRandom.urlsafe_base64(10) if user_is_new
     @user.generate_phone_number_verification_code
     @user.send_verification_text
     @user.save!
