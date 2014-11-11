@@ -5,6 +5,7 @@ class CreateSnowball < ActiveRecord::Migration
     create_table :users, id: :uuid do |t|
       t.string :username, null: false
       t.string :password_digest, null: false
+      t.string :name
       t.string :phone_number
       t.string :phone_number_verification_code
       t.string :auth_token, null: false
