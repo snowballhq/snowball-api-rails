@@ -10,6 +10,7 @@ gem 'phony_rails'
 gem 'twilio-ruby'
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'bcrypt'
 
 group :development, :test do
   gem 'spring'

@@ -39,8 +39,9 @@ ActiveRecord::Schema.define(version: 20141015213216) do
   end
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "username"
-    t.string   "phone_number",                   null: false
+    t.string   "username",                       null: false
+    t.string   "password_digest",                null: false
+    t.string   "phone_number"
     t.string   "phone_number_verification_code"
     t.string   "auth_token",                     null: false
     t.datetime "created_at",                     null: false

@@ -5,12 +5,27 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to be_valid }
 
+  describe 'has_secure_password' do
+    it 'fails without a password' do
+      user.password = nil
+      expect(user.save).to be_falsey
+    end
+    it 'fails with a short password' do
+      user.password = 'p'
+      expect(user.save).to be_falsey
+    end
+    it 'succeeds with a valid password' do
+      expect(user.save).to be_truthy
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:phone_number) }
     it 'validates presence of :auth_token' do
       allow(user).to receive(:generate_auth_token)
       expect(user).to validate_presence_of(:auth_token)
     end
+    it { is_expected.to ensure_length_of(:password).is_at_least(5) }
   end
 
   describe 'associations' do

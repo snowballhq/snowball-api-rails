@@ -3,8 +3,9 @@ class CreateSnowball < ActiveRecord::Migration
 
   def change
     create_table :users, id: :uuid do |t|
-      t.string :username
-      t.string :phone_number, null: false
+      t.string :username, null: false
+      t.string :password_digest, null: false
+      t.string :phone_number
       t.string :phone_number_verification_code
       t.string :auth_token, null: false
       t.timestamps null: false
