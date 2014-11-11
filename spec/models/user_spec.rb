@@ -11,22 +11,6 @@ RSpec.describe User, type: :model do
       allow(user).to receive(:generate_auth_token)
       expect(user).to validate_presence_of(:auth_token)
     end
-    describe 'validates #username_exists_when_user_verified' do
-      context 'when the user is verified' do
-        it 'is not valid without a username' do
-          user.username = nil
-          user.phone_number_verification_code = nil
-          expect(user.valid?).to be_falsy
-        end
-      end
-      context 'when the user is not verified' do
-        it 'is valid without a username' do
-          user.username = nil
-          user.phone_number_verification_code = '1234'
-          expect(user.valid?).to be_truthy
-        end
-      end
-    end
   end
 
   describe 'associations' do

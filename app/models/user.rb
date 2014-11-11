@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
 
   validates :phone_number, presence: true, phony_plausible: true
   validates :auth_token, presence: true
-  validate :username_exists_when_user_verified
 
   phony_normalize :phone_number, default_country_code: 'US'
 
@@ -38,13 +37,5 @@ class User < ActiveRecord::Base
 
   def following?(user)
     0 < follows.where(following: user).count
-  end
-
-  protected
-
-  def username_exists_when_user_verified
-    return if username.present?
-    return if phone_number_verification_code.present?
-    errors.add(:username, 'can\'t be blank')
   end
 end
