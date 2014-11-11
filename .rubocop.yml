@@ -29,3 +29,6 @@ BlockComments:
 
 RSpec/DescribeClass:
   Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
