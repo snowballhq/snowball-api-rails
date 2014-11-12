@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
   validates :password, length: { minimum: 5 }, allow_blank: true
+  validates :email, presence: true, format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ # this regex is from Devise, lib/devise.rb 'email_regexp'
 
   phony_normalize :phone_number, default_country_code: 'US'
 

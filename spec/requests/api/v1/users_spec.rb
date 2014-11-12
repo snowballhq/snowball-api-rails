@@ -245,10 +245,19 @@ RSpec.describe 'Users', type: :request do
         message: 'Invalid password. Please try again.'
       }.to_json)
     end
+    it 'returns an error when the email is invalid' do
+      user = build(:user)
+      params = { username: user.username, password: user.password, email: 'invalidemail@' }
+      post '/api/v1/users/sign-up', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'Email is invalid'
+      }.to_json)
+    end
     context 'when everything is valid' do
       it 'returns the user' do
         user = build(:user)
-        params = { username: user.username, password: user.password }
+        params = { username: user.username, password: user.password, email: user.email }
         post '/api/v1/users/sign-up', params
         expect(response).to have_http_status(200)
         user = User.where(username: user.username).first

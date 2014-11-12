@@ -27,6 +27,7 @@ class Api::V1::UsersController < ApiController
     user_is_new = @user.new_record?
     @user.username = SecureRandom.urlsafe_base64(5) if user_is_new
     @user.password = SecureRandom.urlsafe_base64(10) if user_is_new
+    @user.email = "autogen#{SecureRandom.urlsafe_base64(10)}@snowball.is"
     @user.generate_phone_number_verification_code
     @user.send_verification_text
     @user.save!
@@ -72,6 +73,7 @@ class Api::V1::UsersController < ApiController
   def user_params
     params.permit(
       :username,
+      :email,
       :password,
       :phone_number
     )
