@@ -29,6 +29,7 @@ RSpec.describe 'Clips', type: :request do
           user: {
             id: clip2.user.id,
             username: clip2.user.username,
+            email: clip2.user.email,
             avatar_url: nil
           },
           created_at: clip2.created_at.to_time.to_i
@@ -53,6 +54,7 @@ RSpec.describe 'Clips', type: :request do
           user: {
             id: clip.user.id,
             username: clip.user.username,
+            email: clip.user.email,
             avatar_url: nil
           },
           created_at: clip.created_at.to_time.to_i

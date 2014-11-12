@@ -19,6 +19,7 @@ RSpec.describe 'Users', type: :request do
         {
           id: user2.id,
           username: user2.username,
+          email: user2.email,
           avatar_url: nil
         }
       ].to_json)
@@ -34,6 +35,7 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
+          email: user.email,
           avatar_url: nil
         }
       ].to_json)
@@ -49,6 +51,7 @@ RSpec.describe 'Users', type: :request do
         expect(response.body).to eq({
           id: user.id,
           username: user.username,
+          email: user.email,
           avatar_url: nil,
           phone_number: user.phone_number
         }.to_json)
