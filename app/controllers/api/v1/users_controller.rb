@@ -42,10 +42,10 @@ class Api::V1::UsersController < ApiController
   end
 
   def sign_in
-    fail Snowball::InvalidUsername unless user_params[:username].present?
+    fail Snowball::InvalidEmail unless user_params[:email].present?
     fail Snowball::InvalidPassword unless user_params[:password].present?
-    @user = User.where(username: user_params[:username]).first
-    fail Snowball::InvalidUsername if @user.nil?
+    @user = User.where(email: user_params[:email]).first
+    fail Snowball::InvalidEmail if @user.nil?
     @user.authenticate(user_params[:password])
     fail Snowball::InvalidPassword if @user.nil?
   end

@@ -6,6 +6,8 @@ class ApiController < ApplicationController
   end
   class Snowball::InvalidUsername < StandardError
   end
+  class Snowball::InvalidEmail < StandardError
+  end
   class Snowball::InvalidPassword < StandardError
   end
   class Snowball::UsernameInUse < StandardError
@@ -15,6 +17,7 @@ class ApiController < ApplicationController
   rescue_from ActionController::ParameterMissing, with: :render_error
   rescue_from Snowball::InvalidPhoneNumberVerificationCode, with: :render_error
   rescue_from Snowball::InvalidUsername, with: :render_error
+  rescue_from Snowball::InvalidEmail, with: :render_error
   rescue_from Snowball::InvalidPassword, with: :render_error
   rescue_from Snowball::UsernameInUse, with: :render_error
 
@@ -28,6 +31,8 @@ class ApiController < ApplicationController
       message = 'Looks like you typed in incorrect numbers. Please try again.'
     elsif error.is_a? Snowball::InvalidUsername
       message = 'Invalid username. Please try again.'
+    elsif error.is_a? Snowball::InvalidEmail
+      message = 'Invalid email. Please try again.'
     elsif error.is_a? Snowball::InvalidPassword
       message = 'Invalid password. Please try again.'
     elsif error.is_a? Snowball::UsernameInUse

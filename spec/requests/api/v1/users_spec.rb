@@ -188,17 +188,17 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /users/sign_in' do
-    it 'returns an error when the username is invalid or doesn\'t exist' do
-      params = { username: nil, password: nil }
+    it 'returns an error when the email is invalid or doesn\'t exist' do
+      params = { email: nil, password: nil }
       post '/api/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Invalid username. Please try again.'
+        message: 'Invalid email. Please try again.'
       }.to_json)
     end
     it 'returns an error when the password is invalid or doesn\'t match' do
       user = create(:user)
-      params = { username: user.username, password: nil }
+      params = { email: user.email, password: nil }
       post '/api/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
@@ -208,7 +208,7 @@ RSpec.describe 'Users', type: :request do
     context 'when everything is valid' do
       it 'returns the user' do
         user = create(:user)
-        params = { username: user.username, password: user.password }
+        params = { email: user.email, password: user.password }
         post '/api/v1/users/sign-in', params
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
