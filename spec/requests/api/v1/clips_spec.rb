@@ -15,6 +15,7 @@ RSpec.describe 'Clips', type: :request do
         {
           id: clip.id,
           video_url: clip.video.url,
+          thumbnail_url: clip.thumbnail.url,
           user: {
             id: clip.user.id,
             username: clip.user.username,
@@ -26,6 +27,7 @@ RSpec.describe 'Clips', type: :request do
         {
           id: clip2.id,
           video_url: clip2.video.url,
+          thumbnail_url: clip2.thumbnail.url,
           user: {
             id: clip2.user.id,
             username: clip2.user.username,
@@ -43,7 +45,8 @@ RSpec.describe 'Clips', type: :request do
       it 'creates and returns the clip' do
         create(:user)
         video = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/video.mp4', 'video/mp4')
-        params = { video: video }
+        thumbnail = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/thumbnail.png', 'image/png')
+        params = { video: video, thumbnail: thumbnail }
         post '/api/v1/clips', params
         expect(response).to have_http_status(201)
         clip = Clip.last
@@ -51,6 +54,7 @@ RSpec.describe 'Clips', type: :request do
         {
           id: clip.id,
           video_url: clip.video.url,
+          thumbnail_url: clip.thumbnail.url,
           user: {
             id: clip.user.id,
             username: clip.user.username,

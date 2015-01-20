@@ -15,7 +15,8 @@ class Api::V1::ClipsController < ApiController
 
   def clip_params
     params.permit(
-      :video
+      :video,
+      :thumbnail
     )
   end
 end
