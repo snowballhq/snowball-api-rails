@@ -26,6 +26,8 @@ class CreateSnowball < ActiveRecord::Migration
       t.uuid :user_id, null: false
       t.string :video_file_name, null: false
       t.string :video_content_type, null: false
+      t.string :thumbnail_file_name, null: false
+      t.string :thumbnail_content_type, null: false
       t.timestamps null: false
     end
 
