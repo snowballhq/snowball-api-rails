@@ -250,7 +250,7 @@ DEPENDENCIES
   paperclip
   pg
   phony_rails
-  rails (= 4.2.0.beta4)
+  rails
   rails_12factor
   rspec-rails
   rubocop
