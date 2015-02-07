@@ -20,7 +20,8 @@ RSpec.describe 'Clips', type: :request do
             id: clip.user.id,
             username: clip.user.username,
             avatar_url: nil,
-            you_follow: user.following?(clip.user)
+            follower: clip.user.following?(user),
+            following: user.following?(clip.user)
           },
           created_at: clip.created_at.to_time.to_i
         },
