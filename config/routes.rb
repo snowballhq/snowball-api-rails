@@ -19,9 +19,10 @@ Rails.application.routes.draw do
   end
 
   constraints subdomain: 'api' do
-    concerns :api
+    namespace :api, path: nil do
+      concerns :api
+    end
   end
-
   namespace :api do
     concerns :api
   end
