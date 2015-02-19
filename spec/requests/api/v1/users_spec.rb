@@ -6,7 +6,7 @@ RSpec.describe 'Users', type: :request do
       user = create(:user)
       user2 = create(:user, phone_number: '4151234567')
       # instead of user2.phone_number, we test normalization here
-      query = { phone_number: "#{user.phone_number}, +1 (415) 123-4567" }.to_query
+      query = { phone_number: "#{user.phone_number}, (415) 123-4567" }.to_query
       get "/api/v1/users?#{query}"
       expect(response).to have_http_status(200)
       expect(response.body).to eq([

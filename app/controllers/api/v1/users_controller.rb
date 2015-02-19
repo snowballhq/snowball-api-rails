@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApiController
     @users = User.all
     if params[:phone_number].present?
       phone_numbers = params[:phone_number].split(',').map do |phone_number|
-        PhonyRails.normalize_number(phone_number)
+        PhonyRails.normalize_number(phone_number, default_country_code: 'US')
       end
       @users = @users.where(phone_number: phone_numbers)
     end
