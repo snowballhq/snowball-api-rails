@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  describe 'GET /users?phone_number=' do
+  describe 'POST /users/phone-search' do
     it 'returns users with specified phone number(s)' do
       user = create(:user)
       user2 = create(:user, phone_number: '4151234567')
       # instead of user2.phone_number, we test normalization here
-      query = { phone_number: "#{user.phone_number}, (415) 123-4567" }.to_query
-      get "/api/v1/users?#{query}"
+      params = { phone_numbers: [user.phone_number, "(415) 123-4567"] }
+      post "/api/v1/users/phone-search", params
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {

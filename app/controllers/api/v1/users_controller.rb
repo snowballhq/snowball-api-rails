@@ -3,14 +3,7 @@ class Api::V1::UsersController < ApiController
   before_action :set_user, only: [:show, :update, :phone_verification]
 
   def index
-    @users = User.all
-    if params[:phone_number].present?
-      phone_numbers = params[:phone_number].split(',').map do |phone_number|
-        PhonyRails.normalize_number(phone_number, default_country_code: 'US')
-      end
-      @users = @users.where(phone_number: phone_numbers)
-    end
-    @users = @users.where(username: params[:username]) if params[:username].present?
+    @users = User.where(username: params[:username]) if params[:username].present?
   end
 
   def show
@@ -19,6 +12,13 @@ class Api::V1::UsersController < ApiController
   def update
     @user.update!(user_params)
     head :no_content
+  end
+
+  def phone_search
+    phone_numbers = params[:phone_numbers].map do |phone_number|
+      PhonyRails.normalize_number(phone_number, default_country_code: 'US')
+    end
+    @users = User.where(phone_number: phone_numbers)
   end
 
   def phone_auth

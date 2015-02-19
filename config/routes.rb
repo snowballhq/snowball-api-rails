@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       match 'users/sign-in', to: 'users#sign_in', via: :post
       match 'users/sign-up', to: 'users#sign_up', via: :post
       match 'users/phone-auth', to: 'users#phone_auth', via: :post
+      match 'users/phone-search', to: 'users#phone_search', via: :post
       resources :users, only: [:index, :show, :update] do
         match '/phone-verification', to: 'users#phone_verification', via: :post
         match '/followers', to: 'follows#followers', via: :get
