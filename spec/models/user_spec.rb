@@ -49,18 +49,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#generate_phone_number_verification_code' do
-    it 'generates a new verification code' do
-      expect { user.generate_phone_number_verification_code }.to change { user.phone_number_verification_code }.from(nil).to(a_string_matching(/[0-9]{4}/))
-    end
-  end
-
-  describe '#send_verification_text' do
-    it 'sends the user a text message with the verification code' do
-      # TODO: finish writing this spec with webmock
-    end
-  end
-
   describe '#following?(user)' do
     it 'returns true if the user is following the user' do
       follow = create(:follow)

@@ -2,8 +2,6 @@ class ApiController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
-  class Snowball::InvalidPhoneNumberVerificationCode < StandardError
-  end
   class Snowball::InvalidUsername < StandardError
   end
   class Snowball::InvalidEmail < StandardError
@@ -15,7 +13,6 @@ class ApiController < ApplicationController
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
-  rescue_from Snowball::InvalidPhoneNumberVerificationCode, with: :render_error
   rescue_from Snowball::InvalidUsername, with: :render_error
   rescue_from Snowball::InvalidEmail, with: :render_error
   rescue_from Snowball::InvalidPassword, with: :render_error
@@ -27,8 +24,6 @@ class ApiController < ApplicationController
       message = error.record.errors.full_messages.first
     elsif error.is_a? ActionController::ParameterMissing
       message = error.message
-    elsif error.is_a? Snowball::InvalidPhoneNumberVerificationCode
-      message = 'Looks like you typed in incorrect numbers. Please try again.'
     elsif error.is_a? Snowball::InvalidUsername
       message = 'Invalid username. Please try again.'
     elsif error.is_a? Snowball::InvalidEmail

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApiController
-  before_action :authenticate!, except: [:phone_auth, :phone_verification, :sign_in, :sign_up]
-  before_action :set_user, only: [:show, :update, :phone_verification]
+  before_action :authenticate!, except: [:sign_in, :sign_up]
+  before_action :set_user, only: [:show, :update]
 
   def index
     @users = User.where(username: params[:username]) if params[:username].present?
@@ -19,26 +19,6 @@ class Api::V1::UsersController < ApiController
       PhonyRails.normalize_number(phone_number, default_country_code: 'US')
     end
     @users = User.where(phone_number: phone_numbers)
-  end
-
-  def phone_auth
-    phone_number = PhonyRails.normalize_number(user_params[:phone_number])
-    @user = User.where(phone_number: phone_number).first_or_initialize
-    user_is_new = @user.new_record?
-    @user.username = SecureRandom.urlsafe_base64(5) if user_is_new
-    @user.password = SecureRandom.urlsafe_base64(10) if user_is_new
-    @user.email = "autogen#{SecureRandom.urlsafe_base64(10)}@snowball.is"
-    @user.generate_phone_number_verification_code
-    @user.send_verification_text
-    @user.save!
-    render status: :created if user_is_new
-  end
-
-  def phone_verification
-    fail Snowball::InvalidPhoneNumberVerificationCode if @user.phone_number_verification_code != params[:phone_number_verification_code]
-    @user.generate_auth_token
-    @user.phone_number_verification_code = nil
-    @user.save!
   end
 
   def sign_in
