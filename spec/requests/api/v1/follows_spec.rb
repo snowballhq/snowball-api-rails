@@ -5,13 +5,13 @@ RSpec.describe 'Follows', type: :request do
     it 'returns the users who are following the specified user' do
       user = create(:user)
       user2 = create(:user)
-      create(:follow, following: user2, follower: user)
-      get "/api/v1/users/#{user2.id}/followers"
+      create(:follow, following: user, follower: user2)
+      get "/api/v1/users/#{user.id}/followers"
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
-          id: user.id,
-          username: user.username,
+          id: user2.id,
+          username: user2.username,
           avatar_url: nil,
           follower: true,
           following: false
@@ -31,9 +31,7 @@ RSpec.describe 'Follows', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil,
-          follower: false,
-          following: true
+          avatar_url: nil
         }
       ].to_json)
     end
@@ -53,8 +51,8 @@ RSpec.describe 'Follows', type: :request do
     it 'unfollows the user' do
       user = create(:user)
       user2 = create(:user)
-      create(:follow, following: user, follower: user2)
-      delete "/api/v1/users/#{user.id}/follow"
+      create(:follow, following: user2, follower: user)
+      delete "/api/v1/users/#{user2.id}/follow"
       expect(response).to have_http_status(204)
       expect(Follow.count).to eq(0)
     end

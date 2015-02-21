@@ -1,6 +1,10 @@
 class ApiController < ApplicationController
+  # TODO: figure out if next two lines are needed
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
+
+  before_action :authenticate_user_from_token!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
+  before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
   class Snowball::InvalidUsername < StandardError
   end
@@ -42,18 +46,13 @@ class ApiController < ApplicationController
 
   protected
 
-  def authenticate!
+  def authenticate_user_from_token!
     if Rails.env.test?
-      @current_user = User.last
+      sign_in User.first, store: false
       return
     end
-    authenticate_or_request_with_http_basic do |auth_token|
-      @current_user = User.where(auth_token: auth_token).first
-      if @current_user.present?
-        true
-      else
-        false
-      end
-    end
+    auth_token, _ = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
+    user = auth_token && User.where(auth_token: auth_token).first
+    sign_in user, store: false if user
   end
 end

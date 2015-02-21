@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   concern :api do
     namespace :v1, defaults: { format: :json } do
-      match 'users/sign-in', to: 'users#sign_in', via: :post
-      match 'users/sign-up', to: 'users#sign_up', via: :post
+      match 'users/sign-in', to: 'sessions#create', via: :post
+      match 'users/sign-up', to: 'registrations#create', via: :post
       match 'users/phone-search', to: 'users#phone_search', via: :post
       resources :users, only: [:index, :show, :update] do
         match '/followers', to: 'follows#followers', via: :get

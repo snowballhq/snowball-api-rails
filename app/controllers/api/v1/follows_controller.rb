@@ -1,15 +1,14 @@
 class Api::V1::FollowsController < ApiController
-  before_action :authenticate!
-  before_action :set_following, except: [:followers, :following]
+  before_action :set_following, only: [:create, :destroy]
   before_action :set_user, only: [:followers, :following]
 
   def create
-    Follow.create!(following: @following, follower: @current_user)
+    Follow.create!(following: @following, follower: current_user)
     head :created
   end
 
   def destroy
-    follow = Follow.where(following: @following, follower: @current_user).first
+    follow = Follow.where(following: @following, follower: current_user).first
     follow.destroy!
     head :no_content
   end
@@ -26,7 +25,7 @@ class Api::V1::FollowsController < ApiController
 
   def set_user
     if params[:user_id] == 'me'
-      @user = @current_user
+      @user = current_user
       return
     end
     @user = User.find(params[:user_id])

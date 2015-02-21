@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Clips', type: :request do
   describe 'GET /clips/stream' do
-    # TODO: since_id
     it 'returns the stream of clips' do
-      create(:clip) # not following user, won't show in stream
-      clip = create(:clip)
       user = create(:user)
-      clip2 = create(:clip, user: user) # own clip should show in stream
-      user.follows.create!(following: clip.user)
+      clip = create(:clip, user: user) # own clip should show in stream
+      user2 = create(:user)
+      clip2 = create(:clip, user: user2)
+      user.follows.create!(following: user2)
+      create(:clip) # not following user, won't show in stream
       get '/api/v1/clips/stream'
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
@@ -17,11 +17,9 @@ RSpec.describe 'Clips', type: :request do
           video_url: clip.video.url,
           thumbnail_url: clip.thumbnail.url,
           user: {
-            id: clip.user.id,
-            username: clip.user.username,
-            avatar_url: nil,
-            follower: clip.user.following?(user),
-            following: user.following?(clip.user)
+            id: user.id,
+            username: user.username,
+            avatar_url: nil
           },
           created_at: clip.created_at.to_time.to_i
         },
@@ -30,10 +28,11 @@ RSpec.describe 'Clips', type: :request do
           video_url: clip2.video.url,
           thumbnail_url: clip2.thumbnail.url,
           user: {
-            id: clip2.user.id,
-            username: clip2.user.username,
-            email: clip2.user.email,
-            avatar_url: nil
+            id: user2.id,
+            username: user2.username,
+            avatar_url: nil,
+            follower: user2.following?(user),
+            following: user.following?(user2)
           },
           created_at: clip2.created_at.to_time.to_i
         }
@@ -59,7 +58,6 @@ RSpec.describe 'Clips', type: :request do
           user: {
             id: clip.user.id,
             username: clip.user.username,
-            email: clip.user.email,
             avatar_url: nil
           },
           created_at: clip.created_at.to_time.to_i

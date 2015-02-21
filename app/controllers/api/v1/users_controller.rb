@@ -1,5 +1,4 @@
 class Api::V1::UsersController < ApiController
-  before_action :authenticate!, except: [:sign_in, :sign_up]
   before_action :set_user, only: [:show, :update]
 
   def index
@@ -21,30 +20,13 @@ class Api::V1::UsersController < ApiController
     @users = User.where(phone_number: phone_numbers)
   end
 
-  def sign_in
-    fail Snowball::InvalidEmail unless user_params[:email].present?
-    fail Snowball::InvalidPassword unless user_params[:password].present?
-    @user = User.where(email: user_params[:email]).first
-    fail Snowball::InvalidEmail if @user.nil?
-    @user.authenticate(user_params[:password])
-    fail Snowball::InvalidPassword if @user.nil?
-  end
-
-  def sign_up
-    fail Snowball::InvalidUsername unless user_params[:username].present?
-    fail Snowball::InvalidPassword unless user_params[:password].present?
-    @user = User.where(username: user_params[:username]).first
-    fail Snowball::UsernameInUse if @user.present?
-    @user = User.create!(user_params)
-  end
-
   private
 
   def set_user
     user_id = params[:id] if params[:id].present?
     user_id = params[:user_id] if params[:user_id].present?
     if user_id == 'me'
-      @user = @current_user
+      @user = current_user
       return
     end
     @user = User.find(user_id)

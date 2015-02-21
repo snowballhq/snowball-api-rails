@@ -1,8 +1,13 @@
 json.id user.id
 json.username user.username
-json.email user.email if @current_user.present? && user == @current_user
+
+is_authenticating = (controller_name == 'registrations' || controller_name == 'sessions')
+is_current_user = (!current_user.nil? && user == current_user)
+is_getting_me = (is_current_user && controller_name == 'users' && action_name == 'show')
+
+json.email user.email if is_getting_me
 json.avatar_url nil
-json.follower user.following?(@current_user) unless @current_user.nil? || user == @current_user
-json.following @current_user.following?(user) unless @current_user.nil? || user == @current_user
-json.phone_number user.phone_number if controller_name == 'users' && action_name == 'show' && user == @current_user
-json.auth_token user.auth_token if action_name == 'phone_verification' || action_name == 'sign_in' || action_name == 'sign_up'
+json.follower user.following?(current_user) unless is_current_user
+json.following current_user.following?(user) unless is_current_user
+json.phone_number user.phone_number if is_getting_me
+json.auth_token user.auth_token if is_authenticating

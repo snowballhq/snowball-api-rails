@@ -1,13 +1,11 @@
 class Api::V1::ClipsController < ApiController
-  before_action :authenticate!
-
   def index
-    user_ids = @current_user.follows.pluck(:following_id).append(@current_user.id)
+    user_ids = current_user.follows.pluck(:following_id).append(current_user.id)
     @clips = Clip.where(user_id: user_ids).last(25)
   end
 
   def create
-    @clip = @current_user.clips.create!(clip_params)
+    @clip = current_user.clips.create!(clip_params)
     render status: :created
   end
 

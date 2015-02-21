@@ -13,15 +13,14 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil,
-          follower: user.following?(user2),
-          following: user2.following?(user)
+          avatar_url: nil
         },
         {
           id: user2.id,
           username: user2.username,
-          email: user2.email,
-          avatar_url: nil
+          avatar_url: nil,
+          follower: user2.following?(user),
+          following: user.following?(user2)
         }
       ].to_json)
     end
@@ -36,7 +35,6 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
-          email: user.email,
           avatar_url: nil
         }
       ].to_json)
@@ -62,14 +60,14 @@ RSpec.describe 'Users', type: :request do
       it 'returns the user without phone number with follow status' do
         user = create(:user)
         user2 = create(:user)
-        get "/api/v1/users/#{user.id}"
+        get "/api/v1/users/#{user2.id}"
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
-          id: user.id,
-          username: user.username,
+          id: user2.id,
+          username: user2.username,
           avatar_url: nil,
-          follower: user.following?(user2),
-          following: user2.following?(user)
+          follower: user2.following?(user),
+          following: user.following?(user2)
         }.to_json)
       end
     end
