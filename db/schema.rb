@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119232237) do
+ActiveRecord::Schema.define(version: 20150221194740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,19 +41,17 @@ ActiveRecord::Schema.define(version: 20150119232237) do
   end
 
   create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "username",                       null: false
-    t.string   "password_digest",                null: false
+    t.string   "username",        null: false
+    t.string   "password_digest", null: false
     t.string   "name"
-    t.string   "email",                          null: false
+    t.string   "email",           null: false
     t.string   "phone_number"
-    t.string   "phone_number_verification_code"
-    t.string   "auth_token",                     null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.string   "auth_token",      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
-  add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end
