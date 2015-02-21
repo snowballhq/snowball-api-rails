@@ -10,6 +10,7 @@ gem 'phony_rails'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'bcrypt'
+gem 'devise'
 
 group :development, :test do
   gem 'spring'

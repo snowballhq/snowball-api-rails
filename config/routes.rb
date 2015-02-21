@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'home#index'
+
   concern :api do
     namespace :v1, defaults: { format: :json } do
       match 'users/sign-in', to: 'users#sign_in', via: :post
