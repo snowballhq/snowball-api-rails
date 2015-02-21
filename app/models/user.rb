@@ -1,13 +1,12 @@
 class User < ActiveRecord::Base
-  has_secure_password
-
   include Orderable
+
+  devise :database_authenticatable, :registerable, :recoverable, :validatable
 
   validates :username, presence: true
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
   validates :password, length: { minimum: 5 }, allow_blank: true
-  validates :email, presence: true, format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ # this regex is from Devise, lib/devise.rb 'email_regexp'
 
   phony_normalize :phone_number, default_country_code: 'US'
 
@@ -21,7 +20,7 @@ class User < ActiveRecord::Base
 
   def generate_auth_token
     loop do
-      self.auth_token = SecureRandom.hex
+      self.auth_token = Devise.friendly_token
       break unless self.class.exists?(auth_token: auth_token)
     end
   end

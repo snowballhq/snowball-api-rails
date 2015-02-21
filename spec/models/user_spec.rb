@@ -45,7 +45,8 @@ RSpec.describe User, type: :model do
 
   describe '#generate_auth_token' do
     it 'generates a new auth token' do
-      expect { user.save }.to change { user.auth_token }.from(nil).to(a_string_matching(/[0-9a-f]{32}/))
+      regex = '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
+      expect { user.save }.to change { user.auth_token }.from(nil).to(a_string_matching(regex))
     end
   end
 
