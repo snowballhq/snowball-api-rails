@@ -25,7 +25,7 @@ RSpec.describe 'Users', type: :request do
       ].to_json)
     end
     it 'does not return users with empty phone numbers' do
-      user = create(:user, phone_number: '')
+      create(:user, phone_number: '')
       params = { phone_numbers: [''] }
       post '/api/v1/users/phone-search', params
       expect(response).to have_http_status(200)
