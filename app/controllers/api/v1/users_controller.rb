@@ -17,6 +17,8 @@ class Api::V1::UsersController < ApiController
     phone_numbers = params[:phone_numbers].map do |phone_number|
       PhonyRails.normalize_number(phone_number, default_country_code: 'US')
     end
+    phone_numbers.delete("")
+    phone_numbers.delete(nil)
     @users = User.where(phone_number: phone_numbers)
   end
 
