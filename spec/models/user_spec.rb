@@ -43,6 +43,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'after_create' do
+    it 'follows the snowball user' do
+      expect(user).to receive(:follow_snowball)
+      user.save!
+    end
+  end
+
   describe '#generate_auth_token' do
     it 'generates a new auth token' do
       # TODO: bring back regex validation here
@@ -51,6 +58,18 @@ RSpec.describe User, type: :model do
       expect(user.auth_token).to be_nil
       user.save!
       expect(user.auth_token).to_not be_nil
+    end
+  end
+
+  describe '#follow_snowball' do
+    context 'when the snowball account exists' do
+      it 'follows the snowball account' do
+        user2 = create(:user, email: 'hello@snowball.is')
+        expect(user.follows.count).to eq(0)
+        user.save!
+        follow = user.follows.first
+        expect(follow.following).to eq(user2)
+      end
     end
   end
 

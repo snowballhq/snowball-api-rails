@@ -18,11 +18,20 @@ class User < ActiveRecord::Base
     generate_auth_token
   end
 
+  after_create do
+    follow_snowball
+  end
+
   def generate_auth_token
     loop do
       self.auth_token = Devise.friendly_token
       break unless self.class.exists?(auth_token: auth_token)
     end
+  end
+
+  def follow_snowball
+    snowball_user = User.where(email: 'hello@snowball.is').first
+    follows.create!(following: snowball_user) unless snowball_user.nil?
   end
 
   def following?(user)
