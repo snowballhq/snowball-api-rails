@@ -1,9 +1,5 @@
-if ENV['UNICORN_COUNT'].to_i > 0
-  worker_processes ENV['UNICORN_COUNT'].to_i
-else
-  worker_processes 4
-end
-timeout 120
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
+timeout 15
 preload_app true
 
 before_fork do |_server, _worker|
