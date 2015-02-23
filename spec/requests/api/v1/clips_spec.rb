@@ -51,17 +51,17 @@ RSpec.describe 'Clips', type: :request do
         expect(response).to have_http_status(201)
         clip = Clip.last
         expect(response.body).to eq(
-        {
-          id: clip.id,
-          video_url: clip.video.url,
-          thumbnail_url: clip.thumbnail.url,
-          user: {
-            id: clip.user.id,
-            username: clip.user.username,
-            avatar_url: nil
-          },
-          created_at: clip.created_at.to_time.to_i
-        }.to_json)
+          {
+            id: clip.id,
+            video_url: clip.video.url,
+            thumbnail_url: clip.thumbnail.url,
+            user: {
+              id: clip.user.id,
+              username: clip.user.username,
+              avatar_url: nil
+            },
+            created_at: clip.created_at.to_time.to_i
+          }.to_json)
       end
     end
     context 'with invalid params' do
