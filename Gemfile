@@ -11,6 +11,7 @@ gem 'paperclip'
 gem 'aws-sdk'
 gem 'bcrypt'
 gem 'devise'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'spring'
