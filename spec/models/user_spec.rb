@@ -31,9 +31,9 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:clips) }
-    it { is_expected.to have_many(:followings).class_name('Follow') }
-    it { is_expected.to have_many(:follows).class_name('Follow') }
+    it { is_expected.to have_many(:clips).dependent(:destroy) }
+    it { is_expected.to have_many(:followings).class_name('Follow').dependent(:destroy) }
+    it { is_expected.to have_many(:follows).class_name('Follow').dependent(:destroy) }
   end
 
   describe 'before_validation(on: :create)' do

@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
 
   phony_normalize :phone_number, default_country_code: 'US'
 
-  has_many :clips
-  has_many :follows, class_name: 'Follow', foreign_key: :follower_id # follows user has created
-  has_many :followings, class_name: 'Follow', foreign_key: :following_id # follows others have created
+  has_many :clips, dependent: :destroy
+  has_many :follows, class_name: 'Follow', foreign_key: :follower_id, dependent: :destroy # follows user has created
+  has_many :followings, class_name: 'Follow', foreign_key: :following_id, dependent: :destroy # follows others have created
 
   before_validation(on: :create) do
     generate_auth_token

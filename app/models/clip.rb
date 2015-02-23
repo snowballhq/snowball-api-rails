@@ -9,5 +9,5 @@ class Clip < ActiveRecord::Base
   validates_attachment :thumbnail, presence: true, content_type: { content_type: 'image/png' }
 
   belongs_to :user
-  has_many :flags
+  has_many :flags, dependent: :destroy
 end
