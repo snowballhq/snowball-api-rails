@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, :recoverable, :validatable
 
-  validates :username, presence: true
+  validates :username, presence: true, format: /[a-zA-Z0-9_]{3,15}/
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
   validates :password, length: { minimum: 5 }, allow_blank: true
