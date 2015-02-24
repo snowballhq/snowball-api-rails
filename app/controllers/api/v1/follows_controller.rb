@@ -3,13 +3,12 @@ class Api::V1::FollowsController < ApiController
   before_action :set_user, only: [:followers, :following]
 
   def create
-    Follow.create!(following: @following, follower: current_user)
+    current_user.follow(@following)
     head :created
   end
 
   def destroy
-    follow = Follow.where(following: @following, follower: current_user).first
-    follow.destroy!
+    current_user.unfollow(@following)
     head :no_content
   end
 

@@ -7,7 +7,7 @@ RSpec.describe 'Clips', type: :request do
       clip = create(:clip, user: user) # own clip should show in stream
       user2 = create(:user)
       clip2 = create(:clip, user: user2)
-      user.follows.create!(following: user2)
+      user.follow(user2)
       create(:clip) # not following user, won't show in stream
       get '/api/v1/clips/stream'
       expect(response).to have_http_status(200)

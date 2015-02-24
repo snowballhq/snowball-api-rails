@@ -31,10 +31,20 @@ class User < ActiveRecord::Base
 
   def follow_snowball
     snowball_user = User.where(email: 'hello@snowball.is').first
-    follows.create!(following: snowball_user) unless snowball_user.nil?
+    follow(snowball_user) unless snowball_user.nil?
   end
 
   def following?(user)
     0 < follows.where(following: user).count
+  end
+
+  def follow(user)
+    return if following?(user)
+    return if self == user
+    follows.create!(following: user)
+  end
+
+  def unfollow(user)
+    follows.where(following: user).first.destroy
   end
 end

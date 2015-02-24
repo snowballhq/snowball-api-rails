@@ -88,4 +88,41 @@ RSpec.describe User, type: :model do
       expect(user.following?(user2)).to be_falsy
     end
   end
+
+  describe '#follow(user)' do
+    before(:each) do
+      user.save!
+    end
+    it 'follows the specified user' do
+      user2 = create(:user)
+      expect(user.follows.count).to eq(0)
+      user.follow(user2)
+      expect(user.following?(user2)).to be_truthy
+    end
+    it 'does not follow a user duplicate times' do
+      user2 = create(:user)
+      user.follow(user2)
+      expect(user.follows.count).to eq(1)
+      user.follow(user2)
+      expect(user.follows.count).to eq(1)
+    end
+    it 'does not follow self' do
+      expect(user.follows.count).to eq(0)
+      user.follow(user)
+      expect(user.follows.count).to eq(0)
+    end
+  end
+
+  describe '#unfollow(user)' do
+    before(:each) do
+      user.save!
+    end
+    it 'unfollows the specified user' do
+      user2 = create(:user)
+      user.follow(user2)
+      expect(user.follows.count).to eq(1)
+      user.unfollow(user2)
+      expect(user.follows.count).to eq(0)
+    end
+  end
 end
