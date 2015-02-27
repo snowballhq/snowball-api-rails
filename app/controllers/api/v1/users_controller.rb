@@ -39,7 +39,8 @@ class Api::V1::UsersController < ApiController
       :username,
       :email,
       :password,
-      :phone_number
+      :phone_number,
+      :avatar
     )
   end
 end

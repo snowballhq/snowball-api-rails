@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150221201618) do
+ActiveRecord::Schema.define(version: 20150227221125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "clips", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "clips", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id",                null: false
     t.string   "video_file_name",        null: false
     t.string   "video_content_type",     null: false
@@ -27,20 +27,20 @@ ActiveRecord::Schema.define(version: 20150221201618) do
     t.string   "thumbnail_content_type", null: false
   end
 
-  create_table "flags", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "flags", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "clip_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "follows", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "follows", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "following_id", null: false
     t.uuid     "follower_id",  null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "username",               null: false
     t.string   "encrypted_password",     null: false
     t.string   "name"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20150221201618) do
     t.datetime "updated_at",             null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree

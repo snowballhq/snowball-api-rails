@@ -85,10 +85,12 @@ RSpec.describe 'Users', type: :request do
       it 'updates the user' do
         user = create(:user)
         user2 = build(:user)
-        params = { username: user2.username, password: user2.password }
+        avatar = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/thumbnail.png', 'image/png')
+        params = { username: user2.username, password: user2.password, avatar: avatar }
         patch "/api/v1/users/#{user.id}", params
         expect(response).to have_http_status(204)
         expect(user.reload.username).to eq user2.username
+        expect(user.reload.avatar.url).to_not be_nil
       end
     end
     context 'with invalid params' do

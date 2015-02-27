@@ -32,6 +32,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:password).is_at_least(5) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to allow_value('james+test@snowball.is').for(:email) }
+    it { is_expected.to validate_attachment_content_type(:avatar) }
   end
 
   describe 'associations' do
