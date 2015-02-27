@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
       allow(user).to receive(:generate_auth_token)
       expect(user).to validate_presence_of(:auth_token)
     end
-    it { is_expected.to ensure_length_of(:password).is_at_least(5) }
+    it { is_expected.to validate_length_of(:password).is_at_least(5) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to allow_value('james+test@snowball.is').for(:email) }
   end
