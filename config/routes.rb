@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       concerns :api
     end
   end
+  constraints subdomain: 'api-staging' do
+    namespace :api, path: nil do
+      concerns :api
+    end
+  end
   namespace :api do
     concerns :api
   end
