@@ -12,7 +12,7 @@ RSpec.describe 'Follows', type: :request do
         {
           id: user2.id,
           username: user2.username,
-          avatar_url: nil,
+          avatar_url: user2.avatar.url,
           follower: true,
           following: false
         }
@@ -31,7 +31,7 @@ RSpec.describe 'Follows', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil
+          avatar_url: user.avatar.url
         }
       ].to_json)
     end

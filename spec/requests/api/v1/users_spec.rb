@@ -13,12 +13,12 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil
+          avatar_url: user.avatar.url
         },
         {
           id: user2.id,
           username: user2.username,
-          avatar_url: nil,
+          avatar_url: user2.avatar.url,
           follower: user2.following?(user),
           following: user.following?(user2)
         }
@@ -42,7 +42,7 @@ RSpec.describe 'Users', type: :request do
         {
           id: user.id,
           username: user.username,
-          avatar_url: nil
+          avatar_url: user.avatar.url
         }
       ].to_json)
     end
@@ -58,7 +58,7 @@ RSpec.describe 'Users', type: :request do
           id: user.id,
           username: user.username,
           email: user.email,
-          avatar_url: nil,
+          avatar_url: user.avatar.url,
           phone_number: user.phone_number
         }.to_json)
       end
@@ -72,7 +72,7 @@ RSpec.describe 'Users', type: :request do
         expect(response.body).to eq({
           id: user2.id,
           username: user2.username,
-          avatar_url: nil,
+          avatar_url: user2.avatar.url,
           follower: user2.following?(user),
           following: user.following?(user2)
         }.to_json)
@@ -133,7 +133,7 @@ RSpec.describe 'Users', type: :request do
         expect(response.body).to eq({
           id: user.id,
           username: user.username,
-          avatar_url: nil,
+          avatar_url: user.avatar.url,
           auth_token: user.reload.auth_token
         }.to_json)
       end
