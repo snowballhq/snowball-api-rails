@@ -1,7 +1,7 @@
 class Clip < ActiveRecord::Base
   include Orderable
 
-  has_attached_file :video
+  has_attached_file :video, use_timestamp: false
   has_attached_file :thumbnail
 
   validates :user, presence: true
