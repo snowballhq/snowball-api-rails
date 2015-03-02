@@ -21,6 +21,11 @@ RSpec.describe User, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:username) }
+    it 'validates the username as unique and case sensitive' do
+      user.save!
+      user2 = build(:user, username: user.username.upcase)
+      expect(user2.valid?).to be_falsey
+    end
     it { is_expected.to allow_value('abc').for(:username) }
     it { is_expected.to_not allow_value('@@@').for(:username) }
     it { is_expected.to_not allow_value('...').for(:username) }

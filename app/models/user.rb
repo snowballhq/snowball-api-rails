@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   has_attached_file :avatar
 
-  validates :username, presence: true, format: /[a-zA-Z0-9_]{3,15}/
+  validates :username, presence: true, format: /[a-zA-Z0-9_]{3,15}/, uniqueness: { case_sensitive: false }
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
   validates :password, length: { minimum: 5 }, allow_blank: true
