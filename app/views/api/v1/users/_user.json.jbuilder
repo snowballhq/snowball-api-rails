@@ -6,7 +6,7 @@ is_current_user = (!current_user.nil? && user == current_user)
 is_getting_me = (is_current_user && controller_name == 'users' && action_name == 'show')
 
 json.email user.email if is_getting_me
-if user.avatar.exists?
+if user.avatar.present?
   json.avatar_url user.avatar.url
 else
   json.avatar_url nil
