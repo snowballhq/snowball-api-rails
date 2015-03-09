@@ -117,3 +117,16 @@ p {
   display: inline;
   margin-right: 30px;
 }
+
+.nohunt {
+  position: absolute;
+  bottom: $footer-height + 20;
+  right: 20px;
+  width: 200px;
+  height: 169.5px;
+
+  @media #{$small-only} {
+    width: 100px;
+    height: 84.75px;
+  }
+}
