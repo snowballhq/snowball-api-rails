@@ -6,6 +6,13 @@ body {
   text-align: center;
 }
 
+.page {
+  max-width: 720px;
+  margin: auto;
+  margin-bottom: 110px;
+  text-align: left;
+}
+
 @media #{$small-only} {
   body {
     margin-top: 30px;

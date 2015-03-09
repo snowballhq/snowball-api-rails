@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'home#index'
+  get '/privacy', to: 'home#privacy'
+  get '/terms', to: 'home#terms'
 
   concern :api do
     namespace :v1, defaults: { format: :json } do
