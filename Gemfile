@@ -17,7 +17,6 @@ gem 'haml'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
-gem 'foundation-rails'
 
 group :development, :test do
   gem 'spring'
