@@ -1,7 +1,7 @@
 class Api::V1::ClipsController < ApiController
   def index
     user_ids = current_user.follows.pluck(:following_id).append(current_user.id)
-    @clips = Clip.where(user_id: user_ids).last(25)
+    @clips = Clip.includes(:user).where(user_id: user_ids).last(25)
   end
 
   def create
