@@ -11,11 +11,6 @@ RSpec.describe 'Users', type: :request do
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
-          id: user.id,
-          username: user.username,
-          avatar_url: user.avatar.url
-        },
-        {
           id: user2.id,
           username: user2.username,
           avatar_url: user2.avatar.url,
@@ -27,6 +22,13 @@ RSpec.describe 'Users', type: :request do
     it 'does not return users with empty phone numbers' do
       create(:user, phone_number: '')
       params = { phone_numbers: [''] }
+      post '/api/v1/users/phone-search', params
+      expect(response).to have_http_status(200)
+      expect(response.body).to eq([].to_json)
+    end
+    it 'does not return the current user' do
+      user = create(:user)
+      params = { phone_numbers: [user.phone_number] }
       post '/api/v1/users/phone-search', params
       expect(response).to have_http_status(200)
       expect(response.body).to eq([].to_json)

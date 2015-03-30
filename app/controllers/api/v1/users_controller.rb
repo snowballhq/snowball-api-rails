@@ -19,6 +19,7 @@ class Api::V1::UsersController < ApiController
     end
     phone_numbers.delete('')
     phone_numbers.delete(nil)
+    phone_numbers.delete(current_user.phone_number)
     @users = User.where(phone_number: phone_numbers)
   end
 
