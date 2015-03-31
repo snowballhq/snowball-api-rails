@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         match '/follow', to: 'follows#create', via: :post
         match '/follow', to: 'follows#destroy', via: :delete
       end
-      resources :clips, only: :create do
+      resources :clips, only: [:create, :destroy] do
         resources :flags, only: :create
       end
       match 'clips/stream', to: 'clips#index', via: :get

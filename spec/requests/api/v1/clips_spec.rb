@@ -75,4 +75,24 @@ RSpec.describe 'Clips', type: :request do
       end
     end
   end
+
+  describe 'DELETE /clips/:id' do
+    context 'when user is clip owner' do
+      it 'deletes the clip' do
+        clip = create(:clip)
+        delete "/api/v1/clips/#{clip.id}"
+        expect(response).to have_http_status(204)
+        expect(Clip.count).to eq(0)
+      end
+    end
+    context 'when user is not clip owner' do
+      it 'does not delete the clip' do
+        create(:user)
+        clip = create(:clip)
+        delete "/api/v1/clips/#{clip.id}"
+        expect(response).to have_http_status(403)
+        expect(Clip.count).to eq(1)
+      end
+    end
+  end
 end
