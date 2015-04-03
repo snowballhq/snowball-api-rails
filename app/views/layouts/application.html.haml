@@ -7,9 +7,5 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
-    = yield
-    .footer
-      %ul
-        %li= link_to 'Home', root_url
-        %li= link_to 'Terms', terms_url
-        %li= link_to 'Privacy', privacy_url
+    #container
+      = yield

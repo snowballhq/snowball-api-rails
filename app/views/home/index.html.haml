@@ -1,6 +1,18 @@
-.home
-  = image_tag 'logo.png'
-  %h1 Snowball
-  %h2 The friend film.
-  = link_to image_tag('download-ios.png'), 'http://bit.ly/snblapp'
-  = link_to image_tag('pdhmy.png', class: 'nohunt'), 'http://www.tapir.me/prey'
+#home
+  #left-column
+    #intro
+      #logo= image_tag 'logo.png'
+      %h1 Snowball
+      %h2 The friend film.
+    .download= link_to image_tag('download-ios.png'), 'http://bit.ly/snblapp'
+  #right-column
+    .cell#cell-one
+    .cell#cell-two
+    .cell#cell-three
+    .cell#cell-four
+    .cell#cell-five
+    #footer
+      %ul
+        %li= link_to 'Home', root_url
+        %li= link_to 'Terms', terms_url
+        %li= link_to 'Privacy', privacy_url
