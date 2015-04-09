@@ -5,7 +5,7 @@ Snowball
 ### System Dependencies
 We recommend using [Homebrew](http://brew.sh/) whenever possible.
 
-* Ruby 2.1.2 (we recommend [rbenv](http://rbenv.org/))
+* Ruby (we recommend [rbenv](http://rbenv.org/))
 * [PostgreSQL](https://wiki.postgresql.org/wiki/Homebrew)
 * [Heroku Toolbelt](http://toolbelt.heroku.com/)
 
