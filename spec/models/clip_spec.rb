@@ -16,5 +16,6 @@ RSpec.describe Clip, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to have_many(:flags).dependent(:destroy) }
+    it { is_expected.to have_many(:likes).dependent(:destroy) }
   end
 end
