@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApiController
   before_action :set_user, only: [:show, :update]
 
   def index
-    @users = User.where(username: params[:username]) if params[:username].present?
+    @users = User.where('username ILIKE ?', params[:username]) if params[:username].present?
   end
 
   def show

@@ -36,9 +36,9 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'GET /users?username=' do
-    it 'returns users with specified username' do
+    it 'returns users with specified username, case insensitive' do
       user = create(:user, username: 'user')
-      get "/api/v1/users?username=#{user.username}"
+      get "/api/v1/users?username=#{user.username.upcase}"
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
