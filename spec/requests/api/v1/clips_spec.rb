@@ -2,41 +2,66 @@ require 'rails_helper'
 
 RSpec.describe 'Clips', type: :request do
   describe 'GET /clips/stream' do
-    it 'returns the stream of clips' do
-      user = create(:user)
-      clip = create(:clip, user: user) # own clip should show in stream
-      user2 = create(:user)
-      clip2 = create(:clip, user: user2)
-      user.follow(user2)
-      create(:clip) # not following user, won't show in stream
-      get '/api/v1/clips/stream'
-      expect(response).to have_http_status(200)
-      expect(response.body).to eq([
-        {
-          id: clip.id,
-          video_url: clip.video.url,
-          thumbnail_url: clip.thumbnail.url,
-          user: {
-            id: user.id,
-            username: user.username,
-            avatar_url: user.avatar.url
+    context 'with a user_id' do
+      it 'returns the stream of clips created by the specified user' do
+        clip = create(:clip)
+        clip2 = create(:clip)
+        get "/api/v1/users/#{clip2.user.id}/clips/stream"
+        expect(response).to have_http_status(200)
+        expect(response.body).to eq([
+          {
+            id: clip2.id,
+            video_url: clip2.video.url,
+            thumbnail_url: clip2.thumbnail.url,
+            user: {
+              id: clip2.user.id,
+              username: clip2.user.username,
+              avatar_url: clip2.user.avatar.url,
+              follower: clip2.user.following?(clip.user),
+              following: clip.user.following?(clip2.user)
+            },
+            created_at: clip2.user.created_at.to_time.to_i
+          }
+        ].to_json)
+      end
+    end
+    context 'without a user_id' do
+      it 'returns the stream of clips from users the current user is following' do
+        user = create(:user)
+        clip = create(:clip, user: user) # own clip should show in stream
+        user2 = create(:user)
+        clip2 = create(:clip, user: user2)
+        user.follow(user2)
+        create(:clip) # not following user, won't show in stream
+        get '/api/v1/clips/stream'
+        expect(response).to have_http_status(200)
+        expect(response.body).to eq([
+          {
+            id: clip.id,
+            video_url: clip.video.url,
+            thumbnail_url: clip.thumbnail.url,
+            user: {
+              id: user.id,
+              username: user.username,
+              avatar_url: user.avatar.url
+            },
+            created_at: clip.created_at.to_time.to_i
           },
-          created_at: clip.created_at.to_time.to_i
-        },
-        {
-          id: clip2.id,
-          video_url: clip2.video.url,
-          thumbnail_url: clip2.thumbnail.url,
-          user: {
-            id: user2.id,
-            username: user2.username,
-            avatar_url: user2.avatar.url,
-            follower: user2.following?(user),
-            following: user.following?(user2)
-          },
-          created_at: clip2.created_at.to_time.to_i
-        }
-      ].to_json)
+          {
+            id: clip2.id,
+            video_url: clip2.video.url,
+            thumbnail_url: clip2.thumbnail.url,
+            user: {
+              id: user2.id,
+              username: user2.username,
+              avatar_url: user2.avatar.url,
+              follower: user2.following?(user),
+              following: user.following?(user2)
+            },
+            created_at: clip2.created_at.to_time.to_i
+          }
+        ].to_json)
+      end
     end
   end
 
