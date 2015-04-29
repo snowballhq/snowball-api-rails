@@ -17,7 +17,7 @@ build:
             code: bundle exec rubocop
     after-steps:
         - sherzberg/slack-notify:
-            subdomain: snbl
+            subdomain: snowball
             token: $SLACK_TOKEN
             channel: "#engineering"
 deploy:
