@@ -1,6 +1,12 @@
 // Variables
 
-$snowball-color-main: #4bd91c;
+$snowball-color-blue: #8fecff;
+$snowball-color-orange: #f5a623;
+$snowball-color-green: #7ed321;
+$snowball-color-pink: #ff2ba6;
+$snowball-color-gray: #ececec;
+$snowball-color-light-gray: #fcfcfc;
+
 
 // Mixins
 
@@ -13,9 +19,8 @@ $snowball-color-main: #4bd91c;
 // Styles
 
 body {
-  background-color: $snowball-color-main;
+  background-color: white;
   color: white;
-  text-align: center;
   margin-bottom: 30px;
   font-family: 'Nunito', sans-serif;
   font-weight: 300;
@@ -45,9 +50,15 @@ p {
 }
 
 #left-column {
+  text-align: center;
   position: fixed;
   width: 50%;
   height: 100%;
+  background-color: $snowball-color-blue;
+  background-image: url("video.gif");
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
 }
 
 #right-column {
@@ -66,48 +77,83 @@ p {
 }
 
 #intro h1 {
-  font-size: 2.75em;
-  line-height: 1.091em;
-  margin: 0;
+  font-size: 3em;
+  margin: 0.4em 0 0 0;
 }
 
 #intro h2 {
-  font-size: 1.875em;
-  line-height: 1.2em;
-  margin: 0;
+  font-size: 1.5em;
+  margin: 0.55em 0 0 0;
+  letter-spacing: 0.05em;
 }
 
-.download {
+#download {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 32px;
+  bottom: 100px; /* TODO: make em? */
   margin-left: auto;
   margin-right: auto;
 }
 
 .cell {
-  height: 500px;
+  height: 600px; /* TODO: make em? */
+  padding: 55px 80px 0 80px; /* TODO: make em? */
+  border-bottom: 1px solid $snowball-color-gray;
+  position: relative;
+}
+
+.cell h2 {
+  font-size: 2.25em;
+  line-height: 1.25em;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.cell .app-screen img {
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#disclaimer img {
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 20px;
 }
 
 #cell-one {
-  background: #5fceea;
+  background: $snowball-color-blue;
+}
+
+#cell-one .welcome {
+  margin-top: 1.5em;
 }
 
 #cell-two {
-  background: #1840b2;
+  color: $snowball-color-blue;
 }
 
 #cell-three {
-  background: #ff4f4f;
+  color: $snowball-color-orange;
+  background-color: $snowball-color-light-gray;
 }
 
 #cell-four {
-  background: #34c9a4;
+  color: $snowball-color-green;
 }
 
 #cell-five {
-  background: #662aea;
+  color: $snowball-color-pink;
+  background-color: $snowball-color-light-gray;
 }
 
 #legal {
@@ -115,14 +161,16 @@ p {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  color: black;
 }
 
 #footer {
+  text-align: center;
   background-color: white;
-  height: 60px;
-  line-height: 60px;
+  height: 60px; /* TODO: make em? */
+  line-height: 60px; /* TODO: make em? */
   width: 100%;
-  color: $snowball-color-main;
+  color: $snowball-color-blue;
 }
 
 #footer li {
