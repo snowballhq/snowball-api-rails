@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
       resources :clips, only: [:create, :destroy] do
         resources :flags, only: :create
+        resources :likes, only: :create
       end
       match 'users/:user_id/clips/stream', to: 'clips#index', via: :get
       match 'clips/stream', to: 'clips#index', via: :get
