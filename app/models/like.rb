@@ -13,17 +13,19 @@ class Like < ActiveRecord::Base
 
   def send_push_notification
     headers = {
-      'Authorization' => 'key=' + ENV['GCM_API_KEY'],
+      'X-Parse-Application-Id' => ENV['PARSE_APPLICATION_ID'],
+      'X-Parse-REST-API-Key' => ENV['PARSE_API_KEY'],
       'Content-Type' => 'application/json'
     }
     message = "#{user.username} liked your clip."
-    to = 'mWcWGCK9jeA:APA91bHrTDhhYRinvH1U0ArtIDSJmqjweUCOSW5t0kTrm7RHWAYY0QpYMM8U8e2gURjVK__SzJk-B1Iw3kttbgA0V4AflUQOtVk9XpimX5_3V6AkGElZ_Ky2hMreNmXN21dYAf6UxzDz'
     params = {
-      to: to,
-      notification: {
-        body: message
+      where: {
+        user_id: clip.user.id
+      },
+      data: {
+        alert: message
       }
     }
-    HTTParty.post('https://gcm-http.googleapis.com/gcm/send', body: params.to_json, headers: headers, verify: false)
+    HTTParty.post('https://api.parse.com/1/push', body: params.to_json, headers: headers, verify: false)
   end
 end
