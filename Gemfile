@@ -12,6 +12,7 @@ gem 'aws-sdk', '<2.0'
 gem 'bcrypt'
 gem 'devise'
 gem 'newrelic_rpm'
+gem 'httparty'
 
 gem 'haml'
 gem 'sass-rails'

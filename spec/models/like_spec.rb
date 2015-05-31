@@ -14,4 +14,10 @@ RSpec.describe Like, type: :model do
     it { is_expected.to belong_to(:clip) }
     it { is_expected.to belong_to(:user) }
   end
+
+  describe 'after_create' do
+    it 'sends a push notification' do
+      # TODO: test this
+    end
+  end
 end
