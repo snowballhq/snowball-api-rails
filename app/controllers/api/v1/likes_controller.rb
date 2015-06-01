@@ -6,6 +6,11 @@ class Api::V1::LikesController < ApiController
     head :created
   end
 
+  def destroy
+    @clip.likes.where(user: current_user).destroy_all
+    head :no_content
+  end
+
   private
 
   def set_clip
