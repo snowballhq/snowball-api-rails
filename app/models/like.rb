@@ -17,7 +17,7 @@ class Like < ActiveRecord::Base
       'X-Parse-REST-API-Key' => ENV['PARSE_API_KEY'],
       'Content-Type' => 'application/json'
     }
-    message = "#{user.username} liked your clip."
+    message = "#{user.username} liked your clip. 👍"
     body = {
       where: {
         user_id: clip.user.id
