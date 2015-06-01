@@ -18,7 +18,7 @@ class Like < ActiveRecord::Base
       'Content-Type' => 'application/json'
     }
     message = "#{user.username} liked your clip."
-    params = {
+    body = {
       where: {
         user_id: clip.user.id
       },
@@ -26,6 +26,6 @@ class Like < ActiveRecord::Base
         alert: message
       }
     }
-    HTTParty.post('https://api.parse.com/1/push', body: params.to_json, headers: headers, verify: false)
+    HTTParty.post('https://api.parse.com/1/push', body: body.to_json, headers: headers, verify: false)
   end
 end
