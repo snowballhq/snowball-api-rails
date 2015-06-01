@@ -13,7 +13,7 @@ RSpec.describe 'Clips', type: :request do
   describe 'DELETE /clips/:clip_id/likes' do
     it 'unlikes the clip' do
       clip = create(:clip)
-      like = create(:like, clip: clip, user: clip.user)
+      create(:like, clip: clip, user: clip.user)
       delete "/api/v1/clips/#{clip.id}/likes"
       expect(response).to have_http_status(204)
       expect(Like.count).to eq(0)

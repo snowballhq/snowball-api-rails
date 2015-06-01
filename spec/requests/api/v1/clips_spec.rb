@@ -20,6 +20,7 @@ RSpec.describe 'Clips', type: :request do
               follower: clip2.user.following?(clip.user),
               following: clip.user.following?(clip2.user)
             },
+            liked: false,
             created_at: clip2.user.created_at.to_time.to_i
           }
         ].to_json)
@@ -45,6 +46,7 @@ RSpec.describe 'Clips', type: :request do
               username: user.username,
               avatar_url: user.avatar.url
             },
+            liked: false,
             created_at: clip.created_at.to_time.to_i
           },
           {
@@ -58,6 +60,7 @@ RSpec.describe 'Clips', type: :request do
               follower: user2.following?(user),
               following: user.following?(user2)
             },
+            liked: false,
             created_at: clip2.created_at.to_time.to_i
           }
         ].to_json)
@@ -85,6 +88,7 @@ RSpec.describe 'Clips', type: :request do
               username: clip.user.username,
               avatar_url: clip.user.avatar.url
             },
+            liked: false,
             created_at: clip.created_at.to_time.to_i
           }.to_json)
       end
