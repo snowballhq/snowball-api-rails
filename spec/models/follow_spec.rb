@@ -14,4 +14,10 @@ RSpec.describe Follow, type: :model do
     it { is_expected.to belong_to(:follower).class_name('User') }
     it { is_expected.to belong_to(:following).class_name('User') }
   end
+
+  describe 'after_create' do
+    it 'sends a push notification' do
+      # TODO: test this
+    end
+  end
 end
