@@ -1,6 +1,11 @@
 json.id clip.id
-json.video_url clip.video.url
-json.thumbnail_url clip.thumbnail.url
+if clip.video.exists?
+  json.video_url clip.video.url
+  json.thumbnail_url clip.thumbnail.url
+else
+  json.video_upload_url 'aurl'
+  json.thumbnail_upload_url 'aurl'
+end
 json.user do
   json.partial! 'api/v1/users/user', user: clip.user
 end

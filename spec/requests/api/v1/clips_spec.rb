@@ -68,10 +68,10 @@ RSpec.describe 'Clips', type: :request do
     end
   end
 
-  describe 'POST /clips' do
-    # TODO: remove this functionality
+  # TODO: remove this functionality
+  describe 'POST /clips [DEPRECATED]' do
     context 'with a video and a thumbnail attached [DEPRECATED]' do
-      it 'creates and returns the clip' do
+      it 'creates and returns the clip [DEPRECATED]' do
         create(:user)
         video = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/video.mp4', 'video/mp4')
         thumbnail = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/thumbnail.png', 'image/png')
@@ -94,16 +94,28 @@ RSpec.describe 'Clips', type: :request do
           }.to_json)
       end
     end
-    # context 'with invalid params' do
-    #   it 'returns an error' do
-    #     create(:user) # current user
-    #     post '/api/v1/clips'
-    #     expect(response).to have_http_status(400)
-    #     expect(response.body).to eq({
-    #       message: 'Video can\'t be blank'
-    #     }.to_json)
-    #   end
-    # end
+  end
+
+  describe 'POST /clips' do
+    it 'creates a clip and returns upload urls' do
+      create(:user) # current user
+      post '/api/v1/clips'
+      expect(response).to have_http_status(201)
+      clip = Clip.last
+      expect(response.body).to eq(
+      {
+        id: clip.id,
+        video_upload_url: 'aurl',
+        thumbnail_upload_url: 'aurl',
+        user: {
+          id: clip.user.id,
+          username: clip.user.username,
+          avatar_url: clip.user.avatar.url
+        },
+        liked: false,
+        created_at: clip.created_at.to_time.to_i
+      }.to_json)
+    end
   end
 
   describe 'DELETE /clips/:id' do
