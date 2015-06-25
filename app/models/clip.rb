@@ -25,6 +25,6 @@ class Clip < ActiveRecord::Base
   def s3_url_string_for_file(file)
     s3 = AWS::S3.new
     obj = s3.buckets[ENV['S3_BUCKET_NAME']].objects["clips/#{id}/#{file}"]
-    obj.url_for(:write).to_s
+    obj.url_for(:write, acl: :public_read).to_s
   end
 end

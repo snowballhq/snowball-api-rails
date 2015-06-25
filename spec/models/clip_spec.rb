@@ -25,6 +25,8 @@ RSpec.describe Clip, type: :model do
       expect(URI.parse(url)).to be_a_kind_of(URI::HTTPS)
       expected_url = "https://#{ENV['S3_BUCKET_NAME']}.s3.amazonaws.com/clips/#{clip.id}/video.mp4"
       expect(url.include?(expected_url)).to be_truthy
+      expected_acl = 'x-amz-acl=public-read'
+      expect(url.include?(expected_acl)).to be_truthy
     end
   end
 
@@ -36,6 +38,8 @@ RSpec.describe Clip, type: :model do
       expect(URI.parse(url)).to be_a_kind_of(URI::HTTPS)
       expected_url = "https://#{ENV['S3_BUCKET_NAME']}.s3.amazonaws.com/clips/#{clip.id}/thumbnail.png"
       expect(url.include?(expected_url)).to be_truthy
+      expected_acl = 'x-amz-acl=public-read'
+      expect(url.include?(expected_acl)).to be_truthy
     end
   end
 end
