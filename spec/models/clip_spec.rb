@@ -7,9 +7,7 @@ RSpec.describe Clip, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:user) }
-    it { is_expected.to validate_attachment_presence(:video) }
     it { is_expected.to validate_attachment_content_type(:video) }
-    it { is_expected.to validate_attachment_presence(:thumbnail) }
     it { is_expected.to validate_attachment_content_type(:thumbnail) }
   end
 
