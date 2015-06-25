@@ -11,4 +11,20 @@ class Clip < ActiveRecord::Base
   belongs_to :user
   has_many :flags, dependent: :destroy
   has_many :likes, dependent: :destroy
+
+  def video_upload_url
+    s3_url_string_for_file('video.mp4')
+  end
+
+  def thumbnail_upload_url
+    s3_url_string_for_file('thumbnail.png')
+  end
+
+  private
+
+  def s3_url_string_for_file(file)
+    s3 = AWS::S3.new
+    obj = s3.buckets[ENV['S3_BUCKET_NAME']].objects["clips/#{id}/#{file}"]
+    obj.url_for(:write).to_s
+  end
 end

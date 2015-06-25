@@ -105,8 +105,8 @@ RSpec.describe 'Clips', type: :request do
       expect(response.body).to eq(
         {
           id: clip.id,
-          video_upload_url: 'aurl',
-          thumbnail_upload_url: 'aurl',
+          video_upload_url: clip.video_upload_url,
+          thumbnail_upload_url: clip.thumbnail_upload_url,
           user: {
             id: clip.user.id,
             username: clip.user.username,

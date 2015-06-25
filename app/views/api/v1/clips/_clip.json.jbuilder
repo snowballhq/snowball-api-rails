@@ -3,8 +3,8 @@ if clip.video.exists?
   json.video_url clip.video.url
   json.thumbnail_url clip.thumbnail.url
 else
-  json.video_upload_url 'aurl'
-  json.thumbnail_upload_url 'aurl'
+  json.video_upload_url clip.video_upload_url
+  json.thumbnail_upload_url clip.thumbnail_upload_url
 end
 json.user do
   json.partial! 'api/v1/users/user', user: clip.user
