@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150410015205) do
+ActiveRecord::Schema.define(version: 20150810220236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20150410015205) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "video_file_size"
-    t.string   "video_updated_at"
     t.string   "thumbnail_file_size"
-    t.string   "thumbnail_updated_at"
+    t.datetime "video_updated_at"
+    t.datetime "thumbnail_updated_at"
   end
 
   create_table "flags", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150410015205) do
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.string   "avatar_file_size"
-    t.string   "avatar_updated_at"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
