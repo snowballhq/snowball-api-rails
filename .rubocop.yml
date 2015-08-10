@@ -35,3 +35,6 @@ Metrics/PerceivedComplexity:
 
 Metrics/AbcSize:
   Enabled: false
+
+Rails/Date:
+  Enabled: false

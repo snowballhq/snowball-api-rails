@@ -1,4 +1,4 @@
-class Api::V1::RegistrationsController <  ApiController
+class Api::V1::RegistrationsController < ApiController
   def create
     fail Snowball::InvalidUsername unless user_params[:username].present?
     fail Snowball::InvalidPassword unless user_params[:password].present?

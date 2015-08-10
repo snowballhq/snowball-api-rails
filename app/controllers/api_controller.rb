@@ -51,7 +51,7 @@ class ApiController < ApplicationController
       sign_in User.first, store: false
       return
     end
-    auth_token, _ = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
+    auth_token, = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
     user = auth_token && User.where(auth_token: auth_token).first
     sign_in user, store: false if user
   end

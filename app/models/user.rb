@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def follow_snowball
-    snowball_user = User.where(email: 'hello@snowball.is').first
+    snowball_user = User.find_by(email: 'hello@snowball.is')
     follow(snowball_user) unless snowball_user.nil?
   end
 
@@ -49,6 +49,6 @@ class User < ActiveRecord::Base
   end
 
   def unfollow(user)
-    follows.where(following: user).first.destroy
+    follows.find_by(following: user).destroy
   end
 end
