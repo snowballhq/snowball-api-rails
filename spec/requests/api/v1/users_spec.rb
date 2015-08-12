@@ -3,10 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
   describe 'POST /users/phone-search' do
     it 'returns users with specified phone numbers' do
+      num_format_a = '4157654321'
+      num_format_b = '(415) 765-4321'
       user = create(:user)
-      user2 = create(:user, phone_number: '4151234567')
-      # instead of user2.phone_number, we test normalization here
-      params = { phone_numbers: [user.phone_number, '(415) 123-4567'] }
+      user2 = build(:user)
+      user2.phone_number = num_format_a
+      user2.save!
+      # normalization testing is included here:
+      expect(user2.phone_number).to_not eq(num_format_a)
+      expect(user2.phone_number).to_not eq(num_format_b)
+      params = { phone_numbers: [user.phone_number, num_format_b] }
       post '/api/v1/users/phone-search', params
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
