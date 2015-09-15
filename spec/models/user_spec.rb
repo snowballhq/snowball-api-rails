@@ -59,6 +59,10 @@ RSpec.describe User, type: :model do
       expect(user).to receive(:follow_snowball)
       user.save!
     end
+    it 'follows the snowboard user' do
+      expect(user).to receive(:follow_snowboard)
+      user.save!
+    end
   end
 
   describe '#generate_auth_token' do
@@ -76,10 +80,18 @@ RSpec.describe User, type: :model do
     context 'when the snowball account exists' do
       it 'follows the snowball account' do
         user2 = create(:user, email: 'hello@snowball.is')
-        expect(user.follows.count).to eq(0)
-        user.save!
-        follow = user.follows.first
-        expect(follow.following).to eq(user2)
+        expect { user.save }.to change { user.follows.count }.from(0).to(1)
+        expect(user.following?(user2)).to be_truthy
+      end
+    end
+  end
+
+  describe '#follow_snowboard' do
+    context 'when the snowboard account exists' do
+      it 'follows the snowboard account' do
+        user2 = create(:user, email: 'onboarding@snowball.is')
+        expect { user.save }.to change { user.follows.count }.from(0).to(1)
+        expect(user.following?(user2)).to be_truthy
       end
     end
   end

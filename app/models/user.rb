@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
 
   after_create do
     follow_snowball
+    follow_snowboard
   end
 
   def generate_auth_token
@@ -36,6 +37,11 @@ class User < ActiveRecord::Base
   def follow_snowball
     snowball_user = User.find_by(email: 'hello@snowball.is')
     follow(snowball_user) unless snowball_user.nil?
+  end
+
+  def follow_snowboard
+    snowboard_user = User.find_by(email: 'onboarding@snowball.is')
+    follow(snowboard_user) unless snowboard_user.nil?
   end
 
   def following?(user)
