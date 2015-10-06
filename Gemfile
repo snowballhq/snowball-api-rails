@@ -14,12 +14,6 @@ gem 'devise'
 gem 'newrelic_rpm'
 gem 'httparty'
 
-gem 'haml'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
-gem 'compass-rails'
-
 group :development, :test do
   gem 'spring'
   gem 'rspec-rails'
