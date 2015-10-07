@@ -13,7 +13,7 @@ RSpec.describe 'Users', type: :request do
       expect(user2.phone_number).to_not eq(num_format_a)
       expect(user2.phone_number).to_not eq(num_format_b)
       params = { phone_numbers: [user.phone_number, num_format_b] }
-      post '/v1/users/phone-search', params
+      post '/v1/users/phone-search', params, authenticated_env
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
@@ -28,14 +28,14 @@ RSpec.describe 'Users', type: :request do
     it 'does not return users with empty phone numbers' do
       create(:user, phone_number: '')
       params = { phone_numbers: [''] }
-      post '/v1/users/phone-search', params
+      post '/v1/users/phone-search', params, authenticated_env
       expect(response).to have_http_status(200)
       expect(response.body).to eq([].to_json)
     end
     it 'does not return the current user' do
       user = create(:user)
       params = { phone_numbers: [user.phone_number] }
-      post '/v1/users/phone-search', params
+      post '/v1/users/phone-search', params, authenticated_env
       expect(response).to have_http_status(200)
       expect(response.body).to eq([].to_json)
     end
@@ -44,7 +44,7 @@ RSpec.describe 'Users', type: :request do
   describe 'GET /users?username=' do
     it 'returns users with specified username, case insensitive' do
       user = create(:user, username: 'user')
-      get "/v1/users?username=#{user.username.upcase}"
+      get "/v1/users?username=#{user.username.upcase}", {}, authenticated_env
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
@@ -60,7 +60,7 @@ RSpec.describe 'Users', type: :request do
     context 'getting current user' do
       it 'returns the user with phone number without follow status' do
         user = create(:user)
-        get "/v1/users/#{user.id}"
+        get "/v1/users/#{user.id}", {}, authenticated_env
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user.id,
@@ -75,7 +75,7 @@ RSpec.describe 'Users', type: :request do
       it 'returns the user without phone number with follow status' do
         user = create(:user)
         user2 = create(:user)
-        get "/v1/users/#{user2.id}"
+        get "/v1/users/#{user2.id}", {}, authenticated_env
         expect(response).to have_http_status(200)
         expect(response.body).to eq({
           id: user2.id,
@@ -95,7 +95,7 @@ RSpec.describe 'Users', type: :request do
         user2 = build(:user)
         avatar = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/thumbnail.png', 'image/png')
         params = { username: user2.username, password: user2.password, avatar: avatar }
-        patch "/v1/users/#{user.id}", params
+        patch "/v1/users/#{user.id}", params, authenticated_env
         expect(response).to have_http_status(204)
         expect(user.reload.username).to eq user2.username
         expect(user.reload.avatar.url).to_not be_nil
@@ -105,7 +105,7 @@ RSpec.describe 'Users', type: :request do
       it 'returns an error' do
         user = create(:user)
         params = { username: nil, password: 'password' }
-        patch "/v1/users/#{user.id}", params
+        patch "/v1/users/#{user.id}", params, authenticated_env
         expect(response).to have_http_status(400)
         expect(response.body).to eq({
           message: 'Username can\'t be blank'

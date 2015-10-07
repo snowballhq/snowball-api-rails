@@ -1,11 +1,16 @@
 class ClipsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_clip, only: :destroy
 
   def index
     if params[:user_id]
       user_ids = [params[:user_id]]
     else
-      user_ids = @current_user.follows.pluck(:following_id).append(@current_user.id)
+      if current_user
+        user_ids = current_user.follows.pluck(:following_id).append(current_user.id)
+      else
+        user_ids = [User.snowboard_user.id]
+      end
     end
     @clips = Clip.includes(:user).where(user_id: user_ids).last(25)
   end

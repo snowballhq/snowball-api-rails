@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :optionally_authenticate_user
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
   class Snowball::InvalidUsername < StandardError
@@ -47,15 +48,22 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authenticate_user!
-    if Rails.env.test?
-      @current_user = User.first
-      return
-    end
+  def current_user
+    return @current_user if @current_user
     basic = ActionController::HttpAuthentication::Basic
-    fail Snowball::Unauthorized unless basic.has_basic_credentials?(request)
+    return nil unless basic.has_basic_credentials?(request)
     auth_token, = basic.user_name_and_password(request)
-    @current_user = User.where(auth_token: auth_token).first
-    fail Snowball::Unauthorized unless @current_user
+    user = User.where(auth_token: auth_token).first
+    return nil unless user
+    @current_user = user
+    @current_user
+  end
+
+  def optionally_authenticate_user
+    current_user
+  end
+
+  def authenticate_user!
+    fail Snowball::Unauthorized unless current_user
   end
 end
