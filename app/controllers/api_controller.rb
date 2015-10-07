@@ -3,6 +3,10 @@ class ApiController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
+  before_action do
+    request.format = :json
+  end
+
   before_action :authenticate_user_from_token!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 

@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApiController
+class UsersController < ApiController
   before_action :set_user, only: [:show, :update]
 
   def index

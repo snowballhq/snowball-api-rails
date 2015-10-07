@@ -6,7 +6,7 @@ RSpec.describe 'Clips', type: :request do
       it 'returns the stream of clips created by the specified user' do
         clip = create(:clip)
         clip2 = create(:clip)
-        get "/api/v1/users/#{clip2.user.id}/clips/stream"
+        get "/users/#{clip2.user.id}/clips/stream"
         expect(response).to have_http_status(200)
         expect(response.body).to eq([
           {
@@ -34,7 +34,7 @@ RSpec.describe 'Clips', type: :request do
         clip2 = create(:clip, user: user2)
         user.follow(user2)
         create(:clip) # not following user, won't show in stream
-        get '/api/v1/clips/stream'
+        get '/clips/stream'
         expect(response).to have_http_status(200)
         expect(response.body).to eq([
           {
@@ -75,7 +75,7 @@ RSpec.describe 'Clips', type: :request do
         video = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/video.mp4', 'video/mp4')
         thumbnail = Rack::Test::UploadedFile.new(Rails.root + 'spec/support/thumbnail.png', 'image/png')
         params = { video: video, thumbnail: thumbnail }
-        post '/api/v1/clips', params
+        post '/clips', params
         expect(response).to have_http_status(201)
         clip = Clip.last
         expect(response.body).to eq(
@@ -96,7 +96,7 @@ RSpec.describe 'Clips', type: :request do
     context 'with invalid params' do
       it 'returns an error' do
         create(:user) # current user
-        post '/api/v1/clips'
+        post '/clips'
         expect(response).to have_http_status(400)
         expect(response.body).to eq({
           message: 'Video can\'t be blank'
@@ -109,7 +109,7 @@ RSpec.describe 'Clips', type: :request do
     context 'when user is clip owner' do
       it 'deletes the clip' do
         clip = create(:clip)
-        delete "/api/v1/clips/#{clip.id}"
+        delete "/clips/#{clip.id}"
         expect(response).to have_http_status(204)
         expect(Clip.count).to eq(0)
       end
@@ -118,7 +118,7 @@ RSpec.describe 'Clips', type: :request do
       it 'does not delete the clip' do
         create(:user)
         clip = create(:clip)
-        delete "/api/v1/clips/#{clip.id}"
+        delete "/clips/#{clip.id}"
         expect(response).to have_http_status(403)
         expect(Clip.count).to eq(1)
       end

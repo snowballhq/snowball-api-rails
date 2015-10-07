@@ -1,4 +1,4 @@
-class Api::V1::FollowsController < ApiController
+class FollowsController < ApiController
   before_action :set_following, only: [:create, :destroy]
   before_action :set_user, only: [:followers, :following]
 
