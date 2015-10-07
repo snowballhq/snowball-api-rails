@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
     request.format = :json
   end
 
-  before_action :authenticate_user_from_token!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
+  # before_action :authenticate_user_from_token!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
   class Snowball::InvalidUsername < StandardError
@@ -46,13 +46,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authenticate_user_from_token!
+  def authenticate_user!
     if Rails.env.test?
-      sign_in User.first, store: false
+      @current_user = User.first
       return
     end
     auth_token, = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
-    user = auth_token && User.where(auth_token: auth_token).first
-    sign_in user, store: false if user
+    @current_user = User.where(auth_token: auth_token).first
+  end
+
+  def current_user
+    @current_user
   end
 end

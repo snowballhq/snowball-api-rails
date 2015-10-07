@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :users
   match 'users/sign-in', to: 'sessions#create', via: :post
   match 'users/sign-up', to: 'registrations#create', via: :post
   match 'users/phone-search', to: 'users#phone_search', via: :post
