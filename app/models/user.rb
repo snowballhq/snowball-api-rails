@@ -29,7 +29,10 @@ class User < ActiveRecord::Base
 
   def generate_auth_token
     loop do
-      self.auth_token = Devise.friendly_token
+      # From Devise.friendly_token
+      length = 20
+      rlength = (length * 3) / 4
+      self.auth_token = SecureRandom.urlsafe_base64(rlength).tr('lIO0', 'sxyz')
       break unless self.class.exists?(auth_token: auth_token)
     end
   end
