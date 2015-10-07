@@ -1,4 +1,4 @@
-class ClipsController < ApiController
+class ClipsController < ApplicationController
   before_action :set_clip, only: :destroy
 
   def index

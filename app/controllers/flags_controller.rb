@@ -1,4 +1,4 @@
-class FlagsController < ApiController
+class FlagsController < ApplicationController
   before_action :set_clip
 
   def create

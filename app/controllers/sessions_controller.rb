@@ -1,4 +1,4 @@
-class SessionsController < ApiController
+class SessionsController < ApplicationController
   def create
     fail Snowball::InvalidEmail unless user_params[:email].present?
     fail Snowball::InvalidPassword unless user_params[:password].present?

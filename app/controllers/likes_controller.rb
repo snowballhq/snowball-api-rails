@@ -1,4 +1,4 @@
-class LikesController < ApiController
+class LikesController < ApplicationController
   before_action :set_clip
 
   def create
