@@ -1,9 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action do
-    request.format = :json
-  end
-
-  # before_action :authenticate_user_from_token!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
   class Snowball::InvalidUsername < StandardError

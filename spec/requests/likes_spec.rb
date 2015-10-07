@@ -4,7 +4,7 @@ RSpec.describe 'Clips', type: :request do
   describe 'POST /clips/:clip_id/likes' do
     it 'likes the clip' do
       clip = create(:clip)
-      post "/clips/#{clip.id}/likes"
+      post "/v1/clips/#{clip.id}/likes"
       expect(response).to have_http_status(201)
       expect(Like.count).to eq(1)
     end
@@ -14,7 +14,7 @@ RSpec.describe 'Clips', type: :request do
     it 'unlikes the clip' do
       clip = create(:clip)
       create(:like, clip: clip, user: clip.user)
-      delete "/clips/#{clip.id}/likes"
+      delete "/v1/clips/#{clip.id}/likes"
       expect(response).to have_http_status(204)
       expect(Like.count).to eq(0)
     end

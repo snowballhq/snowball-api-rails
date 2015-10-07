@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Follows', type: :request do
-  describe 'GET /users/:user_id/followers' do
+  describe 'GET /v1/users/:user_id/followers' do
     it 'returns the users who are following the specified user' do
       user = create(:user)
       user2 = create(:user)
       user2.follow(user)
-      get "/users/#{user.id}/followers"
+      get "/v1/users/#{user.id}/followers"
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
@@ -20,12 +20,12 @@ RSpec.describe 'Follows', type: :request do
     end
   end
 
-  describe 'GET /users/:user_id/following' do
+  describe 'GET /v1/users/:user_id/following' do
     it 'returns the users that the specified user is following' do
       user = create(:user)
       user2 = create(:user)
       user2.follow(user)
-      get "/users/#{user2.id}/following"
+      get "/v1/users/#{user2.id}/following"
       expect(response).to have_http_status(200)
       expect(response.body).to eq([
         {
@@ -37,22 +37,22 @@ RSpec.describe 'Follows', type: :request do
     end
   end
 
-  describe 'POST /users/:user_id/follows' do
+  describe 'POST /v1/users/:user_id/follows' do
     it 'follows the user' do
       create(:user)
       user2 = create(:user)
-      post "/users/#{user2.id}/follow"
+      post "/v1/users/#{user2.id}/follow"
       expect(response).to have_http_status(201)
       expect(Follow.count).to eq(1)
     end
   end
 
-  describe 'DELETE /users/:user_id/follows' do
+  describe 'DELETE /v1/users/:user_id/follows' do
     it 'unfollows the user' do
       user = create(:user)
       user2 = create(:user)
       user.follow(user2)
-      delete "/users/#{user2.id}/follow"
+      delete "/v1/users/#{user2.id}/follow"
       expect(response).to have_http_status(204)
       expect(Follow.count).to eq(0)
     end
