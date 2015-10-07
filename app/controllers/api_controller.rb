@@ -1,8 +1,4 @@
 class ApiController < ApplicationController
-  # TODO: figure out if next two lines are needed
-  protect_from_forgery with: :null_session
-  skip_before_action :verify_authenticity_token
-
   before_action do
     request.format = :json
   end
