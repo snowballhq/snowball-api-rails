@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     end
     phone_numbers.delete('')
     phone_numbers.delete(nil)
-    phone_numbers.delete(current_user.phone_number)
+    phone_numbers.delete(@current_user.phone_number)
     @users = User.where(phone_number: phone_numbers)
   end
 
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     user_id = params[:id] if params[:id].present?
     user_id = params[:user_id] if params[:user_id].present?
     if user_id == 'me'
-      @user = current_user
+      @user = @current_user
       return
     end
     @user = User.find(user_id)

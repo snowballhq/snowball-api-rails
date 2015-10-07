@@ -5,18 +5,18 @@ class ClipsController < ApplicationController
     if params[:user_id]
       user_ids = [params[:user_id]]
     else
-      user_ids = current_user.follows.pluck(:following_id).append(current_user.id)
+      user_ids = @current_user.follows.pluck(:following_id).append(@current_user.id)
     end
     @clips = Clip.includes(:user).where(user_id: user_ids).last(25)
   end
 
   def create
-    @clip = current_user.clips.create!(clip_params)
+    @clip = @current_user.clips.create!(clip_params)
     render status: :created
   end
 
   def destroy
-    if @clip.user == current_user
+    if @clip.user == @current_user
       @clip.destroy!
       head :no_content
     else

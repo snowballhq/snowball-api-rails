@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
     fail Snowball::InvalidPassword unless user_params[:password].present?
     existing_user = User.where(username: user_params[:username]).first
     fail Snowball::UsernameInUse if existing_user.present?
-    @user = User.create!(user_params)
+    @current_user = @user = User.create!(user_params)
   end
 
   private

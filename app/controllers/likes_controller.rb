@@ -2,12 +2,12 @@ class LikesController < ApplicationController
   before_action :set_clip
 
   def create
-    @clip.likes.create!(user: current_user)
+    @clip.likes.create!(user: @current_user)
     head :created
   end
 
   def destroy
-    @clip.likes.where(user: current_user).destroy_all
+    @clip.likes.where(user: @current_user).destroy_all
     head :no_content
   end
 

@@ -54,8 +54,4 @@ class ApplicationController < ActionController::Base
     auth_token, = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
     @current_user = User.where(auth_token: auth_token).first
   end
-
-  def current_user
-    @current_user
-  end
 end

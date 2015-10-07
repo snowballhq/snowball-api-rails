@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     existing_user = User.where(email: user_params[:email]).first
     fail Snowball::InvalidEmail if existing_user.nil?
     fail Snowball::InvalidPassword unless existing_user.authenticate(user_params[:password])
-    @user = existing_user
+    @current_user = @user = existing_user
   end
 
   private
