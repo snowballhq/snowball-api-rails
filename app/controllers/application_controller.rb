@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   end
   class Snowball::UsernameInUse < StandardError
   end
+  class Snowball::Unauthorized < StandardError
+  end
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
@@ -16,6 +18,7 @@ class ApplicationController < ActionController::Base
   rescue_from Snowball::InvalidEmail, with: :render_error
   rescue_from Snowball::InvalidPassword, with: :render_error
   rescue_from Snowball::UsernameInUse, with: :render_error
+  rescue_from Snowball::Unauthorized, with: :render_error
 
   def render_error(error)
     status = :bad_request
@@ -31,6 +34,9 @@ class ApplicationController < ActionController::Base
       message = 'Invalid password. Please try again.'
     elsif error.is_a? Snowball::UsernameInUse
       message = 'Username is already in use. Please select another or try to sign in.'
+    elsif error.is_a? Snowball::Unauthorized
+      status = :unauthorized
+      message = 'Unauthorized'
     else
       logger.error error.message
       message = 'An unexpected error has occured.'
@@ -46,7 +52,10 @@ class ApplicationController < ActionController::Base
       @current_user = User.first
       return
     end
-    auth_token, = ActionController::HttpAuthentication::Basic.user_name_and_password(request)
+    basic = ActionController::HttpAuthentication::Basic
+    fail Snowball::Unauthorized unless basic.has_basic_credentials?(request)
+    auth_token, = basic.user_name_and_password(request)
     @current_user = User.where(auth_token: auth_token).first
+    fail Snowball::Unauthorized unless @current_user
   end
 end
