@@ -5,21 +5,16 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to be_valid }
 
-  describe 'has_secure_password' do
-    it 'fails without a password' do
-      user.password = nil
-      expect(user.save).to be_falsey
-    end
-    it 'fails with a short password' do
-      user.password = 'p'
-      expect(user.save).to be_falsey
-    end
-    it 'succeeds with a valid password' do
-      expect(user.save).to be_truthy
-    end
-  end
-
   describe 'validations' do
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to allow_value('james+test@snowball.is').for(:email) }
+    it { is_expected.to_not allow_value('foo').for(:email) }
+    it 'validates the email as unique and case sensitive' do
+      user.save!
+      user2 = build(:user, email: user.email.upcase)
+      expect(user2.valid?).to be_falsey
+    end
+
     it { is_expected.to validate_presence_of(:username) }
     it 'validates the username as unique and case sensitive' do
       user.save!
@@ -30,13 +25,20 @@ RSpec.describe User, type: :model do
     it { is_expected.to_not allow_value('@@@').for(:username) }
     it { is_expected.to_not allow_value('...').for(:username) }
     it { is_expected.to_not allow_value('a').for(:username) }
+
+    it { is_expected.to validate_length_of(:password).is_at_least(5) }
+    it 'validates presence of :password' do
+      user = build(:user, password: nil)
+      expect(user).to validate_presence_of(:password)
+    end
+
+    # TODO: Phone number validation specs
+
     it 'validates presence of :auth_token' do
       allow(user).to receive(:generate_auth_token)
       expect(user).to validate_presence_of(:auth_token)
     end
-    it { is_expected.to validate_length_of(:password).is_at_least(5) }
-    it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to allow_value('james+test@snowball.is').for(:email) }
+
     it { is_expected.to validate_attachment_content_type(:avatar) }
   end
 

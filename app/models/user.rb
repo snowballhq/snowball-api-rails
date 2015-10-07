@@ -1,14 +1,15 @@
 class User < ActiveRecord::Base
   include Orderable
 
-  devise :database_authenticatable, :registerable, :recoverable, :validatable
+  has_secure_password
 
   has_attached_file :avatar
 
+  validates :email, presence: true, format: /@/, uniqueness: { case_sensitive: false }
   validates :username, presence: true, format: /[a-zA-Z0-9_]{3,15}/, uniqueness: { case_sensitive: false }
+  validates :password, length: { minimum: 5 }, presence: true
   validates :phone_number, phony_plausible: true
   validates :auth_token, presence: true
-  validates :password, length: { minimum: 5 }, allow_blank: true
   validates_attachment :avatar, content_type: { content_type: 'image/png' }
 
   phony_normalize :phone_number, default_country_code: 'US'
