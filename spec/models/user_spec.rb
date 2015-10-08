@@ -21,6 +21,7 @@ RSpec.describe User, type: :model do
       user2 = build(:user, username: user.username.upcase)
       expect(user2.valid?).to be_falsey
     end
+    it { is_expected.to validate_length_of(:username).is_at_least(3) }
     it { is_expected.to allow_value('abc').for(:username) }
     it { is_expected.to_not allow_value('@@@').for(:username) }
     it { is_expected.to_not allow_value('...').for(:username) }
