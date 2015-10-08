@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'rails'
+gem 'rails-api'
 gem 'pg'
 gem 'jbuilder'
 gem 'puma'

@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   before_action :optionally_authenticate_user
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
