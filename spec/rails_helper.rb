@@ -6,7 +6,6 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'paperclip/matchers'
 require 'webmock/rspec'
-require 'ffaker'
 require 'support/auth_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
