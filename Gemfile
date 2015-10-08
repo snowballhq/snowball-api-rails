@@ -19,7 +19,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda'
   gem 'factory_girl_rails'
-  gem 'faker'
+  gem 'ffaker'
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'guard-rspec'
