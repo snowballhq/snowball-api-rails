@@ -9,7 +9,8 @@ class ClipsController < ApplicationController
       if current_user
         user_ids = current_user.follows.pluck(:following_id).append(current_user.id)
       else
-        user_ids = [User.snowboard_user.id]
+        snowboard = User.snowboard_user
+        user_ids = snowboard ? [User.snowboard_user.id] : []
       end
     end
     @clips = Clip.includes(:user).where(user_id: user_ids).last(25)
