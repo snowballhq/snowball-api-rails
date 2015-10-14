@@ -39,8 +39,7 @@ module Snowball
       },
       url: ':s3_alias_url',
       s3_host_alias: ENV['CLOUDFLARE_DOMAIN'],
-      path: ':class/:attachment/:id/:style/:filename',
-      s3_protocol: :https
+      path: ':class/:attachment/:id/:style/:filename'
     }
   end
 end
