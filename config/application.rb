@@ -37,7 +37,6 @@ module Snowball
         access_key_id: ENV['AWS_ACCESS_KEY_ID'],
         secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
       },
-      s3_protocol: :https,
       url: ':s3_domain_url',
       path: ':class/:attachment/:id/:style/:filename'
     }
