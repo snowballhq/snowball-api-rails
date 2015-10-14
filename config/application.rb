@@ -37,7 +37,8 @@ module Snowball
         access_key_id: ENV['AWS_ACCESS_KEY_ID'],
         secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
       },
-      url: ':s3_domain_url',
+      url: ':s3_alias_url',
+      s3_host_alias: ENV['CLOUDFLARE_DOMAIN'],
       path: ':class/:attachment/:id/:style/:filename'
     }
   end
