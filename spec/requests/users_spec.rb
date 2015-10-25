@@ -100,6 +100,15 @@ RSpec.describe 'Users', type: :request do
         expect(user.reload.username).to eq user2.username
         expect(user.reload.avatar.url).to_not be_nil
       end
+
+      it 'updates the user 2' do
+        user = create(:user)
+        user2 = build(:user)
+        params = { username: user2.username }
+        patch "/v1/users/#{user.id}", params, authenticated_env
+        expect(response).to have_http_status(204)
+        expect(user.reload.username).to eq user2.username
+      end
     end
     context 'with invalid params' do
       it 'returns an error' do
