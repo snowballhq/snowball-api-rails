@@ -124,21 +124,38 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /v1/users/sign_in' do
-    it 'returns an error when the email is invalid or doesn\'t exist' do
+    it 'returns an error when an email isn\'t provided' do
       params = { email: nil, password: nil }
       post '/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Oops! Looks like your email is incorrect, try again.'
+        message: 'That doesn\'t look like an email address. Try again.'
       }.to_json)
     end
-    it 'returns an error when the password is invalid or doesn\'t match' do
+    it 'returns an error when a password isn\'t provided' do
       user = create(:user)
       params = { email: user.email, password: nil }
       post '/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Oops! Looks like your password is wrong, try again.'
+        message: 'Your password must have at least 5 characters. Try again.'
+      }.to_json)
+    end
+    it 'returns an error when a user does not exist with the provided email' do
+      params = { email: 'email@example.com', password: 'passpass' }
+      post '/v1/users/sign-in', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'A user with that email address does not exist. Try another one or sign up.'
+      }.to_json)
+    end
+    it 'returns an error if the provided password does not match the provided email' do
+      user = create(:user)
+      params = { email: user.email, password: 'passpass' }
+      post '/v1/users/sign-in', params
+      expect(response).to have_http_status(400)
+      expect(response.body).to eq({
+        message: 'That password doesn\'t match. Try again.'
       }.to_json)
     end
     context 'when everything is valid' do
@@ -158,39 +175,39 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /v1/users/sign_up' do
-    it 'returns an error when the username is invalid' do
+    it 'returns an error when a username is not provided' do
       params = { username: nil, password: nil }
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Sorry! That username won\'t work, try at least 3 characters.'
+        message: 'Your username must have at least 3 characters. Try again.'
       }.to_json)
     end
     it 'returns an error when the username is already in use' do
       user = create(:user)
-      params = { username: user.username, password: user.password }
+      params = { email: 'example@example.com', username: user.username, password: user.password }
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Sorry! That username already exists, try another.'
+        message: 'That username is already taken. Try another one.'
       }.to_json)
     end
-    it 'returns an error when the password is invalid' do
+    it 'returns an error when a password is not provided' do
       user = build(:user)
-      params = { username: user.username, password: nil }
+      params = { email: user.email, username: user.username, password: nil }
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Oops! Looks like your password is wrong, try again.'
+        message: 'Your password must have at least 5 characters. Try again.'
       }.to_json)
     end
-    it 'returns an error when the email is invalid' do
+    it 'returns an error when an email is not provided' do
       user = build(:user)
-      params = { username: user.username, password: user.password, email: 'invalidemail@' }
+      params = { username: user.username, password: user.password, email: nil }
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Email is invalid'
+        message: 'That doesn\'t look like an email address. Try again.'
       }.to_json)
     end
     context 'when everything is valid' do

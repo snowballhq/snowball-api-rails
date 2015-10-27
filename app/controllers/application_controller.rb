@@ -2,23 +2,29 @@ class ApplicationController < ActionController::API
   before_action :optionally_authenticate_user
   before_action :authenticate_user!, unless: -> { controller_name == 'registrations' || controller_name == 'sessions' }
 
-  class Snowball::InvalidUsername < StandardError
+  class Snowball::UsernameRequired < StandardError
   end
-  class Snowball::InvalidEmail < StandardError
+  class Snowball::EmailRequired < StandardError
   end
-  class Snowball::InvalidPassword < StandardError
+  class Snowball::PasswordRequired < StandardError
   end
   class Snowball::UsernameInUse < StandardError
+  end
+  class Snowball::UserDoesNotExist < StandardError
+  end
+  class Snowball::PasswordDoesNotMatch < StandardError
   end
   class Snowball::Unauthorized < StandardError
   end
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_error
   rescue_from ActionController::ParameterMissing, with: :render_error
-  rescue_from Snowball::InvalidUsername, with: :render_error
-  rescue_from Snowball::InvalidEmail, with: :render_error
-  rescue_from Snowball::InvalidPassword, with: :render_error
+  rescue_from Snowball::UsernameRequired, with: :render_error
+  rescue_from Snowball::EmailRequired, with: :render_error
+  rescue_from Snowball::PasswordRequired, with: :render_error
   rescue_from Snowball::UsernameInUse, with: :render_error
+  rescue_from Snowball::UserDoesNotExist, with: :render_error
+  rescue_from Snowball::PasswordDoesNotMatch, with: :render_error
   rescue_from Snowball::Unauthorized, with: :render_error
 
   def render_error(error)
@@ -27,14 +33,18 @@ class ApplicationController < ActionController::API
       message = error.record.errors.full_messages.first
     elsif error.is_a? ActionController::ParameterMissing
       message = error.message
-    elsif error.is_a? Snowball::InvalidUsername
-      message = 'Sorry! That username won\'t work, try at least 3 characters.'
-    elsif error.is_a? Snowball::InvalidEmail
-      message = 'Oops! Looks like your email is incorrect, try again.'
-    elsif error.is_a? Snowball::InvalidPassword
-      message = 'Oops! Looks like your password is wrong, try again.'
+    elsif error.is_a? Snowball::UsernameRequired
+      message = 'Your username must have at least 3 characters. Try again.'
+    elsif error.is_a? Snowball::EmailRequired
+      message = 'That doesn\'t look like an email address. Try again.'
+    elsif error.is_a? Snowball::PasswordRequired
+      message = 'Your password must have at least 5 characters. Try again.'
     elsif error.is_a? Snowball::UsernameInUse
-      message = 'Sorry! That username already exists, try another.'
+      message = 'That username is already taken. Try another one.'
+    elsif error.is_a? Snowball::UserDoesNotExist
+      message = 'A user with that email address does not exist. Try another one or sign up.'
+    elsif error.is_a? Snowball::PasswordDoesNotMatch
+      message = 'That password doesn\'t match. Try again.'
     elsif error.is_a? Snowball::Unauthorized
       status = :unauthorized
       message = 'Unauthorized'
