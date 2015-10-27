@@ -28,13 +28,13 @@ class ApplicationController < ActionController::API
     elsif error.is_a? ActionController::ParameterMissing
       message = error.message
     elsif error.is_a? Snowball::InvalidUsername
-      message = 'Invalid username. Please try again.'
+      message = 'Sorry! That username won\'t work, try at least 3 characters.'
     elsif error.is_a? Snowball::InvalidEmail
-      message = 'Invalid email. Please try again.'
+      message = 'Oops! Looks like your email is incorrect, try again.'
     elsif error.is_a? Snowball::InvalidPassword
-      message = 'Invalid password. Please try again.'
+      message = 'Oops! Looks like your password is wrong, try again.'
     elsif error.is_a? Snowball::UsernameInUse
-      message = 'Username is already in use. Please select another or try to sign in.'
+      message = 'Sorry! That username already exists, try another.'
     elsif error.is_a? Snowball::Unauthorized
       status = :unauthorized
       message = 'Unauthorized'
