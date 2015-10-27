@@ -129,7 +129,7 @@ RSpec.describe 'Users', type: :request do
       post '/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Invalid email. Please try again.'
+        message: 'Oops! Looks like your email is incorrect, try again.'
       }.to_json)
     end
     it 'returns an error when the password is invalid or doesn\'t match' do
@@ -138,7 +138,7 @@ RSpec.describe 'Users', type: :request do
       post '/v1/users/sign-in', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Invalid password. Please try again.'
+        message: 'Oops! Looks like your password is wrong, try again.'
       }.to_json)
     end
     context 'when everything is valid' do
@@ -163,7 +163,7 @@ RSpec.describe 'Users', type: :request do
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Invalid username. Please try again.'
+        message: 'Sorry! That username won\'t work, try at least 3 characters.'
       }.to_json)
     end
     it 'returns an error when the username is already in use' do
@@ -172,7 +172,7 @@ RSpec.describe 'Users', type: :request do
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Username is already in use. Please select another or try to sign in.'
+        message: 'Sorry! That username already exists, try another.'
       }.to_json)
     end
     it 'returns an error when the password is invalid' do
@@ -181,7 +181,7 @@ RSpec.describe 'Users', type: :request do
       post '/v1/users/sign-up', params
       expect(response).to have_http_status(400)
       expect(response.body).to eq({
-        message: 'Invalid password. Please try again.'
+        message: 'Oops! Looks like your password is wrong, try again.'
       }.to_json)
     end
     it 'returns an error when the email is invalid' do
