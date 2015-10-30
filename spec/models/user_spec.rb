@@ -68,6 +68,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  # describe 'before_post_process' do
+  #   it 'renames the avatar file name' do
+  #     expect(user).to receive(:change_avatar_filename)
+  #     user.save!
+  #   end
+  # end
+
   describe '#generate_auth_token' do
     it 'generates a new auth token' do
       # TODO: bring back regex validation here
@@ -98,6 +105,11 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  # describe '#change_avatar_filename' do
+  #   it 'changes the avatar file name' do
+  #   end
+  # end
 
   describe '#following?(user)' do
     it 'returns true if the user is following the user' do

@@ -28,6 +28,13 @@ class User < ActiveRecord::Base
     follow_snowboard
   end
 
+  before_post_process :change_avatar_filename
+
+  def change_avatar_filename
+    extension = File.extname(avatar_file_name).downcase
+    self.avatar.instance_write :file_name, "#{Time.now.to_i.to_s}#{extension}"
+  end
+
   def generate_auth_token
     loop do
       # From Devise.friendly_token
