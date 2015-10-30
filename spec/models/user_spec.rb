@@ -26,6 +26,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to_not allow_value('@@@').for(:username) }
     it { is_expected.to_not allow_value('...').for(:username) }
     it { is_expected.to_not allow_value('a').for(:username) }
+    it { is_expected.to_not allow_value('test test').for(:username) }
 
     it { is_expected.to validate_length_of(:password).is_at_least(5) }
     it 'validates presence of :password' do
