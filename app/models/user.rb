@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
   def change_avatar_filename
     extension = File.extname(avatar_file_name).downcase
-    self.avatar.instance_write :file_name, "#{Time.now.to_i.to_s}#{extension}"
+    avatar.instance_write :file_name, "#{Time.now.to_i}#{extension}"
   end
 
   def generate_auth_token
