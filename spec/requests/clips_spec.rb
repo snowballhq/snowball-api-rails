@@ -112,6 +112,27 @@ RSpec.describe 'Clips', type: :request do
         ].to_json)
       end
     end
+    it 'is paginated' do
+      user = create(:user)
+      clips = create_list(:clip, 26, user: user)
+      get "/v1/users/#{user.id}/clips/stream", { page: 2 }, authenticated_env
+      clip = clips.last
+      expect(response).to have_http_status(200)
+      expect(response.body).to eq([
+        {
+          id: clip.id,
+          video_url: clip.video.url,
+          thumbnail_url: clip.thumbnail.url,
+          user: {
+            id: user.id,
+            username: user.username,
+            avatar_url: user.avatar.url
+          },
+          liked: false,
+          created_at: clip.created_at.to_time.to_i
+        }
+      ].to_json)
+    end
   end
 
   describe 'POST /clips' do

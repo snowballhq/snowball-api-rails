@@ -13,7 +13,9 @@ class ClipsController < ApplicationController
         user_ids = snowboard ? [User.snowboard_user.id] : []
       end
     end
-    @clips = Clip.includes(:user).where(user_id: user_ids).last(25)
+    page = 1
+    page = params[:page] if params[:page]
+    @clips = Clip.includes(:user).where(user_id: user_ids).page(page)
   end
 
   def create

@@ -13,6 +13,7 @@ gem 'aws-sdk', '<2.0'
 gem 'bcrypt'
 gem 'newrelic_rpm'
 gem 'httparty'
+gem 'kaminari'
 
 group :development, :test do
   gem 'spring'
