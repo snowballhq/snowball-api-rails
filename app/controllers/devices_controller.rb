@@ -21,7 +21,7 @@ class DevicesController < ApplicationController
 
   def device_params
     params.permit(
-      :type,
+      :platform,
       :token,
       :development
     )

@@ -8,7 +8,7 @@ RSpec.describe Device, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:user) }
     # it { is_expected.to validate_inclusion_of(:development).in_array([true, false]) }
-    it { is_expected.to validate_inclusion_of(:type).in_array([0]) }
+    it { is_expected.to validate_inclusion_of(:platform).in_array([0]) }
     it { is_expected.to validate_presence_of(:token) }
   end
 

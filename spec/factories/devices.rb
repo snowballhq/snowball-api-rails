@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :device do
     user
     development false
-    type 0
+    platform 0
     token Faker::Lorem.characters(10)
   end
 end
