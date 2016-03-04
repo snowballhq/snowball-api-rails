@@ -11,7 +11,7 @@ class DevicesController < ApplicationController
     arn = ENV['AWS_SNS_ARN_IOS_DEVELOPMENT'] if device.development?
     AWS::SNS.new.client.create_platform_endpoint(
       platform_application_arn: arn,
-      token: device.id,
+      token: device.token,
       custom_user_data: device.user_id
     )
     head :accepted
