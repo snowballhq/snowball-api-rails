@@ -4,6 +4,7 @@ class DevicesController < ApplicationController
   def create
     device = @current_user.devices.find_by(token: device_params[:token])
     if device
+      device.development = false
       device.update!(device_params)
     else
       device = @current_user.devices.create!(device_params)
