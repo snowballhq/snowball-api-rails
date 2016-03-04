@@ -7,6 +7,7 @@ class DevicesController < ApplicationController
       temp_device.assign_attributes(device_params)
     end
     # TODO: Do this in the background...
+    # Also, maybe this should be called from the model when created?
     arn = ENV['AWS_SNS_ARN_IOS']
     arn = ENV['AWS_SNS_ARN_IOS_DEVELOPMENT'] if device.development?
     AWS::SNS.new.client.create_platform_endpoint(
