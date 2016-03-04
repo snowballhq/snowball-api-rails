@@ -2,10 +2,13 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    device = @current_user.devices.find_or_create_by!(token: device_params[:token]) do |temp_device|
-      temp_device.development = false
-      temp_device.assign_attributes(device_params)
+    device = @current_user.devices.find_by(token: device_params[:token])
+    if device
+      device.update!(device_params)
+    else
+      device = @current_user.devices.create!(device_params)
     end
+
     # TODO: Do this in the background...
     # Also, maybe this should be called from the model when created?
     arn = ENV['AWS_SNS_ARN_IOS']
