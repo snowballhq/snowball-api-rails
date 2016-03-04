@@ -72,4 +72,14 @@ class User < ActiveRecord::Base
   def self.snowboard_user
     User.find_by(email: 'onboarding@snowball.is')
   end
+
+  def send_push_notification(message)
+    sns = AWS::SNS.new.client
+    devices.each do |device|
+      sns.publish(
+        target_arn: device.arn,
+        message: message
+      )
+    end
+  end
 end

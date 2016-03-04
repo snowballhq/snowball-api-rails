@@ -12,20 +12,6 @@ class Follow < ActiveRecord::Base
   private
 
   def send_push_notification
-    headers = {
-      'X-Parse-Application-Id' => ENV['PARSE_APPLICATION_ID'],
-      'X-Parse-REST-API-Key' => ENV['PARSE_API_KEY'],
-      'Content-Type' => 'application/json'
-    }
-    message = "#{follower.username} is now following you."
-    body = {
-      where: {
-        user_id: following.id
-      },
-      data: {
-        alert: message
-      }
-    }
-    HTTParty.post('https://api.parse.com/1/push', body: body.to_json, headers: headers, verify: false)
+    following.send_push_notification("#{follower.username} is now following you.")
   end
 end
