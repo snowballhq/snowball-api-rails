@@ -2,21 +2,19 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    if !device_params[:type]
-      render json: { message: 'Type can\'t be blank' }, status: :bad_request
-    elsif !device_params[:token]
-      render json: { message: 'Token can\'t be blank' }, status: :bad_request
-    else
-      # TODO: Do this in the background...
-      arn = ENV['AWS_SNS_ARN_IOS']
-      arn = ENV['AWS_SNS_ARN_IOS_DEVELOPMENT'] if device_params[:development]
-      AWS::SNS.new.client.create_platform_endpoint(
-        platform_application_arn: arn,
-        token: device_params[:token],
-        custom_user_data: @current_user.id
-      )
-      head :accepted
+    device = @current_user.devices.find_or_create_by!(token: device_params[:token]) do |temp_device|
+      temp_device.development = false
+      temp_device.assign_attributes(device_params)
     end
+    # TODO: Do this in the background...
+    arn = ENV['AWS_SNS_ARN_IOS']
+    arn = ENV['AWS_SNS_ARN_IOS_DEVELOPMENT'] if device.development?
+    AWS::SNS.new.client.create_platform_endpoint(
+      platform_application_arn: arn,
+      token: device.id,
+      custom_user_data: device.user_id
+    )
+    head :accepted
   end
 
   private

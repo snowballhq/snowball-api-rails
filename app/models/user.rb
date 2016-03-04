@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :follows, class_name: 'Follow', foreign_key: :follower_id, dependent: :destroy # follows user has created
   has_many :followings, class_name: 'Follow', foreign_key: :following_id, dependent: :destroy # follows others have created
   has_many :likes, dependent: :destroy
+  has_many :devices, dependent: :destroy
 
   before_validation(on: :create) do
     generate_auth_token
