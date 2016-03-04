@@ -16,5 +16,6 @@ Rails.application.routes.draw do
     end
     match 'users/:user_id/clips/stream', to: 'clips#index', via: :get
     match 'clips/stream', to: 'clips#index', via: :get
+    resources :devices, only: :create
   end
 end
