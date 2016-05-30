@@ -4,3 +4,10 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+
+Rake::Task.tasks.each do |t|
+  if t.name[0,3] == "db:"
+    t.clear
+    t.add_description("!!! Disabled in favor of Ecto.")
+  end
+end

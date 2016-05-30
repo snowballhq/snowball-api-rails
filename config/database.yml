@@ -7,7 +7,7 @@ default: &default
 
 development:
   <<: *default
-  database: snowball_development
+  database: snowball_dev
 
 test:
   <<: *default
